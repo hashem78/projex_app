@@ -53,3 +53,6 @@ android/app/google-services.json
 # Ignore generated files
 *.freezed.dart
 *.g.dart
+
+# Ignore the environment file
+*.env
