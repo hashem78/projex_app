@@ -29,9 +29,14 @@ This repository contains the client application for Projex, we use _**flutter+da
 ## Build instructions
     1. Clone this repository
     2. cd <projex_folder>
-    3. flutter pub get
-    4. flutter pub run build_runner build
-    5. flutter build <platform>[ios,android,web]
+    *3. dart pub global activate flutterfire_cli
+    *4. flutterfire configure
+    5. flutter pub get
+    6. flutter pub run build_runner build
+    7. flutter build <platform>[ios,android,web]
+
+    * Requires the firebase-cli tool more about this [here](https://firebase.flutter.dev/docs/overview#using-the-flutterfire-cli) 
+    
 
 ## Contribution
 > Contribution in the project is limited to team members only. fork this project and submit pull requests.
