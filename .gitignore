@@ -55,4 +55,4 @@ android/app/google-services.json
 *.g.dart
 
 # Ignore the environment file
-*.env
+env.dat

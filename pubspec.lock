@@ -435,7 +435,7 @@ packages:
     source: hosted
     version: "3.0.7"
   google_sign_in:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: google_sign_in
       url: "https://pub.dartlang.org"

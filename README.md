@@ -32,7 +32,7 @@ This repository contains the client application for Projex, we use _**flutter+da
     *3. dart pub global activate flutterfire_cli
     *4. flutterfire configure
     5. flutter pub get
-    6. add assets/.env file with the following
+    6. add assets/env.dat file with the following
         GOOGLE_CLIENT_ID=<THE_CLIENT_ID_FOR_OUR_PROJECT>
 
         To get the client id go to the firebase console https://console.firebase.google.com/project/projex-app

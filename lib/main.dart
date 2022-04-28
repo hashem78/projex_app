@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:projex_app/firebase_options.dart';
 import 'package:projex_app/state/router_provider.dart';
@@ -23,7 +24,7 @@ Future<void> main() async {
     await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
   }
 
-  await dotenv.load();
+  await dotenv.load(fileName: "assets/env.dat");
 
   // TODO: Add more sign in providers
   FlutterFireUIAuth.configureProviders(
@@ -48,16 +49,21 @@ class App extends ConsumerWidget {
 
     final router = ref.watch(routerProvider);
 
-    if (kIsWeb || Platform.isAndroid) {
-      return MaterialApp.router(
-        routeInformationParser: router.routeInformationParser,
-        routerDelegate: router.routerDelegate,
-      );
-    } else {
-      return CupertinoApp.router(
-        routeInformationParser: router.routeInformationParser,
-        routerDelegate: router.routerDelegate,
-      );
-    }
+    return ScreenUtilInit(
+      designSize: const Size(1080, 1920),
+      builder: (context) {
+        if (kIsWeb || Platform.isAndroid) {
+          return MaterialApp.router(
+            routeInformationParser: router.routeInformationParser,
+            routerDelegate: router.routerDelegate,
+          );
+        } else {
+          return CupertinoApp.router(
+            routeInformationParser: router.routeInformationParser,
+            routerDelegate: router.routerDelegate,
+          );
+        }
+      },
+    );
   }
 }
