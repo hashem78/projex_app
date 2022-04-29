@@ -111,20 +111,20 @@ class PUser with _$PUser {
     required String id,
     required String name,
     required String email,
-    required String phoneNumber,
-    required List<PSocial> socials,
-    required PProfilePicture profilePicture,
-    required List<String> projectIds,
     required String studentNumber,
+    String? phoneNumber,
+    PProfilePicture? profilePicture,
+    @Default([]) List<PSocial> socials,
+    @Default([]) List<String> projectIds,
   }) = _PUserStudent;
   const factory PUser.instructor({
     required String id,
     required String name,
     required String email,
-    required String phoneNumber,
-    required List<PSocial> socials,
-    required PProfilePicture profilePicture,
-    required List<String> projectIds,
+    String? phoneNumber,
+    PProfilePicture? profilePicture,
+    @Default([]) List<PSocial> socials,
+    @Default([]) List<String> projectIds,
   }) = _PUserInstructor;
   factory PUser.fromJson(Map<String, dynamic> json) => _$PUserFromJson(json);
 }
