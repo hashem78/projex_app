@@ -63,4 +63,40 @@ This repository contains the client application for Projex, we use _**flutter+da
     **Note: translations go to lib/i18n folder**
 
 
+# Libraries used
+### State Management 
+* [flutter_riverpod](https://pub.dev/packages/flutter_riverpod)
+* [flutter_hooks](https://pub.dev/packages/flutter_hooks)
+### Equality / Serialization
+* [freezed](https://pub.dev/packages/freezed)
+* [json_serializable](https://pub.dev/packages/json_serializable)
+### Routing
+* [go_router](https://pub.dev/packages/go_router)
+### Database / Auth
+* [cloud_firestore](https://pub.dev/packages/cloud_firestore)
+* [firebase_messaging](https://pub.dev/packages/firebase_messaging)
+* [flutterfire_ui](https://pub.dev/packages/flutterfire_ui)
+* [firebase_auth](https://pub.dev/packages/firebase_auth)
+* [google_sign_in](https://pub.dev/packages/google_sign_in)
+### Environment
+* [flutter_dotenv](https://pub.dev/packages/flutter_dotenv)
+### Internationalization / Localization
+* [flutter_localizations](https://pub.dev/packages/flutter_localizations)
+* [fast_i18n](https://pub.dev/packages/fast_i18n)
+### Utilities
+* [flutter_screenutil](https://pub.dev/packages/flutter_screenutil)
+* [cached_network_image](https://pub.dev/packages/cached_network_image)
+* [shared_preferences](https://pub.dev/packages/shared_preferences)
+
+# Resources
+[Soruce code generation](https://en.wikipedia.org/wiki/Automatic_programming)
+
+[Routing in frontend frameworks](https://www.quora.com/I-hear-routing-all-the-time-in-front-end-frameworks-what-is-routing)
+
+[Internationalization and localization](https://en.wikipedia.org/wiki/Internationalization_and_localization)
+
+[State Management](https://docs.flutter.dev/development/data-and-backend/state-mgmt/intro)
+
+[Firebase](https://firebase.google.com/)
+
 
