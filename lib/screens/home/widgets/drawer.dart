@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/screens/profile/widgets/profile_screen_image.dart';
 import 'package:projex_app/state/auth.dart';
+import 'package:projex_app/state/locale.dart';
 
 class PDrawer extends ConsumerWidget {
   const PDrawer({
@@ -12,6 +13,7 @@ class PDrawer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userFuture = ref.watch(pCurrentUserProvider);
+    final translations = ref.watch(translationProvider).translations;
 
     return Drawer(
       child: ListView(
@@ -34,8 +36,9 @@ class PDrawer extends ConsumerWidget {
                       children: [
                         Text(
                           user.map(
-                            student: (std) => "Student",
-                            instructor: (inst) => "Instructor",
+                            student: (std) => translations.profile.studentType,
+                            instructor: (inst) =>
+                                translations.profile.instructorType,
                           ),
                         ),
                         Text(user.name),
@@ -59,7 +62,7 @@ class PDrawer extends ConsumerWidget {
           ),
           ListTile(
             leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
+            title: Text(translations.settings.name),
             onTap: () {
               context.goNamed('settings');
             },

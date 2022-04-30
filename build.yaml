@@ -4,3 +4,11 @@ targets:
       json_serializable:
         options:
           explicit_to_json: true
+      fast_i18n:
+        options:
+          namespaces: true
+          input_directory: lib/i18n
+          output_directory: lib/i18n 
+          output_file_name: translations.g.dart 
+          locale_handling: false 
+          translation_class_visibility: public

@@ -7,10 +7,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:projex_app/firebase_options.dart';
+import 'package:projex_app/i18n/translations.g.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/router_provider.dart';
 import 'package:projex_app/state/shared_perferences_provider.dart';
 import 'package:projex_app/state/theme_mode.dart';
@@ -60,12 +63,20 @@ class App extends ConsumerWidget {
     // package:go_rotuer handels displaying the correct transitions.
 
     final router = ref.watch(routerProvider);
+    // The current theme mode for this App
     final themeState = ref.watch(themeModeProvider);
+    // The current translations + locale for this App
+    final translations = ref.watch(translationProvider);
     return ScreenUtilInit(
       designSize: const Size(1080, 1920),
       builder: (context) {
         if (kIsWeb || Platform.isAndroid) {
           return MaterialApp.router(
+            locale: translations.locale.flutterLocale,
+            // We support the locales in AppLocale, but AppLocale locales
+            // are different and need to be mapped to flutter locales.
+            supportedLocales: AppLocale.values.map((e) => e.flutterLocale),
+            localizationsDelegates: GlobalMaterialLocalizations.delegates,
             themeMode: themeState.themeMode,
             theme: ThemeData(brightness: themeState.brightness),
             routeInformationParser: router.routeInformationParser,
@@ -73,6 +84,11 @@ class App extends ConsumerWidget {
           );
         } else {
           return CupertinoApp.router(
+            locale: translations.locale.flutterLocale,
+            // We support the locales in AppLocale, but AppLocale locales
+            // are different and need to be mapped to flutter locales.
+            supportedLocales: AppLocale.values.map((e) => e.flutterLocale),
+            localizationsDelegates: GlobalCupertinoLocalizations.delegates,
             theme: CupertinoThemeData(brightness: themeState.brightness),
             routeInformationParser: router.routeInformationParser,
             routerDelegate: router.routerDelegate,

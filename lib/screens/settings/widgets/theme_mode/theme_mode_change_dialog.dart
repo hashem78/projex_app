@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/models/ui/theme_mode/theme_mode.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/theme_mode.dart';
 
 class ChangeThemeDialog extends ConsumerWidget {
@@ -11,14 +12,15 @@ class ChangeThemeDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeState = ref.watch(themeModeProvider);
+    final translations = ref.watch(translationProvider).translations;
 
     return AlertDialog(
-      title: const Text("Change Theme Mode"),
+      title: Text(translations.settings.chooseThemeTitle),
       actions: [
         RadioListTile<PThemeMode>(
           value: systemTheme,
           groupValue: themeState,
-          title: const Text("System"),
+          title: Text(translations.settings.themeSystem),
           onChanged: (_) async {
             final notifier = ref.read(themeModeProvider.notifier);
             await notifier.chageToSystem();
@@ -27,7 +29,7 @@ class ChangeThemeDialog extends ConsumerWidget {
         RadioListTile<PThemeMode>(
           value: kLightTheme,
           groupValue: themeState,
-          title: const Text("Light"),
+          title: Text(translations.settings.themeLight),
           onChanged: (_) async {
             final notifier = ref.read(themeModeProvider.notifier);
             await notifier.chageToLight();
@@ -36,7 +38,7 @@ class ChangeThemeDialog extends ConsumerWidget {
         RadioListTile<PThemeMode>(
           value: kDarkTheme,
           groupValue: themeState,
-          title: const Text("Dark"),
+          title: Text(translations.settings.themeDark),
           onChanged: (themeMode) async {
             final notifier = ref.read(themeModeProvider.notifier);
             await notifier.chageToDark();

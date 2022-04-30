@@ -190,6 +190,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  csv:
+    dependency: transitive
+    description:
+      name: csv
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.1"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -225,6 +232,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  fast_i18n:
+    dependency: "direct dev"
+    description:
+      name: fast_i18n
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.12.3"
   ffi:
     dependency: transitive
     description:
@@ -406,7 +420,7 @@ packages:
     source: hosted
     version: "1.0.4"
   flutter_localizations:
-    dependency: transitive
+    dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -547,7 +561,7 @@ packages:
     source: hosted
     version: "4.0.0"
   intl:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: intl
       url: "https://pub.dartlang.org"

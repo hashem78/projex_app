@@ -27,12 +27,14 @@ dependencies:
   flutter_screenutil: ^5.4.0+1
   cached_network_image: ^3.2.0
   shared_preferences: ^2.0.13
-  intl: ^0.17.0
+  flutter_localizations: 
+    sdk: flutter
+    version: ^0.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  fast_i18n: ^5.12.3
   flutter_lints: ^1.0.0
   freezed: ^2.0.2
   build_runner: ^2.1.10
