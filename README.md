@@ -31,8 +31,9 @@ This repository contains the client application for Projex, we use _**flutter+da
     2. cd <projex_folder>
     *3. dart pub global activate flutterfire_cli
     *4. flutterfire configure
-    5. flutter pub get
-    6. add assets/env.dat file with the following
+    *5. firebase emulators:start
+    6. flutter pub get
+    7. add assets/env.dat file with the following
         GOOGLE_CLIENT_ID=<THE_CLIENT_ID_FOR_OUR_PROJECT>
 
         To get the client id go to the firebase console https://console.firebase.google.com/project/projex-app
@@ -41,13 +42,25 @@ This repository contains the client application for Projex, we use _**flutter+da
 
         copy the string and paste it after the "=" without the "< >" brackets
         
-    7. flutter pub run build_runner build
-    8. flutter build <platform>[ios,android,web]
+    8. flutter pub run build_runner build
+    9. flutter pub run fast_i18n:build
+    10. flutter build <platform>[ios,android,web]
 
     * Requires the firebase-cli tool https://firebase.flutter.dev/docs/overview#using-the-flutterfire-cli
     
 
 ## Contribution
-> Contribution to the project is limited to team members only. fork this repository and submit pull requests.
+* Contribution to the project is limited to team members only. fork this repository and submit pull requests.
+
+* To add translations do the following.
+    1. Fork this repo.
+    2. Create a <namespace\>_<locale\>.i18n.json for the screen you want to translate
+    3. The keys in this file are the same keys in the <namespace\>.i18n.json so just copy & paste the keys to the new file.
+    4. Translate key by key in the new file.
+    5. Run "flutter pub run fast_i18n:build" if you're done or "flutter pub run fast_i18n:watch" if you want your translations to auto build.
+    6. Submit a pull request
+
+    **Note: translations go to lib/i18n folder**
+
 
 
