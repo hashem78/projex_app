@@ -6,15 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/models/user_model/user_model.dart';
 
-// The notifier for when the auth state changes
-// to be used by authProvider.
+/// The notifier for when the auth state changes
+/// to be used by authProvider.
 class AuthNotifier extends ChangeNotifier {
   static final auth = FirebaseAuth.instance;
   static final db = FirebaseFirestore.instance;
 
   bool isFirstTime = false;
-  // The subscription instance to the firebase auth
-  // userChanges stream, this is for cleanup.
+
+  /// The subscription instance to the firebase auth
+  /// userChanges stream, this is for cleanup.
 
   StreamSubscription<User?>? subscription;
 
@@ -43,20 +44,20 @@ class AuthNotifier extends ChangeNotifier {
   }
 }
 
-// The provider for the AuthNotifier instance responsible
-// for handeling the firebase auth userChanges stream.
-// This provider is strictly for creating an AuthNotifier instance
-// to access the currently active user use
-// pCurrentUserPorivder, or pUserProvider to access any user
-// through their uid
+/// The provider for the AuthNotifier instance responsible
+/// for handeling the firebase auth userChanges stream.
+/// This provider is strictly for creating an AuthNotifier instance
+/// to access the currently active user use
+/// pCurrentUserPorivder, or pUserProvider to access any user
+/// through their uid
 final authProvider = ChangeNotifierProvider<AuthNotifier>(
   (ref) {
     return AuthNotifier();
   },
 );
 
-// Provides a stream that changes whenever the database
-// entry for the currently loggedin user changes.
+/// Provides a stream that changes whenever the database
+/// entry for the currently loggedin user changes.
 final pCurrentUserProvider = StreamProvider.autoDispose<PUser?>(
   (ref) async* {
     final auth = ref.read(authProvider);
@@ -74,8 +75,8 @@ final pCurrentUserProvider = StreamProvider.autoDispose<PUser?>(
   },
 );
 
-// Provides a stream that changes whenever the database
-// entry for a user changes.
+/// Provides a stream that changes whenever the database
+/// entry for a user changes.
 final pUserProvider = StreamProvider.family<PUser?, String>(
   (ref, uid) async* {
     final db = FirebaseFirestore.instance;

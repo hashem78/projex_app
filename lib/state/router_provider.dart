@@ -7,14 +7,17 @@ import 'package:projex_app/screens/profile/profile_screen.dart';
 import 'package:projex_app/screens/settings/settings_screen.dart';
 import 'package:projex_app/state/auth.dart';
 
-// This provider sets up goRouter
-// The routes supported are
-//    '/': this is the route for the main view
-//        -> 'settings': the user's settings page
-//    '/login': this is the route for the login/signup page
-//
-// A redirect has been setup such that when the auth state changes
-// The router automatically changes to the appropraite view.
+/// This provider sets up goRouter
+/// The routes supported are
+///
+///    '/': this is the route for the main view
+///
+///    -> 'settings': the user's settings page
+///
+///    '/login': this is the route for the login/signup page
+///
+/// A redirect has been setup such that when the auth state changes
+/// The router automatically changes to the appropraite view.
 
 final routerProvider = Provider<GoRouter>(
   (ref) {

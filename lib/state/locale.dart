@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/i18n/translations.g.dart';
 import 'package:projex_app/state/shared_perferences_provider.dart';
 
-// A simple wrapper class to hold the state of the notifier.
+/// A simple wrapper class to hold the state of the notifier.
 class TranslationsContainer {
   final TranslationsEn translations;
   final AppLocale locale;
@@ -19,6 +19,8 @@ final _arabic = TranslationsContainer(
   AppLocale.ar,
 );
 
+/// The notifier responsible for translation changes, locale changes are
+/// persisted to storage on change.
 class TranslationsNotifier extends StateNotifier<TranslationsContainer> {
   TranslationsNotifier(TranslationsContainer state, this.ref) : super(state);
   final Ref ref;
@@ -32,12 +34,14 @@ class TranslationsNotifier extends StateNotifier<TranslationsContainer> {
         break;
     }
     final prefs = ref.read(sharedPerferencesProvider);
+
     // Save the current locale to SharedPreferneces for persistance.
     await prefs.setString("locale", other.name);
   }
 }
 
-// Provides the current/persisted locale to the widget tree
+/// Provides the current/persisted locale to the widget tree
+/// and the current locale is loaded form storage.
 final translationProvider =
     StateNotifierProvider<TranslationsNotifier, TranslationsContainer>(
   (ref) {
@@ -52,6 +56,7 @@ final translationProvider =
       prefs.setString("locale", defaultLocale.name);
       locale = defaultLocale;
     }
+
     // return the correct translation based on the persisted locale
     // in SharedPereferences.
     switch (locale) {
@@ -61,4 +66,4 @@ final translationProvider =
         return TranslationsNotifier(_arabic, ref);
     }
   },
-); // set it
+);
