@@ -21,27 +21,33 @@ class ChangeThemeDialog extends ConsumerWidget {
           value: systemTheme,
           groupValue: themeState,
           title: Text(translations.settings.themeSystem),
-          onChanged: (_) async {
-            final notifier = ref.read(themeModeProvider.notifier);
-            await notifier.chageToSystem();
+          onChanged: (val) async {
+            if (val != null) {
+              final notifier = ref.read(themeModeProvider.notifier);
+              await notifier.chageTo(val);
+            }
           },
         ),
         RadioListTile<PThemeMode>(
           value: kLightTheme,
           groupValue: themeState,
           title: Text(translations.settings.themeLight),
-          onChanged: (_) async {
-            final notifier = ref.read(themeModeProvider.notifier);
-            await notifier.chageToLight();
+          onChanged: (val) async {
+            if (val != null) {
+              final notifier = ref.read(themeModeProvider.notifier);
+              await notifier.chageTo(val);
+            }
           },
         ),
         RadioListTile<PThemeMode>(
           value: kDarkTheme,
           groupValue: themeState,
           title: Text(translations.settings.themeDark),
-          onChanged: (themeMode) async {
-            final notifier = ref.read(themeModeProvider.notifier);
-            await notifier.chageToDark();
+          onChanged: (val) async {
+            if (val != null) {
+              final notifier = ref.read(themeModeProvider.notifier);
+              await notifier.chageTo(val);
+            }
           },
         ),
       ],
