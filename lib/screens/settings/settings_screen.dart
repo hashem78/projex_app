@@ -1,5 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:projex_app/screens/settings/widgets/signout_tile.dart';
+import 'package:projex_app/screens/settings/widgets/theme_mode/theme_mode_tile.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -11,14 +12,9 @@ class SettingsScreen extends StatelessWidget {
         title: const Text('Settings'),
       ),
       body: ListView(
-        children: [
-          ListTile(
-            onTap: () async {
-              await FirebaseAuth.instance.signOut();
-            },
-            leading: const Icon(Icons.logout),
-            title: const Text('Sign out'),
-          )
+        children: const [
+          ThemeModeTile(),
+          SignOutTile(),
         ],
       ),
     );

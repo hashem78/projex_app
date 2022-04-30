@@ -12,6 +12,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:projex_app/firebase_options.dart';
 import 'package:projex_app/state/router_provider.dart';
+import 'package:projex_app/state/shared_perferences_provider.dart';
+import 'package:projex_app/state/theme_mode.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +28,9 @@ Future<void> main() async {
     await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
   }
-
+  // Loads the SharedPereferences instance for later
+  // overriding.
+  final prefs = await SharedPreferences.getInstance();
   await dotenv.load(fileName: "assets/env.dat");
 
   // TODO: Add more sign in providers
@@ -35,8 +40,13 @@ Future<void> main() async {
     ],
   );
   runApp(
-    const ProviderScope(
-      child: App(),
+    ProviderScope(
+      overrides: [
+        // Override the SharedPereferences Provider with the
+        // instance we just loaded.
+        sharedPerferencesProvider.overrideWithValue(prefs),
+      ],
+      child: const App(),
     ),
   );
 }
@@ -50,17 +60,20 @@ class App extends ConsumerWidget {
     // package:go_rotuer handels displaying the correct transitions.
 
     final router = ref.watch(routerProvider);
-
+    final themeState = ref.watch(themeModeProvider);
     return ScreenUtilInit(
       designSize: const Size(1080, 1920),
       builder: (context) {
         if (kIsWeb || Platform.isAndroid) {
           return MaterialApp.router(
+            themeMode: themeState.themeMode,
+            theme: ThemeData(brightness: themeState.brightness),
             routeInformationParser: router.routeInformationParser,
             routerDelegate: router.routerDelegate,
           );
         } else {
           return CupertinoApp.router(
+            theme: CupertinoThemeData(brightness: themeState.brightness),
             routeInformationParser: router.routeInformationParser,
             routerDelegate: router.routerDelegate,
           );
