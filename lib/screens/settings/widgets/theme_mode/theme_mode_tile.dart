@@ -12,13 +12,12 @@ class ThemeModeTile extends ConsumerWidget {
     late String subTitle;
     final themeState = ref.watch(themeModeProvider);
     final translations = ref.watch(translationProvider).translations;
-    if (themeState == kLightTheme) {
-      subTitle = translations.settings.themeLight;
-    } else if (themeState == kDarkTheme) {
-      subTitle = translations.settings.themeDark;
-    } else {
-      subTitle = translations.settings.themeSystem;
-    }
+    themeState.when(
+      system: () => subTitle = translations.settings.themeSystem,
+      light: () => subTitle = translations.settings.themeLight,
+      dark: () => subTitle = translations.settings.themeDark,
+    );
+
     return ListTile(
       leading: const Icon(Icons.colorize),
       title: Text(translations.settings.themeTitle),

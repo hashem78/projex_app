@@ -77,8 +77,8 @@ class App extends ConsumerWidget {
             // are different and need to be mapped to flutter locales.
             supportedLocales: AppLocale.values.map((e) => e.flutterLocale),
             localizationsDelegates: GlobalMaterialLocalizations.delegates,
-            themeMode: themeState.themeMode,
-            theme: ThemeData(brightness: themeState.brightness),
+            themeMode: themeState.flutterThemeMode,
+            theme: ThemeData(brightness: themeState.flutterBrightness),
             routeInformationParser: router.routeInformationParser,
             routerDelegate: router.routerDelegate,
           );
@@ -89,7 +89,7 @@ class App extends ConsumerWidget {
             // are different and need to be mapped to flutter locales.
             supportedLocales: AppLocale.values.map((e) => e.flutterLocale),
             localizationsDelegates: GlobalCupertinoLocalizations.delegates,
-            theme: CupertinoThemeData(brightness: themeState.brightness),
+            theme: CupertinoThemeData(brightness: themeState.flutterBrightness),
             routeInformationParser: router.routeInformationParser,
             routerDelegate: router.routerDelegate,
           );

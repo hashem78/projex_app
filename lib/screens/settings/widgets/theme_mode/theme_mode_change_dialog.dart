@@ -18,7 +18,7 @@ class ChangeThemeDialog extends ConsumerWidget {
       title: Text(translations.settings.chooseThemeTitle),
       actions: [
         RadioListTile<PThemeMode>(
-          value: systemTheme,
+          value: const PThemeMode.system(),
           groupValue: themeState,
           title: Text(translations.settings.themeSystem),
           onChanged: (val) async {
@@ -29,7 +29,7 @@ class ChangeThemeDialog extends ConsumerWidget {
           },
         ),
         RadioListTile<PThemeMode>(
-          value: kLightTheme,
+          value: const PThemeMode.light(),
           groupValue: themeState,
           title: Text(translations.settings.themeLight),
           onChanged: (val) async {
@@ -40,7 +40,7 @@ class ChangeThemeDialog extends ConsumerWidget {
           },
         ),
         RadioListTile<PThemeMode>(
-          value: kDarkTheme,
+          value: const PThemeMode.dark(),
           groupValue: themeState,
           title: Text(translations.settings.themeDark),
           onChanged: (val) async {
