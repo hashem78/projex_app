@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/i18n/translations.g.dart';
 import 'package:projex_app/state/shared_perferences_provider.dart';
@@ -22,7 +23,13 @@ final _arabic = TranslationsContainer(
 /// The notifier responsible for translation changes, locale changes are
 /// persisted to storage on change.
 class TranslationsNotifier extends StateNotifier<TranslationsContainer> {
-  TranslationsNotifier(TranslationsContainer state, this.ref) : super(state);
+  TranslationsNotifier(TranslationsContainer state, this.ref) : super(state) {
+    final window = WidgetsBinding.instance!.window;
+    window.onLocaleChanged = () async {
+      final locale = AppLocaleUtils.findDeviceLocale();
+      await setTranslations(locale);
+    };
+  }
   final Ref ref;
   Future<void> setTranslations(AppLocale other) async {
     switch (other) {
