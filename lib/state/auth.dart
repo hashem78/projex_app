@@ -77,7 +77,7 @@ final pCurrentUserProvider = StreamProvider<PUser?>(
 
 /// Provides a stream that changes whenever the database
 /// entry for a user changes.
-final pUserProvider = StreamProvider.family<PUser?, String>(
+final pUserProvider = StreamProvider.autoDispose.family<PUser?, String>(
   (ref, uid) async* {
     final db = FirebaseFirestore.instance;
     yield* db.doc('users/$uid').snapshots().map(
