@@ -58,7 +58,7 @@ final authProvider = ChangeNotifierProvider<AuthNotifier>(
 
 /// Provides a stream that changes whenever the database
 /// entry for the currently loggedin user changes.
-final pCurrentUserProvider = StreamProvider.autoDispose<PUser?>(
+final pCurrentUserProvider = StreamProvider<PUser?>(
   (ref) async* {
     final auth = ref.read(authProvider);
     final user = auth.user!;

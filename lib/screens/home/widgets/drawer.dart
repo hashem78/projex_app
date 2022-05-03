@@ -48,6 +48,7 @@ class PDrawer extends ConsumerWidget {
                   ),
                 );
               } else {
+                ref.refresh(pCurrentUserProvider);
                 return Container();
               }
             },
