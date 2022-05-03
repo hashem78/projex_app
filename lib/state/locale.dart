@@ -38,6 +38,21 @@ class TranslationsNotifier extends StateNotifier<TranslationsContainer> {
     // Save the current locale to SharedPreferneces for persistance.
     await prefs.setString("locale", other.name);
   }
+
+  Future<void> toggle() async {
+    switch (state.locale) {
+      case AppLocale.en:
+        state = _arabic;
+        break;
+      case AppLocale.ar:
+        state = _english;
+        break;
+    }
+    final prefs = ref.read(sharedPerferencesProvider);
+
+    // Save the current locale to SharedPreferneces for persistance.
+    await prefs.setString("locale", state.locale.name);
+  }
 }
 
 /// Provides the current/persisted locale to the widget tree

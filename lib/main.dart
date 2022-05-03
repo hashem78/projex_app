@@ -8,12 +8,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterfire_ui/auth.dart';
+import 'package:flutterfire_ui/i10n.dart';
 import 'package:projex_app/firebase_options.dart';
 import 'package:projex_app/i18n/translations.g.dart';
+import 'package:projex_app/screens/login/login_screen.dart';
 import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/router_provider.dart';
 import 'package:projex_app/state/shared_perferences_provider.dart';
@@ -78,7 +79,13 @@ class App extends ConsumerWidget {
             // We support the locales in AppLocale, but AppLocale locales
             // are different and need to be mapped to flutter locales.
             supportedLocales: AppLocale.values.map((e) => e.flutterLocale),
-            localizationsDelegates: GlobalMaterialLocalizations.delegates,
+            localizationsDelegates: [
+              ...GlobalMaterialLocalizations.delegates,
+              // override the default pacakage:flutterfire_ui strings
+              FlutterFireUILocalizations.withDefaultOverrides(
+                LoginLocalilzations(translations.translations),
+              ),
+            ],
             themeMode: themeState.flutterThemeMode,
             theme: ThemeData(brightness: themeState.flutterBrightness),
             routeInformationParser: router.routeInformationParser,
@@ -90,7 +97,13 @@ class App extends ConsumerWidget {
             // We support the locales in AppLocale, but AppLocale locales
             // are different and need to be mapped to flutter locales.
             supportedLocales: AppLocale.values.map((e) => e.flutterLocale),
-            localizationsDelegates: GlobalCupertinoLocalizations.delegates,
+            localizationsDelegates: [
+              ...GlobalCupertinoLocalizations.delegates,
+              // override the default pacakage:flutterfire_ui strings
+              FlutterFireUILocalizations.withDefaultOverrides(
+                LoginLocalilzations(translations.translations),
+              ),
+            ],
             theme: CupertinoThemeData(brightness: themeState.flutterBrightness),
             routeInformationParser: router.routeInformationParser,
             routerDelegate: router.routerDelegate,
