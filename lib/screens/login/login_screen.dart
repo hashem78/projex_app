@@ -26,8 +26,7 @@ class LoginLocalilzations extends fui10n.DefaultLocalizations {
   String get signInHintText => _t.login.signInHintText;
 }
 
-// TOOD: Check if we need other things here
-
+// TODO: Check if we need other things here
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
