@@ -81,6 +81,7 @@ class App extends ConsumerWidget {
             supportedLocales: AppLocale.values.map((e) => e.flutterLocale),
             localizationsDelegates: [
               ...GlobalMaterialLocalizations.delegates,
+              GlobalWidgetsLocalizations.delegate,
               // override the default pacakage:flutterfire_ui strings
               FlutterFireUILocalizations.withDefaultOverrides(
                 LoginLocalilzations(translations.translations),
@@ -99,6 +100,7 @@ class App extends ConsumerWidget {
             supportedLocales: AppLocale.values.map((e) => e.flutterLocale),
             localizationsDelegates: [
               ...GlobalCupertinoLocalizations.delegates,
+              GlobalWidgetsLocalizations.delegate,
               // override the default pacakage:flutterfire_ui strings
               FlutterFireUILocalizations.withDefaultOverrides(
                 LoginLocalilzations(translations.translations),
