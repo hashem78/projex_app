@@ -42,6 +42,12 @@ final routerProvider = Provider<GoRouter>(
               path: 'firstTime',
               name: 'firstTime',
               builder: (context, state) => const FirstTimeSignInScreen(),
+              redirect: (state) {
+                if (!auth.isFirstTime) {
+                  return '/';
+                }
+                return null;
+              },
             ),
             GoRoute(
               path: 'profile/:uid',
