@@ -4,5 +4,8 @@
     "registerText": "Register",
     "registerHintText": "Don't have an account?",
     "signInHintText": "Already have an account?",
-    "changeLanguage":"Change to Arabic"
+    "changeLanguage": "Change to Arabic",
+    "firstTimeTitle": "I am",
+    "firstTimeStudent": "A Student",
+    "firstTimeInstructor": "An Instructor"
 }

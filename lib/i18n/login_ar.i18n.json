@@ -4,5 +4,8 @@
     "registerText": "انشء حساب",
     "registerHintText": "لا تملك حسابا؟",
     "signInHintText": "لديك حساب؟",
-    "changeLanguage": "التغير للغة الانجليزية"
+    "changeLanguage": "التغير للغة الانجليزية",
+    "firstTimeTitle": "انا",
+    "firstTimeStudent": "طالب",
+    "firstTimeInstructor": "مدرس"
 }
