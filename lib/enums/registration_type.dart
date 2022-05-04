@@ -1,0 +1,4 @@
+enum RegistrationType {
+  student,
+  instructor,
+}

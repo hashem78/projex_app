@@ -43,7 +43,7 @@ This repository contains the client application for Projex, we use _**flutter+da
         copy the string and paste it after the "=" without the "< >" brackets
         
     8. flutter pub run build_runner build
-    9. flutter build <platform>[ios,android,web,macOs]
+    9. flutter build <platform>[ios,android,web]
 
     * Requires the firebase-cli tool https://firebase.flutter.dev/docs/overview#using-the-flutterfire-cli
     
@@ -76,6 +76,7 @@ This repository contains the client application for Projex, we use _**flutter+da
 * [firebase_messaging](https://pub.dev/packages/firebase_messaging)
 * [flutterfire_ui](https://pub.dev/packages/flutterfire_ui)
 * [firebase_auth](https://pub.dev/packages/firebase_auth)
+* [firebase_storage](https://pub.dev/packages/firebase_storage)
 * [google_sign_in](https://pub.dev/packages/google_sign_in)
 ### Environment
 * [flutter_dotenv](https://pub.dev/packages/flutter_dotenv)
@@ -86,6 +87,11 @@ This repository contains the client application for Projex, we use _**flutter+da
 * [flutter_screenutil](https://pub.dev/packages/flutter_screenutil)
 * [cached_network_image](https://pub.dev/packages/cached_network_image)
 * [shared_preferences](https://pub.dev/packages/shared_preferences)
+* [image_picker](https://pub.dev/packages/image_picker)
+* [image_cropper](https://pub.dev/packages/image_cropper)
+* [form_field_validator](https://pub.dev/packages/form_field_validator)
+* [path](https://pub.dev/packages/path)
+* [hooks_riverpod](https://pub.dev/packages/hooks_riverpod)
 
 # Resources
 [Soruce code generation](https://en.wikipedia.org/wiki/Automatic_programming)

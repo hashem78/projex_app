@@ -12,6 +12,8 @@ class AuthNotifier extends ChangeNotifier {
   static final auth = FirebaseAuth.instance;
   static final db = FirebaseFirestore.instance;
 
+  final Ref ref;
+
   bool isFirstTime = false;
 
   /// The subscription instance to the firebase auth
@@ -24,10 +26,11 @@ class AuthNotifier extends ChangeNotifier {
   bool get isLoggedIn => user != null;
   bool get isNotLoggedIn => user == null;
 
-  AuthNotifier() {
+  AuthNotifier(this.ref) {
     subscription ??= auth.userChanges().listen(
       (event) async {
         user = event;
+        ref.refresh(pCurrentUserProvider);
         if (user != null) {
           final userDoc = await db.doc('users/${user!.uid}').get();
           isFirstTime = !userDoc.exists;
@@ -52,7 +55,7 @@ class AuthNotifier extends ChangeNotifier {
 /// through their uid
 final authProvider = ChangeNotifierProvider<AuthNotifier>(
   (ref) {
-    return AuthNotifier();
+    return AuthNotifier(ref);
   },
 );
 

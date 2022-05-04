@@ -1,0 +1,12 @@
+{
+    "errorRequiredTextInputField": "هذا العنصر مطلوب",
+    "errorMinlength5": "يحتاج هذا العنصر اللى 5 ارقام على الاقل",
+    "studentNumberHint": "رقم الطالب",
+    "usernameHint": "اسم المستخدم",
+    "phoneNumberHint": "رقم الجوال",
+    "phoneNumberErrorText": "يحتاج هذا العنصر 10 خانات على الأقل",
+    "continueButtonTitle": "استمر",
+    "registrationScreenTitle": "تابع عملية التسجيل",
+    "profilePicturePickText": "اختر صورة شخصية",
+    "profilePicturePickErrorText": "عليك اختيار صورة شخصية"
+}

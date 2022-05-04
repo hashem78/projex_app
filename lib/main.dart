@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ import 'package:flutterfire_ui/auth.dart';
 import 'package:flutterfire_ui/i10n.dart';
 import 'package:projex_app/firebase_options.dart';
 import 'package:projex_app/i18n/translations.g.dart';
-import 'package:projex_app/screens/login/login_screen.dart';
+import 'package:projex_app/screens/login/login_localizations.dart';
 import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/router_provider.dart';
 import 'package:projex_app/state/shared_perferences_provider.dart';
@@ -32,6 +33,7 @@ Future<void> main() async {
   // Make sure to run firebase eumlators:start
   if (kDebugMode) {
     await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+    await FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
   }
   // Loads the SharedPereferences instance for later
@@ -42,6 +44,7 @@ Future<void> main() async {
   // TODO: Add more sign in providers
   FlutterFireUIAuth.configureProviders(
     [
+      const EmailProviderConfiguration(),
       GoogleProviderConfiguration(clientId: dotenv.env['GOOGLE_CLIENT_ID']!),
     ],
   );

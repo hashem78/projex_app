@@ -1,0 +1,1 @@
+enum PickingMode { single, multi }

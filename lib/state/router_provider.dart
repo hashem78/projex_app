@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:projex_app/enums/registration_type.dart';
 import 'package:projex_app/screens/first_time_sign_in/first_time_sign_in_screen.dart';
+import 'package:projex_app/screens/registration/registration_screen.dart';
 import 'package:projex_app/screens/home/home_screen.dart';
 import 'package:projex_app/screens/login/login_screen.dart';
 import 'package:projex_app/screens/profile/profile_screen.dart';
@@ -9,13 +11,17 @@ import 'package:projex_app/state/auth.dart';
 
 /// This provider sets up goRouter
 /// The routes supported are
-///
+///   ```dart
 ///    '/': this is the route for the main view
 ///
 ///    -> 'settings': the user's settings page
 ///
 ///    '/login': this is the route for the login/signup page
 ///
+///    '/firstTime': shown when first creating an account
+///     -> 'continueRegistration': if the user chose email&password
+///         auth this route will be shown after /firstTime
+///```
 /// A redirect has been setup such that when the auth state changes
 /// The router automatically changes to the appropraite view.
 
@@ -48,6 +54,14 @@ final routerProvider = Provider<GoRouter>(
                 }
                 return null;
               },
+              routes: [
+                GoRoute(
+                  path: "continueRegistration",
+                  builder: (context, state) => RegistrationScreen(
+                    registrationType: state.extra as RegistrationType,
+                  ),
+                ),
+              ],
             ),
             GoRoute(
               path: 'profile/:uid',

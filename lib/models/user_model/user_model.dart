@@ -24,52 +24,52 @@ class PUser with _$PUser {
     // TODO: user.CreateGroup()
   }
   Future<void> addMembersToGroup({
-    required String groupId,
+    @Default("") required String groupId,
     required List<String> memberIds,
   }) async {
     // TODO: user.addMembersToGroup()
   }
 
   Future<void> sendProjectNotification({
-    required String projectId,
+    @Default("") required String projectId,
     required PNotification notification,
   }) async {
     // TODO: user.sendProjectNotification()
   }
 
   Future<void> sendGroupNotification({
-    required String projectId,
-    required String groupId,
+    @Default("") required String projectId,
+    @Default("") required String groupId,
     required PNotification notification,
   }) async {
     // TODO: user.sendGroupNotification()
   }
 
   Future<void> sendMessageInThread({
-    required String projectId,
-    required String threadId,
+    @Default("") required String projectId,
+    @Default("") required String threadId,
     required PMessage message,
   }) async {
     // TODO: user.sendMessageInThread()
   }
 
   Future<void> createTask({
-    required String projectId,
+    @Default("") required String projectId,
     required PTask task,
   }) async {
     // TODO: user.createTask()
   }
 
   Future<void> removeTask({
-    required String projectId,
-    required String taskId,
+    @Default("") required String projectId,
+    @Default("") required String taskId,
   }) async {
     // TODO; user.removeTask()
   }
 
   Future<void> setTaskStatus({
-    required String projectId,
-    required String taskId,
+    @Default("") required String projectId,
+    @Default("") required String taskId,
     required PStatus statuss,
   }) async {
     // TODO: user.setTaskStatus
@@ -88,7 +88,7 @@ class PUser with _$PUser {
   }
 
   Future<void> addStudentsToProject({
-    required String projectId,
+    @Default("") required String projectId,
     required List<String> studentIds,
   }) async {
     // TODO: user.addStudentsToProject()
@@ -101,27 +101,27 @@ class PUser with _$PUser {
   }
 
   Future<void> assignRoles({
-    required String projectId,
+    @Default("") required String projectId,
     required Map<String, PRole> rolesMap,
   }) async {
     // TODO: user.assignRoles()
   }
 
   const factory PUser.student({
-    required String id,
-    required String name,
-    required String email,
-    required String studentNumber,
-    String? phoneNumber,
+    @Default("") String id,
+    @Default("") String name,
+    @Default("") String email,
+    @Default("") String studentNumber,
+    @Default("") String phoneNumber,
     PProfilePicture? profilePicture,
     @Default([]) List<PSocial> socials,
     @Default([]) List<String> projectIds,
   }) = _PUserStudent;
   const factory PUser.instructor({
-    required String id,
-    required String name,
-    required String email,
-    String? phoneNumber,
+    @Default("") String id,
+    @Default("") String name,
+    @Default("") String email,
+    @Default("") String phoneNumber,
     PProfilePicture? profilePicture,
     @Default([]) List<PSocial> socials,
     @Default([]) List<String> projectIds,
