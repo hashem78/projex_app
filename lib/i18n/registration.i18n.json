@@ -1,7 +1,7 @@
 {
     "errorRequiredTextInputField": "This field is required",
     "errorMinlength": "This field requires atleast $n characters",
-    "errorMaxlength": "This field requires atleast $n characters",
+    "errorMaxlength": "This field requires a maximum of $n characters",
     "studentNumberHint": "Student number",
     "usernameHint": "Username",
     "phoneNumberHint": "Phone number",

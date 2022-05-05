@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:projex_app/state/locale.dart';
@@ -16,6 +17,9 @@ class UsernameTextField extends ConsumerWidget {
     return FormBuilderTextField(
       name: "uname",
       keyboardType: TextInputType.name,
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(15),
+      ],
       validator: FormBuilderValidators.compose(
         [
           FormBuilderValidators.minLength(
@@ -23,8 +27,8 @@ class UsernameTextField extends ConsumerWidget {
             errorText: translations.errorMinlength(n: 6),
           ),
           FormBuilderValidators.maxLength(
-            30,
-            errorText: translations.errorMaxlength(n: 30),
+            15,
+            errorText: translations.errorMaxlength(n: 15),
           ),
           FormBuilderValidators.required(
             errorText: translations.errorRequiredTextInputField,
