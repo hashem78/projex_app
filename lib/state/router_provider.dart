@@ -64,9 +64,15 @@ final routerProvider = Provider<GoRouter>(
               ],
             ),
             GoRoute(
+              path: 'profile',
+              builder: (context, state) {
+                return const ProfileScreen.fromCurrent();
+              },
+            ),
+            GoRoute(
               path: 'profile/:uid',
               builder: (context, state) {
-                return ProfileScreen(uid: state.params['uid']!);
+                return ProfileScreen.fromUid(uid: state.params['uid']!);
               },
             ),
             GoRoute(

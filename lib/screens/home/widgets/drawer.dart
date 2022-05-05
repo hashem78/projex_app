@@ -20,7 +20,7 @@ class PDrawer extends ConsumerWidget {
           PUserBuilder.fromCurrent(
             builder: (context, user) => GestureDetector(
               onTap: () {
-                context.go('/profile/${user.id}');
+                context.go('/profile');
               },
               child: UserAccountsDrawerHeader(
                 currentAccountPicture: ProfileScreenImage(
