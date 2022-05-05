@@ -1,1 +1,0 @@
-enum PickerUse { signup, changePFP }
