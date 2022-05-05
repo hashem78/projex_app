@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:projex_app/enums/picker_user.dart';
+
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+
 import 'package:projex_app/enums/registration_type.dart';
+
 import 'package:projex_app/screens/registration/widgets/change_pfp_avatar.dart';
 import 'package:projex_app/screens/registration/widgets/phone_number_textfield.dart';
 import 'package:projex_app/screens/registration/widgets/registartion_button.dart';
 import 'package:projex_app/screens/registration/widgets/registration_title.dart';
 import 'package:projex_app/screens/registration/widgets/std_text_field.dart';
 import 'package:projex_app/screens/registration/widgets/username_textfield.dart';
-import 'package:projex_app/state/image_picking.dart';
-import 'package:projex_app/state/locale.dart';
 
-final formKey = GlobalKey<FormState>();
+final builderKey = GlobalKey<FormBuilderState>();
 
-class RegistrationScreen extends HookConsumerWidget {
+class RegistrationScreen extends StatelessWidget {
   const RegistrationScreen({
     Key? key,
     required this.registrationType,
@@ -23,64 +22,32 @@ class RegistrationScreen extends HookConsumerWidget {
   final RegistrationType registrationType;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final usernameController = useTextEditingController();
-    final phoneNumberController = useTextEditingController();
-    final stdNumberController = registrationType == RegistrationType.student
-        ? useTextEditingController()
-        : null;
+  Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
       child: Scaffold(
-        body: Form(
-          key: formKey,
-          child: Center(
-            child: SingleChildScrollView(
-              child: Column(
+        body: FormBuilder(
+          key: builderKey,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Center(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                runSpacing: 16.0,
                 children: [
                   const CompeleteRegistrationTitle(),
-                  _buildText(ref),
                   const ChangePfpAvatar(),
-                  UsernameTextField(
-                    usernameController: usernameController,
-                  ),
-                  PhoneNumberTextField(
-                    phoneNumberController: phoneNumberController,
-                  ),
+                  const UsernameTextField(),
+                  const PhoneNumberTextField(),
                   if (registrationType == RegistrationType.student)
-                    STDNumTextField(
-                      stdNumberController: stdNumberController!,
-                    ),
-                  RegistrationButton(
-                    username: usernameController,
-                    stdNumber: stdNumberController,
-                    phoneNumber: phoneNumberController,
-                  )
+                    const STDNumTextField(),
+                  const RegistrationButton(),
                 ],
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildText(WidgetRef ref) {
-    final imagePicker = ref.watch(
-      imagePickerProvier(PickerUse.signup),
-    );
-    final translations =
-        ref.watch(translationProvider).translations.registration;
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: imagePicker.when(
-        picked: (_) => const SizedBox(),
-        notPicked: () => Text(
-          translations.profilePicturePickText,
-        ),
-        error: () => Text(
-          translations.profilePicturePickErrorText,
-          style: const TextStyle(color: Colors.red),
         ),
       ),
     );

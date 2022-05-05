@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:flutterfire_ui/i10n.dart';
+import 'package:form_builder_validators/localization/l10n.dart';
 import 'package:projex_app/firebase_options.dart';
 import 'package:projex_app/i18n/translations.g.dart';
 import 'package:projex_app/screens/login/login_localizations.dart';
@@ -89,6 +90,7 @@ class App extends ConsumerWidget {
               FlutterFireUILocalizations.withDefaultOverrides(
                 LoginLocalilzations(translations.translations),
               ),
+              FormBuilderLocalizations.delegate,
             ],
             themeMode: themeState.flutterThemeMode,
             theme: ThemeData(brightness: themeState.flutterBrightness),
@@ -108,6 +110,7 @@ class App extends ConsumerWidget {
               FlutterFireUILocalizations.withDefaultOverrides(
                 LoginLocalilzations(translations.translations),
               ),
+              FormBuilderLocalizations.delegate,
             ],
             theme: CupertinoThemeData(brightness: themeState.flutterBrightness),
             routeInformationParser: router.routeInformationParser,
