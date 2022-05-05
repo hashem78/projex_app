@@ -64,6 +64,22 @@ class TranslationsNotifier extends StateNotifier<TranslationsContainer> {
 
 /// Provides the current/persisted locale to the widget tree
 /// and the current locale is loaded form storage.
+///
+/// Usage example:
+/// ``` dart
+///  class PDrawer extends ConsumerWidget {
+///  const PDrawer({
+///    Key? key,
+///  }) : super(key: key);
+///
+///  @override
+///  Widget build(BuildContext context, WidgetRef ref) {
+///    final translations = ref.watch(translationProvider).translations;
+///    // you can obtain the approriate translation for the widget
+///    // from the translations object.
+///    ...
+/// }
+/// ```
 final translationProvider =
     StateNotifierProvider<TranslationsNotifier, TranslationsContainer>(
   (ref) {
