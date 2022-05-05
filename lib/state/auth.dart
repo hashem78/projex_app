@@ -30,8 +30,9 @@ class AuthNotifier extends ChangeNotifier {
     subscription ??= auth.userChanges().listen(
       (event) async {
         user = event;
-        ref.refresh(pCurrentUserProvider);
+
         if (user != null) {
+          ref.refresh(pCurrentUserProvider);
           final userDoc = await db.doc('users/${user!.uid}').get();
           isFirstTime = !userDoc.exists;
         }
