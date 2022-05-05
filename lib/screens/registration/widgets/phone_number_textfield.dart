@@ -26,13 +26,17 @@ class PhoneNumberTextField extends ConsumerWidget {
       validator: FormBuilderValidators.compose(
         [
           FormBuilderValidators.numeric(),
+          FormBuilderValidators.minLength(
+            10,
+            errorText: translations.errorMinlength(n: 10),
+          ),
+          FormBuilderValidators.maxLength(
+            10,
+            errorText: translations.errorMaxlength(n: 10),
+          ),
           FormBuilderValidators.required(
             errorText: translations.errorRequiredTextInputField,
           ),
-          FormBuilderValidators.minLength(
-            10,
-            errorText: translations.phoneNumberErrorText,
-          )
         ],
       ),
       decoration: InputDecoration(

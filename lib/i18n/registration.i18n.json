@@ -1,10 +1,10 @@
 {
     "errorRequiredTextInputField": "This field is required",
-    "errorMinlength5": "This field requires atleast 5 numbers",
+    "errorMinlength": "This field requires atleast $n characters",
+    "errorMaxlength": "This field requires atleast $n characters",
     "studentNumberHint": "Student number",
     "usernameHint": "Username",
     "phoneNumberHint": "Phone number",
-    "phoneNumberErrorText": "This field requires atleast 10 numbers",
     "continueButtonTitle": "Continue",
     "registrationScreenTitle": "Compelete Your registration",
     "profilePicturePickText": "Pick a profile picture",

@@ -18,7 +18,14 @@ class UsernameTextField extends ConsumerWidget {
       keyboardType: TextInputType.name,
       validator: FormBuilderValidators.compose(
         [
-          FormBuilderValidators.match("[a-zA-Z] "),
+          FormBuilderValidators.minLength(
+            6,
+            errorText: translations.errorMinlength(n: 6),
+          ),
+          FormBuilderValidators.maxLength(
+            30,
+            errorText: translations.errorMaxlength(n: 30),
+          ),
           FormBuilderValidators.required(
             errorText: translations.errorRequiredTextInputField,
           ),
