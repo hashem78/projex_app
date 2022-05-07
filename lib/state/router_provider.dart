@@ -5,6 +5,7 @@ import 'package:projex_app/models/user_model/user_model.dart';
 import 'package:projex_app/screens/add_members/add_members_screen.dart';
 import 'package:projex_app/screens/add_roles_to_user/add_roles_to_user_screen.dart';
 import 'package:projex_app/screens/create_project/create_project_screen.dart';
+import 'package:projex_app/screens/edit_roles/edit_roles_screen.dart';
 import 'package:projex_app/screens/first_time_sign_in/first_time_sign_in_screen.dart';
 import 'package:projex_app/screens/project/project_screen.dart';
 import 'package:projex_app/screens/registration/registration_screen.dart';
@@ -114,6 +115,13 @@ final routerProvider = Provider<GoRouter>(
                   builder: (context, state) => AddRolesToUserScreen(
                     pid: state.queryParams['pid']!,
                     uid: state.queryParams['uid']!,
+                  ),
+                ),
+                GoRoute(
+                  path: 'editRole',
+                  builder: (context, state) => EditRoleScreen(
+                    project: (state.extra as Map)['project'],
+                    role: (state.extra as Map)['role'],
                   ),
                 ),
               ],

@@ -20,7 +20,7 @@ class ProjectScreen extends ConsumerWidget {
         return Scaffold(
           floatingActionButton: PProjectScreenFAB(project: project),
           body: DefaultTabController(
-            length: 2,
+            length: 3,
             child: NestedScrollView(
               floatHeaderSlivers: true,
               headerSliverBuilder: (context, _) => [

@@ -37,6 +37,7 @@ class ProjectSliverAppbar extends SliverOverlapAbsorber {
             bottom: const TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.home)),
+                Tab(icon: Icon(Icons.person)),
                 Tab(icon: Icon(Icons.people)),
               ],
             ),
