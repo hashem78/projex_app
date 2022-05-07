@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:projex_app/models/role/role.dart';
 part 'project_model.g.dart';
 part 'project_model.freezed.dart';
 
@@ -10,12 +11,9 @@ class PProject with _$PProject {
     required String description,
     required DateTime startDate,
     required DateTime endDate,
-    required String tasksCollectionId,
-    required String rolesCollectionId,
-    required String usersCollectionId,
-    required String threadsCollectionId,
-    required String subGroupsCollectionId,
+    @Default({}) Set<String> memberIds,
+    @Default({}) Set<Role> roles,
+    @Default({}) Map<String, Set<String>> userRoleMap,
   }) = _PProject;
-  factory PProject.fromJson(Map<String, dynamic> json) =>
-      _$PProjectFromJson(json);
+  factory PProject.fromJson(Map<String, dynamic> json) => _$PProjectFromJson(json);
 }

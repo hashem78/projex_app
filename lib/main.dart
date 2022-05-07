@@ -75,10 +75,11 @@ class App extends ConsumerWidget {
     // The current translations + locale for this App
     final translations = ref.watch(translationProvider);
     return ScreenUtilInit(
-      designSize: const Size(1080, 1920),
+      designSize: const Size(1080, 2340),
       builder: (context) {
         if (kIsWeb || Platform.isAndroid) {
           return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
             locale: translations.locale.flutterLocale,
             // We support the locales in AppLocale, but AppLocale locales
             // are different and need to be mapped to flutter locales.
@@ -99,6 +100,7 @@ class App extends ConsumerWidget {
           );
         } else {
           return CupertinoApp.router(
+            debugShowCheckedModeBanner: false,
             locale: translations.locale.flutterLocale,
             // We support the locales in AppLocale, but AppLocale locales
             // are different and need to be mapped to flutter locales.

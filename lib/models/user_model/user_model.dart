@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:projex_app/enums/status.dart';
 import 'package:projex_app/models/message_model/message_model.dart';
 import 'package:projex_app/models/notification_model/notification_model.dart';
 import 'package:projex_app/models/profile_picture_model/profile_picture_model.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
+import 'package:projex_app/models/role/role.dart';
 import 'package:projex_app/models/role_model/role_model.dart';
 import 'package:projex_app/models/social_model/social_model.dart';
 import 'package:projex_app/models/task_model/task_mode.dart';
@@ -83,28 +85,84 @@ class PUser with _$PUser {
       student: (student) {
         // Students aren't allowed to create projects.
       },
-      instructor: (instructor) {},
+      instructor: (instructor) async {
+        final db = FirebaseFirestore.instance;
+        final batch = db.batch();
+        batch.update(
+          db.doc('users/$id'),
+          {
+            'projectIds': FieldValue.arrayUnion([project.id]),
+          },
+        );
+        batch.set(
+          db.doc('projects/${project.id}'),
+          project.toJson(),
+        );
+        await batch.commit();
+      },
     );
   }
 
-  Future<void> addStudentsToProject({
-    @Default("") required String projectId,
-    required List<String> studentIds,
+  Future<void> addMembersToProject({
+    required String projectId,
+    required List<String> memberIds,
   }) async {
-    // TODO: user.addStudentsToProject()
-    map(
-      student: (student) {
-        // Students aren't allowed to add students to a project.
+    final db = FirebaseFirestore.instance;
+
+    await db.doc('projects/$projectId').update(
+      {
+        "memberIds": FieldValue.arrayUnion(
+          memberIds,
+        ),
       },
-      instructor: (instructor) {},
+    );
+  }
+
+  Future<void> removeMembersFromProject({
+    required String projectId,
+    required List<String> memberIds,
+  }) async {
+    final db = FirebaseFirestore.instance;
+
+    await db.doc('projects/$projectId').update(
+      {
+        "memberIds": FieldValue.arrayRemove(
+          memberIds,
+        ),
+      },
     );
   }
 
   Future<void> assignRoles({
-    @Default("") required String projectId,
-    required Map<String, PRole> rolesMap,
+    required String projectId,
+    required String userId,
+    required List<Role> rolesToAssign,
   }) async {
-    // TODO: user.assignRoles()
+    final db = FirebaseFirestore.instance;
+    await db.doc('projects/$projectId').set(
+      {
+        "userRoleMap": {
+          userId: FieldValue.arrayUnion(rolesToAssign.map((e) => e.id).toList()),
+        },
+      },
+      SetOptions(merge: true),
+    );
+  }
+
+  Future<void> removeRoles({
+    required String projectId,
+    required String userId,
+    required List<Role> rolesToRemove,
+  }) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('projects/$projectId').set(
+      {
+        "userRoleMap": {
+          userId: FieldValue.arrayRemove(rolesToRemove.map((e) => e.id).toList()),
+        },
+      },
+      SetOptions(merge: true),
+    );
   }
 
   const factory PUser.student({

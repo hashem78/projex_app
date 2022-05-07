@@ -7,9 +7,12 @@ class ProfileScreenImage extends ConsumerWidget {
   const ProfileScreenImage({
     required this.user,
     this.borderWidth = 4,
+    this.width = 120,
+    this.height = 120,
     Key? key,
   }) : super(key: key);
-
+  final double width;
+  final double height;
   final PUser user;
   final double borderWidth;
   @override
@@ -17,9 +20,9 @@ class ProfileScreenImage extends ConsumerWidget {
     return CachedNetworkImage(
       imageUrl: user.profilePicture?.link ?? "https://picsum.photos/200/300",
       imageBuilder: (context, imageProvider) {
-        return Container(
-          width: 120,
-          height: 120,
+        return AnimatedContainer(
+          width: width,
+          height: height,
           decoration: BoxDecoration(
             border: Border.all(
               width: borderWidth,
@@ -38,6 +41,7 @@ class ProfileScreenImage extends ConsumerWidget {
               fit: BoxFit.contain,
             ),
           ),
+          duration: const Duration(seconds: 1),
         );
       },
     );

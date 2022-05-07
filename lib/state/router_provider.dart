@@ -1,7 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/enums/registration_type.dart';
+import 'package:projex_app/models/user_model/user_model.dart';
+import 'package:projex_app/screens/add_members_screen/add_members_screen.dart';
+import 'package:projex_app/screens/add_roles_screen/add_roles_screen.dart';
+import 'package:projex_app/screens/create_project_screen/create_project_screen.dart';
 import 'package:projex_app/screens/first_time_sign_in/first_time_sign_in_screen.dart';
+import 'package:projex_app/screens/project_screen/project_screen.dart';
 import 'package:projex_app/screens/registration/registration_screen.dart';
 import 'package:projex_app/screens/home/home_screen.dart';
 import 'package:projex_app/screens/login/login_screen.dart';
@@ -72,13 +77,42 @@ final routerProvider = Provider<GoRouter>(
             GoRoute(
               path: 'profile/:uid',
               builder: (context, state) {
-                return ProfileScreen.fromUid(uid: state.params['uid']!);
+                if (state.extra != null) {
+                  return ProfileScreen.fromUser(user: state.extra! as PUser);
+                } else {
+                  return ProfileScreen.fromUid(uid: state.params['uid']!);
+                }
               },
             ),
             GoRoute(
               path: 'settings',
               name: 'settings',
               builder: (context, state) => const SettingsScreen(),
+            ),
+            GoRoute(
+              path: 'createProject',
+              builder: (context, state) => const CreateProjectScreen(),
+            ),
+            GoRoute(
+              path: 'project',
+              builder: (context, state) => ProjectScreen(
+                id: state.queryParams['pid']!,
+              ),
+              routes: [
+                GoRoute(
+                  path: 'addMembers',
+                  builder: (context, state) => AddMembersScreen(
+                    pid: state.queryParams['pid']!,
+                  ),
+                ),
+                GoRoute(
+                  path: 'addRoles',
+                  builder: (context, state) => AddRolesScreen(
+                    pid: state.queryParams['pid']!,
+                    uid: state.queryParams['uid']!,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
