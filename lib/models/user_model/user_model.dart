@@ -79,27 +79,19 @@ class PUser with _$PUser {
   Future<void> createProject({
     required PProject project,
   }) async {
-    // TODO: user.createProject()
-    map(
-      student: (student) {
-        // Students aren't allowed to create projects.
-      },
-      instructor: (instructor) async {
-        final db = FirebaseFirestore.instance;
-        final batch = db.batch();
-        batch.update(
-          db.doc('users/$id'),
-          {
-            'projectIds': FieldValue.arrayUnion([project.id]),
-          },
-        );
-        batch.set(
-          db.doc('projects/${project.id}'),
-          project.toJson(),
-        );
-        await batch.commit();
+    final db = FirebaseFirestore.instance;
+    final batch = db.batch();
+    batch.update(
+      db.doc('users/$id'),
+      {
+        'projectIds': FieldValue.arrayUnion([project.id]),
       },
     );
+    batch.set(
+      db.doc('projects/${project.id}'),
+      project.toJson(),
+    );
+    await batch.commit();
   }
 
   Future<void> addMembersToProject({
@@ -168,20 +160,11 @@ class PUser with _$PUser {
     @Default("") String id,
     @Default("") String name,
     @Default("") String email,
-    @Default("") String studentNumber,
     @Default("") String phoneNumber,
     PProfilePicture? profilePicture,
     @Default([]) List<PSocial> socials,
     @Default([]) List<String> projectIds,
   }) = _PUserStudent;
-  const factory PUser.instructor({
-    @Default("") String id,
-    @Default("") String name,
-    @Default("") String email,
-    @Default("") String phoneNumber,
-    PProfilePicture? profilePicture,
-    @Default([]) List<PSocial> socials,
-    @Default([]) List<String> projectIds,
-  }) = _PUserInstructor;
+
   factory PUser.fromJson(Map<String, dynamic> json) => _$PUserFromJson(json);
 }

@@ -37,29 +37,23 @@ class ProfileScreen extends StatelessWidget {
     if (isFromCurrent) {
       return PUserBuilder.fromCurrent(
         builder: (_, user) {
-          final isInstructor = user.map(
-            student: (_) => false,
-            instructor: (_) => true,
-          );
           return Scaffold(
-            floatingActionButton: isInstructor
-                ? SpeedDial(
-                    icon: Icons.create,
-                    activeIcon: Icons.close,
-                    children: [
-                      SpeedDialChild(
-                        backgroundColor: Colors.blue,
-                        onTap: () {
-                          context.go('/createProject');
-                        },
-                        child: const Icon(
-                          Icons.checklist,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  )
-                : null,
+            floatingActionButton: SpeedDial(
+              icon: Icons.create,
+              activeIcon: Icons.close,
+              children: [
+                SpeedDialChild(
+                  backgroundColor: Colors.blue,
+                  onTap: () {
+                    context.go('/createProject');
+                  },
+                  child: const Icon(
+                    Icons.checklist,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
             body: _buildBody(user),
           );
         },

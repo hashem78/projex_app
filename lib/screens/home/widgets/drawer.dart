@@ -27,20 +27,7 @@ class PDrawer extends ConsumerWidget {
                   user: user,
                   borderWidth: 2,
                 ),
-                accountName: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      user.map(
-                        student: (std) => translations.profile.studentType,
-                        instructor: (inst) =>
-                            translations.profile.instructorType,
-                      ),
-                    ),
-                    Text(user.name),
-                  ],
-                ),
+                accountName: Text(user.name),
                 accountEmail: Text(user.email),
               ),
             ),

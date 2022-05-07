@@ -1,14 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:projex_app/enums/registration_type.dart';
 import 'package:projex_app/models/user_model/user_model.dart';
 import 'package:projex_app/screens/add_members/add_members_screen.dart';
 import 'package:projex_app/screens/add_roles_to_user/add_roles_to_user_screen.dart';
 import 'package:projex_app/screens/create_project/create_project_screen.dart';
 import 'package:projex_app/screens/edit_roles/edit_roles_screen.dart';
-import 'package:projex_app/screens/first_time_sign_in/first_time_sign_in_screen.dart';
 import 'package:projex_app/screens/project/project_screen.dart';
-import 'package:projex_app/screens/registration/registration_screen.dart';
 import 'package:projex_app/screens/home/home_screen.dart';
 import 'package:projex_app/screens/login/login_screen.dart';
 import 'package:projex_app/screens/profile/profile_screen.dart';
@@ -20,8 +17,6 @@ import 'package:projex_app/state/auth.dart';
 /// The routes supported are
 ///   ```dart
 ///     => /
-///     =>   /firstTime
-///     =>     /firstTime/continueRegistration
 ///     =>   /profile
 ///     =>   /profile/:uid
 ///     =>   /settings
@@ -55,25 +50,6 @@ final routerProvider = Provider<GoRouter>(
           },
           routes: [
             GoRoute(
-              path: 'firstTime',
-              name: 'firstTime',
-              builder: (context, state) => const FirstTimeSignInScreen(),
-              redirect: (state) {
-                if (!auth.isFirstTime) {
-                  return '/';
-                }
-                return null;
-              },
-              routes: [
-                GoRoute(
-                  path: "continueRegistration",
-                  builder: (context, state) => RegistrationScreen(
-                    registrationType: state.extra as RegistrationType,
-                  ),
-                ),
-              ],
-            ),
-            GoRoute(
               path: 'profile',
               builder: (context, state) {
                 return const ProfileScreen.fromCurrent();
@@ -99,7 +75,7 @@ final routerProvider = Provider<GoRouter>(
               builder: (context, state) => const CreateProjectScreen(),
             ),
             GoRoute(
-              path: 'project',
+              path: 'project/:pid',
               builder: (context, state) => ProjectScreen(
                 id: state.queryParams['pid']!,
               ),

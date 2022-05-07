@@ -1,4 +1,0 @@
-enum RegistrationType {
-  student,
-  instructor,
-}
