@@ -5,8 +5,7 @@ import 'package:projex_app/models/message_model/message_model.dart';
 import 'package:projex_app/models/notification_model/notification_model.dart';
 import 'package:projex_app/models/profile_picture_model/profile_picture_model.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
-import 'package:projex_app/models/role/role.dart';
-import 'package:projex_app/models/role_model/role_model.dart';
+import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/models/social_model/social_model.dart';
 import 'package:projex_app/models/task_model/task_mode.dart';
 part 'user_model.freezed.dart';
@@ -136,7 +135,7 @@ class PUser with _$PUser {
   Future<void> assignRoles({
     required String projectId,
     required String userId,
-    required List<Role> rolesToAssign,
+    required List<PRole> rolesToAssign,
   }) async {
     final db = FirebaseFirestore.instance;
     await db.doc('projects/$projectId').set(
@@ -152,7 +151,7 @@ class PUser with _$PUser {
   Future<void> removeRoles({
     required String projectId,
     required String userId,
-    required List<Role> rolesToRemove,
+    required List<PRole> rolesToRemove,
   }) async {
     final db = FirebaseFirestore.instance;
     await db.doc('projects/$projectId').set(

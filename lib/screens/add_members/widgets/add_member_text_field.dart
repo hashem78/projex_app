@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:projex_app/models/user_model/user_model.dart';
-import 'package:projex_app/screens/add_members_screen/add_members_screen.dart';
-import 'package:projex_app/state/add_members_state.dart';
+import 'package:projex_app/screens/add_members/add_members_screen.dart';
+import 'package:projex_app/state/add_members.dart';
 
 class AddMemberEmailField extends ConsumerWidget {
   const AddMemberEmailField({

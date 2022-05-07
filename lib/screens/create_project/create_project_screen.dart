@@ -63,7 +63,7 @@ class CreateProjectScreen extends ConsumerWidget {
                     ),
                     FormBuilderDateTimePicker(
                       name: 'start',
-                      inputType: InputType.date,
+                      inputType: InputType.both,
                       format: DateFormat("EEEE, MMMM d, yyyy 'at' h:mma"),
                       decoration: const InputDecoration(
                         labelText: 'Start date',

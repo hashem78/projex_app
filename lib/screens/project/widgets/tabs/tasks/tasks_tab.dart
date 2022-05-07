@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projex_app/screens/project_screen/widgets/project_percent_indicator.dart';
-import 'package:projex_app/screens/project_screen/widgets/project_screen_task_tile.dart';
+import 'package:projex_app/screens/project/widgets/tabs/tasks/tasks_percent_indicator.dart';
+import 'package:projex_app/screens/project/widgets/tabs/tasks/task_tile.dart';
 
 class TasksTab extends StatelessWidget {
   const TasksTab({

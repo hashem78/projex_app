@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:projex_app/screens/project_screen/widgets/project_member_tile.dart';
-import 'package:projex_app/state/add_members_state.dart';
+import 'package:projex_app/screens/project/widgets/tabs/members/project_member_tile.dart';
+import 'package:projex_app/state/add_members.dart';
 
 class MembersToBeAddedList extends ConsumerWidget {
   const MembersToBeAddedList({

@@ -3,11 +3,11 @@ part 'role.freezed.dart';
 part 'role.g.dart';
 
 @freezed
-class Role with _$Role {
-  const factory Role({
+class PRole with _$PRole {
+  const factory PRole({
     required String id,
     required String name,
     required String color,
-  }) = _Role;
-  factory Role.fromJson(Map<String, dynamic> json) => _$RoleFromJson(json);
+  }) = _PRole;
+  factory PRole.fromJson(Map<String, dynamic> json) => _$PRoleFromJson(json);
 }

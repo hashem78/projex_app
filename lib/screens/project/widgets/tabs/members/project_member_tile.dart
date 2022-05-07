@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
-import 'package:projex_app/models/role/role.dart';
+import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/models/user_model/user_model.dart';
-import 'package:projex_app/screens/project_screen/widgets/member_profile_image.dart';
-import 'package:projex_app/screens/project_screen/widgets/project_builder.dart';
-import 'package:projex_app/screens/project_screen/widgets/role_list.dart';
+import 'package:projex_app/screens/project/widgets/tabs/members/member_profile_image.dart';
+import 'package:projex_app/screens/project/widgets/project_builder.dart';
+import 'package:projex_app/screens/project/widgets/tabs/members/member_role_list.dart';
 
 class ProjectMemberTile extends StatelessWidget {
   final PProject? project;
@@ -40,7 +40,7 @@ class ProjectMemberTile extends StatelessWidget {
   }
 
   Widget _buildWIdget(BuildContext context, PProject project) {
-    final userRoles = <Role>[];
+    final userRoles = <PRole>[];
     for (final roleId in project.userRoleMap[user.id] ?? {}) {
       for (final role in project.roles) {
         if (roleId == role.id) {
@@ -64,9 +64,13 @@ class ProjectMemberTile extends StatelessWidget {
                 children: [
                   Text(
                     user.name,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Text(
+                    user.email,
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
-                  RoleList(
+                  MemberRoleList(
                     roles: userRoles,
                     pid: project.id,
                     uid: user.id,

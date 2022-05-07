@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:projex_app/screens/add_roles_screen/add_roles_appbar_title.dart';
-import 'package:projex_app/screens/add_roles_screen/roles_listview.dart';
+import 'package:projex_app/screens/add_roles_to_user/widgets/add_roles_appbar_title.dart';
+import 'package:projex_app/screens/add_roles_to_user/widgets/roles_listview.dart';
 import 'package:projex_app/screens/profile/widgets/puser_builder.dart';
-import 'package:projex_app/screens/project_screen/widgets/project_builder.dart';
+import 'package:projex_app/screens/project/widgets/project_builder.dart';
 
-class AddRolesScreen extends ConsumerWidget {
+class AddRolesToUserScreen extends ConsumerWidget {
   final String pid;
   final String uid;
-  const AddRolesScreen({
+  const AddRolesToUserScreen({
     Key? key,
     required this.pid,
     required this.uid,

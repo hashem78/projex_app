@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/screens/profile/widgets/puser_builder.dart';
-import 'package:projex_app/state/add_members_state.dart';
+import 'package:projex_app/state/add_members.dart';
 
 class AddMembersButton extends ConsumerWidget {
   const AddMembersButton({

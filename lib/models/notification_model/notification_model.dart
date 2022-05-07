@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:projex_app/enums/importance.dart';
-import 'package:projex_app/models/role_model/role_model.dart';
+import 'package:projex_app/models/role_model/role.dart';
 part 'notification_model.freezed.dart';
 part 'notification_model.g.dart';
 
@@ -11,6 +11,5 @@ class PNotification with _$PNotification {
     required List<PRole> roles,
     required Importance importance,
   }) = _PNotification;
-  factory PNotification.fromJson(Map<String, dynamic> json) =>
-      _$PNotificationFromJson(json);
+  factory PNotification.fromJson(Map<String, dynamic> json) => _$PNotificationFromJson(json);
 }

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:projex_app/models/role/role.dart';
-import 'package:projex_app/screens/project_screen/widgets/add_roles_button.dart';
-import 'package:projex_app/screens/project_screen/widgets/role_bage.dart';
+import 'package:projex_app/models/role_model/role.dart';
+import 'package:projex_app/screens/project/widgets/tabs/members/add_roles_button.dart';
+import 'package:projex_app/screens/project/widgets/role_bage.dart';
 
-class RoleList extends StatelessWidget {
-  const RoleList({
+class MemberRoleList extends StatelessWidget {
+  const MemberRoleList({
     Key? key,
     required this.pid,
     required this.roles,
     required this.uid,
   }) : super(key: key);
 
-  final List<Role> roles;
+  final List<PRole> roles;
   final String pid;
   final String uid;
 

@@ -1,6 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:projex_app/models/role/role.dart';
+import 'package:projex_app/models/role_model/role.dart';
 
 class RoleBadge extends StatelessWidget {
   const RoleBadge({
@@ -9,7 +9,7 @@ class RoleBadge extends StatelessWidget {
     this.onTap,
     this.padding = const EdgeInsets.all(5.0),
   }) : super(key: key);
-  final Role role;
+  final PRole role;
   final VoidCallback? onTap;
   final EdgeInsets padding;
   @override

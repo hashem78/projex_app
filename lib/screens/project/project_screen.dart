@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:projex_app/screens/project_screen/widgets/project_builder.dart';
-import 'package:projex_app/screens/project_screen/widgets/project_screen_fab.dart';
-import 'package:projex_app/screens/project_screen/widgets/project_sliverappbar.dart';
-import 'package:projex_app/screens/project_screen/widgets/project_tabbar_view.dart';
+import 'package:projex_app/screens/project/widgets/project_builder.dart';
+import 'package:projex_app/screens/project/widgets/project_screen_fab.dart';
+import 'package:projex_app/screens/project/widgets/project_sliverappbar.dart';
+import 'package:projex_app/screens/project/widgets/project_tabbar_view.dart';
 
 class ProjectScreen extends ConsumerWidget {
   final String id;

@@ -20,7 +20,7 @@ class AddRolesButton extends ConsumerWidget {
 
     return GestureDetector(
       onTap: () {
-        context.push('/project/addRoles?pid=$pid&uid=$uid');
+        context.push('/project/addRolesToUser?pid=$pid&uid=$uid');
       },
       child: isEditing
           ? Badge(
