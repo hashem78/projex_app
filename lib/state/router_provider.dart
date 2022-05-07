@@ -75,7 +75,7 @@ final routerProvider = Provider<GoRouter>(
               builder: (context, state) => const CreateProjectScreen(),
             ),
             GoRoute(
-              path: 'project/:pid',
+              path: 'project',
               builder: (context, state) => ProjectScreen(
                 id: state.queryParams['pid']!,
               ),
