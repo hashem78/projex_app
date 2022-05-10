@@ -41,7 +41,7 @@ class ProjectMemberTile extends StatelessWidget {
   Widget _buildWIdget(BuildContext context, PProject project) {
     return InkWell(
       onTap: () {
-        context.go('/profile/${user.id}', extra: user);
+        context.push('/profile/${user.id}', extra: user);
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
