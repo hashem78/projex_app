@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/state/auth.dart';
 
-class ProfileScreenImage extends ConsumerWidget {
-  const ProfileScreenImage({
+class ProfileImage extends ConsumerWidget {
+  const ProfileImage({
     this.borderWidth = 4,
     this.width = 120,
     this.height = 120,

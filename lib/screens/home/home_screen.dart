@@ -1,45 +1,68 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutterfire_ui/firestore.dart';
-import 'package:go_router/go_router.dart';
-import 'package:projex_app/models/project_model/project_model.dart';
-import 'package:projex_app/screens/home/widgets/drawer.dart';
-import 'package:projex_app/state/locale.dart';
+import 'package:projex_app/screens/home/pages/profile/profie_page.dart';
+import 'package:projex_app/screens/home/pages/projects/projects_page.dart';
+import 'package:projex_app/screens/home/pages/settings/settings_page.dart';
+import 'package:projex_app/screens/home/widgets/home_fab.dart';
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final translations = ref.watch(translationProvider).translations;
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  int _selectedIndex = 0;
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(translations.home.appBarTitle),
-      ),
-      drawer: const PDrawer(),
-      body: FirestoreListView<PProject>(
-        query: FirebaseFirestore.instance
-            .collection(
-              'projects',
-            )
-            .withConverter(
-              fromFirestore: (snapshot, _) {
-                return PProject.fromJson(
-                  snapshot.data()!,
-                );
-              },
-              toFirestore: (u, _) => u.toJson(),
-            ),
-        itemBuilder: (context, snapshot) {
-          final data = snapshot.data();
-          return ListTile(
-            onTap: () {
-              context.push('/project?pid=${data.id}');
-            },
-            title: Text(data.name),
+      floatingActionButton: const HomeFAB(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      bottomNavigationBar: AnimatedBottomNavigationBar(
+        icons: const [
+          Icons.home,
+          Icons.list,
+          Icons.settings,
+        ],
+        activeColor: Colors.blue,
+        activeIndex: _selectedIndex,
+        gapLocation: GapLocation.end,
+        notchSmoothness: NotchSmoothness.defaultEdge,
+        onTap: (index) => setState(() {
+          _selectedIndex = index;
+          _pageController.animateToPage(
+            index,
+            duration: const Duration(milliseconds: 250),
+            curve: Curves.easeIn,
           );
+        }),
+      ),
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() => _selectedIndex = index);
         },
+        children: const [
+          HomeProfilePage(),
+          HomeProjectsPage(),
+          SettingsPage(),
+        ],
       ),
     );
   }

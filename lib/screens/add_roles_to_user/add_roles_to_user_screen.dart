@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/screens/add_roles_to_user/widgets/add_roles_appbar_title.dart';
 import 'package:projex_app/screens/add_roles_to_user/widgets/roles_listview.dart';
-import 'package:projex_app/screens/profile/widgets/puser_builder.dart';
+import 'package:projex_app/screens/home/widgets/puser_builder.dart';
 import 'package:projex_app/screens/project/widgets/project_builder.dart';
 
 class AddRolesToUserScreen extends ConsumerWidget {

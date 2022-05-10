@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/i18n/translations.g.dart';
-import 'package:projex_app/screens/settings/widgets/translations/translations_change_dialog.dart';
+import 'package:projex_app/screens/home/pages/settings/widgets/translations/translations_change_dialog.dart';
 import 'package:projex_app/state/locale.dart';
 
 class TranslationsTile extends ConsumerWidget {

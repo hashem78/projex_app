@@ -42,6 +42,7 @@ dependencies:
   percent_indicator: ^4.0.1
   animate_do: ^2.1.0
   badges: ^2.0.2
+  animated_bottom_navigation_bar: ^0.3.2
 
 dev_dependencies:
   flutter_test:

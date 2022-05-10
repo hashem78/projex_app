@@ -1,20 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:projex_app/models/user_model/user_model.dart';
-import 'package:projex_app/screens/profile/widgets/profile_screen_image.dart';
 
-class ProfileScreenAppBar extends ConsumerWidget {
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:projex_app/screens/home/pages/profile/widgets/profile_image.dart';
+
+class ProfileScreenAppBar extends StatelessWidget {
   const ProfileScreenAppBar({
     Key? key,
-    required this.user,
   }) : super(key: key);
 
-  final PUser user;
-
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     const banner = "https://picsum.photos/400/500";
     return SliverAppBar(
       collapsedHeight: 0.25.sh,
@@ -33,7 +29,7 @@ class ProfileScreenAppBar extends ConsumerWidget {
             bottom: -0.070.sh,
             right: 0,
             left: 0,
-            child: const ProfileScreenImage(),
+            child: const ProfileImage(),
           ),
         ],
       ),

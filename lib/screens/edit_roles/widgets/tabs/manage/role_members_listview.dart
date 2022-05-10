@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/models/role_model/role.dart';
-import 'package:projex_app/screens/profile/widgets/puser_builder.dart';
+import 'package:projex_app/screens/home/widgets/puser_builder.dart';
 import 'package:projex_app/screens/project/widgets/tabs/members/project_member_tile.dart';
 import 'package:projex_app/state/auth.dart';
 
