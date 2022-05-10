@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
-import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/models/user_model/user_model.dart';
 import 'package:projex_app/screens/project/widgets/tabs/members/member_profile_image.dart';
 import 'package:projex_app/screens/project/widgets/project_builder.dart';
@@ -40,14 +39,6 @@ class ProjectMemberTile extends StatelessWidget {
   }
 
   Widget _buildWIdget(BuildContext context, PProject project) {
-    final userRoles = <PRole>[];
-    for (final roleId in project.userRoleMap[user.id] ?? {}) {
-      for (final role in project.roles) {
-        if (roleId == role.id) {
-          userRoles.add(role);
-        }
-      }
-    }
     return InkWell(
       onTap: () {
         context.go('/profile/${user.id}', extra: user);
@@ -71,9 +62,8 @@ class ProjectMemberTile extends StatelessWidget {
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                   MemberRoleList(
-                    roles: userRoles,
-                    pid: project.id,
-                    uid: user.id,
+                    project: project,
+                    user: user,
                   ),
                 ],
               ),

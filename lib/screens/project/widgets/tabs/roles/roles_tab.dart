@@ -1,11 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutterfire_ui/firestore.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/state/editing.dart';
-import 'package:uuid/uuid.dart';
 
 class RolesTab extends ConsumerWidget {
   final PProject project;
@@ -18,48 +19,58 @@ class RolesTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isEditing = ref.watch(allowEditingProjectProvider);
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return ListTile(
-                onTap: isEditing
-                    ? () {
-                        context.push(
-                          '/project/editRole?roleId=rid',
-                          extra: {
-                            'role': PRole(
-                              id: const Uuid().v4(),
-                              name: 'Instructor',
-                              color: 'ff0000ff',
-                            ),
-                            'project': project,
-                          },
-                        );
-                      }
-                    : null,
-                title: const Text('Admin'),
-                leading: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    Text('1'),
-                    Icon(Icons.person),
-                  ],
-                ),
-                trailing: isEditing
-                    ? IconButton(
-                        color: Colors.red,
-                        icon: const Icon(Icons.close),
-                        onPressed: () {},
-                      )
-                    : null,
-              );
-            },
+    return FirestoreListView<PRole>(
+      query: FirebaseFirestore.instance
+          .collection(
+            'projects/${project.id}/roles',
+          )
+          .withConverter<PRole>(
+            fromFirestore: (r, _) => PRole.fromJson(r.data()!),
+            toFirestore: (r, _) => r.toJson(),
           ),
-        ),
-      ],
+      itemBuilder: (context, snap) {
+        final role = snap.data();
+        return ListTile(
+          tileColor: Color(int.parse(role.color, radix: 16)),
+          onTap: isEditing
+              ? () {
+                  context.push(
+                    '/project/editRole?roleId=${role.id}',
+                    extra: project,
+                  );
+                }
+              : null,
+          title: Text(
+            role.name,
+            style: const TextStyle(color: Colors.white),
+          ),
+          leading: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                role.count.toString(),
+                style: const TextStyle(color: Colors.white),
+              ),
+              const Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
+            ],
+          ),
+          trailing: isEditing
+              ? IconButton(
+                  color: Colors.red,
+                  icon: const Icon(
+                    Icons.close,
+                    color: Colors.white,
+                  ),
+                  onPressed: () async {
+                    await project.removeRole(role.id);
+                  },
+                )
+              : null,
+        );
+      },
     );
   }
 }

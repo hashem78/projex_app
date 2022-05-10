@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:projex_app/models/project_model/project_model.dart';
-import 'package:projex_app/models/role_model/role.dart';
-import 'package:projex_app/screens/profile/widgets/puser_builder.dart';
+import 'package:projex_app/screens/edit_roles/widgets/role_builder.dart';
+import 'package:projex_app/screens/edit_roles/widgets/tabs/display/display_tab.dart';
 
 class EditRoleScreen extends ConsumerWidget {
-  final PRole role;
+  final String roleId;
   final PProject project;
   const EditRoleScreen({
     Key? key,
-    required this.role,
+    required this.roleId,
     required this.project,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return PUserBuilder.fromCurrent(
-      builder: (context, user) {
+    return PRoleBuilder(
+      pid: project.id,
+      rid: roleId,
+      builder: (context, role) {
         return Scaffold(
           endDrawer: const Drawer(),
           body: DefaultTabController(
@@ -29,6 +30,7 @@ class EditRoleScreen extends ConsumerWidget {
                 return [
                   SliverAppBar(
                     title: Text('Edit Role - ${role.name}'),
+                    backgroundColor: Color(int.parse(role.color, radix: 16)),
                     leading: IconButton(
                       onPressed: () {
                         context.pop();
@@ -49,21 +51,9 @@ class EditRoleScreen extends ConsumerWidget {
               },
               body: TabBarView(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListView(
-                      children: [
-                        TextFormField(
-                          initialValue: role.name,
-                          decoration: InputDecoration(
-                            label: Text(role.name),
-                            hintText: role.name,
-                          ),
-                        ),
-                        50.verticalSpace,
-                        Divider(),
-                      ],
-                    ),
+                  DisplayTab(
+                    project: project,
+                    role: role,
                   ),
                   ListView(),
                   ListView(),

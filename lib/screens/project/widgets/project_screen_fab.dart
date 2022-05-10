@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
+import 'package:projex_app/models/role_model/role.dart';
+import 'package:uuid/uuid.dart';
 
 class PProjectScreenFAB extends ConsumerWidget {
   final PProject project;
@@ -29,9 +31,21 @@ class PProjectScreenFAB extends ConsumerWidget {
         SpeedDialChild(
           backgroundColor: Colors.green,
           child: const Icon(
-            Icons.add,
+            Icons.people,
             color: Colors.white,
           ),
+          onTap: () async {
+            final newRole = PRole(
+              id: const Uuid().v4(),
+              color: Colors.blue.value.toRadixString(16),
+              name: 'New Role',
+            );
+            await project.createRole(newRole);
+            context.push(
+              '/project/editRole?roleId=${newRole.id}',
+              extra: project,
+            );
+          },
         ),
       ],
     );

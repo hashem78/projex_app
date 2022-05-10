@@ -8,6 +8,7 @@ class PRole with _$PRole {
     required String id,
     required String name,
     required String color,
+    @Default(0) int count,
   }) = _PRole;
   factory PRole.fromJson(Map<String, dynamic> json) => _$PRoleFromJson(json);
 }
