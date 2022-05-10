@@ -5,7 +5,6 @@ import 'package:flutterfire_ui/firestore.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/screens/home/widgets/drawer.dart';
-import 'package:projex_app/screens/profile/widgets/puser_builder.dart';
 import 'package:projex_app/state/locale.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -19,30 +18,26 @@ class HomeScreen extends ConsumerWidget {
         title: Text(translations.home.appBarTitle),
       ),
       drawer: const PDrawer(),
-      body: PUserBuilder.fromCurrent(
-        builder: (context, user) {
-          return FirestoreListView<PProject>(
-            query: FirebaseFirestore.instance
-                .collection(
-                  'projects',
-                )
-                .withConverter(
-                  fromFirestore: (snapshot, _) {
-                    return PProject.fromJson(
-                      snapshot.data()!,
-                    );
-                  },
-                  toFirestore: (u, _) => u.toJson(),
-                ),
-            itemBuilder: (context, snapshot) {
-              final data = snapshot.data();
-              return ListTile(
-                onTap: () {
-                  context.push('/project?pid=${data.id}');
-                },
-                title: Text(data.name),
-              );
+      body: FirestoreListView<PProject>(
+        query: FirebaseFirestore.instance
+            .collection(
+              'projects',
+            )
+            .withConverter(
+              fromFirestore: (snapshot, _) {
+                return PProject.fromJson(
+                  snapshot.data()!,
+                );
+              },
+              toFirestore: (u, _) => u.toJson(),
+            ),
+        itemBuilder: (context, snapshot) {
+          final data = snapshot.data();
+          return ListTile(
+            onTap: () {
+              context.push('/project?pid=${data.id}');
             },
+            title: Text(data.name),
           );
         },
       ),

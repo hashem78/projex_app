@@ -1,11 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:projex_app/models/user_model/user_model.dart';
+import 'package:projex_app/state/auth.dart';
 
 class ProfileScreenImage extends ConsumerWidget {
   const ProfileScreenImage({
-    required this.user,
     this.borderWidth = 4,
     this.width = 120,
     this.height = 120,
@@ -13,10 +12,10 @@ class ProfileScreenImage extends ConsumerWidget {
   }) : super(key: key);
   final double width;
   final double height;
-  final PUser user;
   final double borderWidth;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(authProvider)!;
     return CachedNetworkImage(
       imageUrl: user.profilePicture?.link ?? "https://picsum.photos/200/300",
       imageBuilder: (context, imageProvider) {

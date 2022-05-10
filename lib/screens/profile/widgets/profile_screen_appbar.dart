@@ -33,7 +33,7 @@ class ProfileScreenAppBar extends ConsumerWidget {
             bottom: -0.070.sh,
             right: 0,
             left: 0,
-            child: ProfileScreenImage(user: user),
+            child: const ProfileScreenImage(),
           ),
         ],
       ),

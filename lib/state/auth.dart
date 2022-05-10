@@ -20,6 +20,7 @@ class AuthNotifier extends StateNotifier<PUser?> {
   /// userChanges stream, this is for cleanup.
 
   StreamSubscription<User?>? subscription;
+  StreamSubscription<PUser?>? psubscription;
 
   bool get isLoggedIn => state != null;
   bool get isNotLoggedIn => state == null;
@@ -39,14 +40,27 @@ class AuthNotifier extends StateNotifier<PUser?> {
               name: event.displayName ?? "",
               profilePicture: PProfilePicture(link: event.photoURL ?? ""),
             );
-
             await db.doc('users/${event.uid}').set(puser.toJson());
             state = puser;
           }
+
+          psubscription?.cancel();
+          psubscription = db
+              .doc(
+                'users/${event.uid}',
+              )
+              .snapshots()
+              .map(
+                (event) => PUser.fromJson(event.data()!),
+              )
+              .listen(
+            (event) {
+              state = event;
+            },
+          );
         } else {
           state = null;
         }
-        ref.refresh(pCurrentUserProvider);
       },
     );
   }
@@ -54,6 +68,7 @@ class AuthNotifier extends StateNotifier<PUser?> {
   @override
   void dispose() {
     subscription?.cancel();
+    psubscription?.cancel();
     super.dispose();
   }
 }
@@ -67,26 +82,6 @@ class AuthNotifier extends StateNotifier<PUser?> {
 final authProvider = StateNotifierProvider<AuthNotifier, PUser?>(
   (ref) {
     return AuthNotifier(ref);
-  },
-);
-
-/// Provides a stream that changes whenever the database
-/// entry for the currently loggedin user changes.
-final pCurrentUserProvider = StreamProvider<PUser?>(
-  (ref) async* {
-    final user = ref.read(authProvider);
-    final db = FirebaseFirestore.instance;
-    if (user != null) {
-      yield* db.doc('users/${user.id}').snapshots().map(
-        (event) {
-          final data = event.data();
-          if (data != null) {
-            return PUser.fromJson(data);
-          }
-          return null;
-        },
-      );
-    }
   },
 );
 

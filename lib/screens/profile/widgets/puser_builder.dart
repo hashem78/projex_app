@@ -31,7 +31,7 @@ import 'package:projex_app/state/auth.dart';
 ///
 /// ```
 class PUserBuilder extends ConsumerWidget {
-  final String? uid;
+  final String uid;
 
   final Widget Function(BuildContext context, PUser user) builder;
 
@@ -51,26 +51,13 @@ class PUserBuilder extends ConsumerWidget {
     this.loadingBuilder,
   }) : super(key: key);
 
-  const PUserBuilder.fromCurrent({
-    Key? key,
-    required this.builder,
-    this.errorBuilder,
-    this.loadingBuilder,
-  })  : uid = null,
-        super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userFuture = uid != null
-        ? ref.watch(pUserProvider(uid!))
-        : ref.watch(pCurrentUserProvider);
+    final userFuture = ref.watch(pUserProvider(uid));
     return userFuture.when(
       data: (user) {
         if (user != null) {
           return builder.call(context, user);
-        } else {
-          if (uid == null) {
-            ref.refresh(pCurrentUserProvider);
-          }
         }
         return const SizedBox();
       },

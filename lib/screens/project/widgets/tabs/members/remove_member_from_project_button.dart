@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:projex_app/screens/profile/widgets/puser_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:projex_app/state/auth.dart';
 
-class RemoveMemberFromProjectButton extends StatelessWidget {
+class RemoveMemberFromProjectButton extends ConsumerWidget {
   const RemoveMemberFromProjectButton({
     Key? key,
     required this.pid,
@@ -12,17 +13,13 @@ class RemoveMemberFromProjectButton extends StatelessWidget {
   final String uid;
 
   @override
-  Widget build(BuildContext context) {
-    return PUserBuilder.fromCurrent(
-      builder: (context, innerUser) {
-        return IconButton(
-          icon: const Icon(Icons.close, color: Colors.red),
-          onPressed: () async {
-            await innerUser.removeMembersFromProject(
-              projectId: pid,
-              memberIds: [uid],
-            );
-          },
+  Widget build(BuildContext context, WidgetRef ref) {
+    return IconButton(
+      icon: const Icon(Icons.close, color: Colors.red),
+      onPressed: () async {
+        await ref.read(authProvider)!.removeMembersFromProject(
+          projectId: pid,
+          memberIds: [uid],
         );
       },
     );

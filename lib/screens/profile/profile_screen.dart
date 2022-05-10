@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:go_router/go_router.dart';
@@ -6,8 +7,9 @@ import 'package:projex_app/models/user_model/user_model.dart';
 import 'package:projex_app/screens/profile/widgets/profile_card.dart';
 import 'package:projex_app/screens/profile/widgets/profile_screen_appbar.dart';
 import 'package:projex_app/screens/profile/widgets/puser_builder.dart';
+import 'package:projex_app/state/auth.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends ConsumerWidget {
   const ProfileScreen.fromCurrent({
     Key? key,
   })  : uid = null,
@@ -30,33 +32,30 @@ class ProfileScreen extends StatelessWidget {
   final PUser? user;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isFromCurrent = uid == null && user == null;
     final isFromUid = uid != null && user == null;
 
     if (isFromCurrent) {
-      return PUserBuilder.fromCurrent(
-        builder: (_, user) {
-          return Scaffold(
-            floatingActionButton: SpeedDial(
-              icon: Icons.create,
-              activeIcon: Icons.close,
-              children: [
-                SpeedDialChild(
-                  backgroundColor: Colors.blue,
-                  onTap: () {
-                    context.go('/createProject');
-                  },
-                  child: const Icon(
-                    Icons.checklist,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
+      final user = ref.watch(authProvider)!;
+      return Scaffold(
+        floatingActionButton: SpeedDial(
+          icon: Icons.create,
+          activeIcon: Icons.close,
+          children: [
+            SpeedDialChild(
+              backgroundColor: Colors.blue,
+              onTap: () {
+                context.go('/createProject');
+              },
+              child: const Icon(
+                Icons.checklist,
+                color: Colors.white,
+              ),
             ),
-            body: _buildBody(user),
-          );
-        },
+          ],
+        ),
+        body: _buildBody(user),
       );
     } else if (isFromUid) {
       return PUserBuilder.fromUid(

@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
-import 'package:projex_app/screens/profile/widgets/puser_builder.dart';
+import 'package:projex_app/state/auth.dart';
 import 'package:uuid/uuid.dart';
 
 final createProjectKey = GlobalKey<FormBuilderState>();
@@ -83,32 +83,29 @@ class CreateProjectScreen extends ConsumerWidget {
                     ),
                     SizedBox(
                       width: 1.sw,
-                      child: PUserBuilder.fromCurrent(
-                        builder: (context, user) {
-                          return OutlinedButton(
-                            onPressed: () async {
-                              final isValid = createProjectKey.currentState!.validate();
-                              if (isValid) {
-                                final state = createProjectKey.currentState!.fields;
-                                const uuid = Uuid();
-                                final pid = uuid.v4();
-                                final pname = state['name']!.value as String;
-                                final desc = state['desc']!.value as String;
-                                final startDate = state['start']!.value as DateTime;
-                                final endDate = state['end']!.value as DateTime;
-                                final project = PProject(
-                                  id: pid,
-                                  name: pname,
-                                  description: desc,
-                                  startDate: startDate,
-                                  endDate: endDate,
-                                );
-                                await user.createProject(project: project);
-                              }
-                            },
-                            child: const Text("Create Project"),
-                          );
+                      child: OutlinedButton(
+                        onPressed: () async {
+                          final isValid = createProjectKey.currentState!.validate();
+                          if (isValid) {
+                            final state = createProjectKey.currentState!.fields;
+                            const uuid = Uuid();
+                            final pid = uuid.v4();
+                            final pname = state['name']!.value as String;
+                            final desc = state['desc']!.value as String;
+                            final startDate = state['start']!.value as DateTime;
+                            final endDate = state['end']!.value as DateTime;
+                            final project = PProject(
+                              id: pid,
+                              name: pname,
+                              description: desc,
+                              startDate: startDate,
+                              endDate: endDate,
+                            );
+                            final user = ref.read(authProvider)!;
+                            await user.createProject(project: project);
+                          }
                         },
+                        child: const Text("Create Project"),
                       ),
                     ),
                   ],

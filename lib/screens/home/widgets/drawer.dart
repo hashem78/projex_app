@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/screens/profile/widgets/profile_screen_image.dart';
-import 'package:projex_app/screens/profile/widgets/puser_builder.dart';
+import 'package:projex_app/state/auth.dart';
 import 'package:projex_app/state/locale.dart';
 
 class PDrawer extends ConsumerWidget {
@@ -13,23 +13,20 @@ class PDrawer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final translations = ref.watch(translationProvider).translations;
-
+    final user = ref.watch(authProvider)!;
     return Drawer(
       child: ListView(
         children: [
-          PUserBuilder.fromCurrent(
-            builder: (context, user) => GestureDetector(
-              onTap: () {
-                context.go('/profile');
-              },
-              child: UserAccountsDrawerHeader(
-                currentAccountPicture: ProfileScreenImage(
-                  user: user,
-                  borderWidth: 2,
-                ),
-                accountName: Text(user.name),
-                accountEmail: Text(user.email),
+          GestureDetector(
+            onTap: () {
+              context.go('/profile');
+            },
+            child: UserAccountsDrawerHeader(
+              currentAccountPicture: const ProfileScreenImage(
+                borderWidth: 2,
               ),
+              accountName: Text(user.name),
+              accountEmail: Text(user.email),
             ),
           ),
           ListTile(
