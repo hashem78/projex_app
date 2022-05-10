@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/state/editing.dart';
 
-class AddRolesButton extends ConsumerWidget {
-  const AddRolesButton({
+class EditProjectUserRolesButton extends ConsumerWidget {
+  const EditProjectUserRolesButton({
     Key? key,
     required this.pid,
     required this.uid,
@@ -33,13 +33,13 @@ class AddRolesButton extends ConsumerWidget {
                 badgeContent: Row(
                   children: [
                     const Icon(
-                      Icons.edit,
+                      Icons.add,
                       color: Colors.white,
                       size: 18,
                     ),
                     16.horizontalSpace,
                     const Text(
-                      'Edit Roles',
+                      'Add Roles',
                       style: TextStyle(color: Colors.white),
                     ),
                     16.horizontalSpace,

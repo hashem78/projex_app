@@ -20,6 +20,11 @@ class PProject with _$PProject {
   Future<void> removeRole(String rid) async {
     final db = FirebaseFirestore.instance;
     await db.doc('projects/$id/roles/$rid').delete();
+    final newUserRoleMap = {...userRoleMap};
+    for (final v in userRoleMap.values) {
+      v.remove(rid);
+    }
+    db.doc('projects/$id').set(newUserRoleMap);
   }
 
   const factory PProject({

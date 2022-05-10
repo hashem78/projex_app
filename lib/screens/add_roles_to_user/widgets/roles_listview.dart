@@ -22,7 +22,7 @@ class RolesListView extends StatelessWidget {
       child: FirestoreListView<PRole>(
         query: FirebaseFirestore.instance
             .collection(
-              'project/${project.id}/roles',
+              'projects/${project.id}/roles',
             )
             .withConverter<PRole>(
               fromFirestore: (r, _) => PRole.fromJson(r.data()!),

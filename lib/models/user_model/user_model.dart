@@ -124,32 +124,54 @@ class PUser with _$PUser {
     );
   }
 
-  Future<void> assignRoles({
+  Future<void> assignRoleToUser({
     required String projectId,
     required String userId,
-    required List<PRole> rolesToAssign,
+    required PRole role,
   }) async {
     final db = FirebaseFirestore.instance;
+    await db.doc('/projects/$projectId/roles/${role.id}').update(
+      {'count': FieldValue.increment(1)},
+    );
+    await db
+        .doc(
+      '/projects/$projectId/roles/${role.id}/userIds/$userId',
+    )
+        .set(
+      {
+        'id': userId,
+      },
+    );
+
     await db.doc('projects/$projectId').set(
       {
         "userRoleMap": {
-          userId: FieldValue.arrayUnion(rolesToAssign.map((e) => e.id).toList()),
+          userId: FieldValue.arrayUnion([role.id]),
         },
       },
       SetOptions(merge: true),
     );
   }
 
-  Future<void> removeRoles({
+  Future<void> removeRoleFromUser({
     required String projectId,
     required String userId,
-    required List<PRole> rolesToRemove,
+    required PRole role,
   }) async {
     final db = FirebaseFirestore.instance;
+    await db.doc('/projects/$projectId/roles/${role.id}').update(
+      {'count': FieldValue.increment(-1)},
+    );
+
+    await db
+        .doc(
+          '/projects/$projectId/roles/${role.id}/userIds/$userId',
+        )
+        .delete();
     await db.doc('projects/$projectId').set(
       {
         "userRoleMap": {
-          userId: FieldValue.arrayRemove(rolesToRemove.map((e) => e.id).toList()),
+          userId: FieldValue.arrayRemove([role.id]),
         },
       },
       SetOptions(merge: true),

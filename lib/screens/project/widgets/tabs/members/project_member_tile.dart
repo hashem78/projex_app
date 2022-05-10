@@ -10,10 +10,12 @@ class ProjectMemberTile extends StatelessWidget {
   final PProject? project;
   final String? pid;
   final PUser user;
+  final bool showRoles;
   const ProjectMemberTile({
     Key? key,
     required this.project,
     required this.user,
+    this.showRoles = true,
   })  : pid = null,
         super(key: key);
 
@@ -21,6 +23,7 @@ class ProjectMemberTile extends StatelessWidget {
     Key? key,
     required this.user,
     required this.pid,
+    this.showRoles = true,
   })  : project = null,
         super(key: key);
 
@@ -61,10 +64,11 @@ class ProjectMemberTile extends StatelessWidget {
                     user.email,
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
-                  MemberRoleList(
-                    project: project,
-                    user: user,
-                  ),
+                  if (showRoles)
+                    MemberRoleList(
+                      project: project,
+                      user: user,
+                    ),
                 ],
               ),
             ),

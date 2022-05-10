@@ -19,19 +19,19 @@ class RoleCheckboxTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return CheckboxListTile(
       title: Text(role.name),
-      value: project.userRoleMap[user.id]?.contains(role.id),
+      value: project.userRoleMap[user.id]?.contains(role.id) ?? false,
       onChanged: (val) async {
         if (!val!) {
-          await user.removeRoles(
+          await user.removeRoleFromUser(
             projectId: project.id,
             userId: user.id,
-            rolesToRemove: [role],
+            role: role,
           );
         } else {
-          await user.assignRoles(
+          await user.assignRoleToUser(
             projectId: project.id,
             userId: user.id,
-            rolesToAssign: [role],
+            role: role,
           );
         }
       },

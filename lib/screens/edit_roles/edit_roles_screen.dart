@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:projex_app/models/project_model/project_model.dart';
+import 'package:projex_app/screens/edit_roles/edit_role_tabbar_view.dart';
+import 'package:projex_app/screens/edit_roles/edit_roles_appbar.dart';
+import 'package:projex_app/screens/edit_roles/widgets/edit_roles_end_drawer.dart';
 import 'package:projex_app/screens/edit_roles/widgets/role_builder.dart';
-import 'package:projex_app/screens/edit_roles/widgets/tabs/display/display_tab.dart';
 
 class EditRoleScreen extends ConsumerWidget {
   final String roleId;
@@ -22,42 +23,20 @@ class EditRoleScreen extends ConsumerWidget {
       rid: roleId,
       builder: (context, role) {
         return Scaffold(
-          endDrawer: const Drawer(),
+          endDrawer: EditRolesEndDrawer(
+            project: project,
+          ),
           body: DefaultTabController(
             length: 3,
             child: NestedScrollView(
               headerSliverBuilder: (context, _) {
                 return [
-                  SliverAppBar(
-                    title: Text('Edit Role - ${role.name}'),
-                    backgroundColor: Color(int.parse(role.color, radix: 16)),
-                    leading: IconButton(
-                      onPressed: () {
-                        context.pop();
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back,
-                      ),
-                    ),
-                    bottom: const TabBar(
-                      tabs: [
-                        Tab(text: 'Display'),
-                        Tab(text: 'Permissions'),
-                        Tab(text: 'Manage'),
-                      ],
-                    ),
-                  ),
+                  EditRoleScreenAppBar(role: role),
                 ];
               },
-              body: TabBarView(
-                children: [
-                  DisplayTab(
-                    project: project,
-                    role: role,
-                  ),
-                  ListView(),
-                  ListView(),
-                ],
+              body: EditRoleTabBarView(
+                project: project,
+                role: role,
               ),
             ),
           ),
