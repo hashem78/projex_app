@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:projex_app/models/profile_picture_model/profile_picture_model.dart';
 import 'package:projex_app/models/user_model/user_model.dart';
 
 /// The notifier for when the auth state changes
 /// to be used by authProvider.
-class AuthNotifier extends ChangeNotifier {
+class AuthNotifier extends StateNotifier<PUser?> {
   static final auth = FirebaseAuth.instance;
   static final db = FirebaseFirestore.instance;
 
@@ -21,22 +21,32 @@ class AuthNotifier extends ChangeNotifier {
 
   StreamSubscription<User?>? subscription;
 
-  User? user;
+  bool get isLoggedIn => state != null;
+  bool get isNotLoggedIn => state == null;
 
-  bool get isLoggedIn => user != null;
-  bool get isNotLoggedIn => user == null;
-
-  AuthNotifier(this.ref) {
+  AuthNotifier(this.ref) : super(null) {
     subscription ??= auth.userChanges().listen(
       (event) async {
-        user = event;
+        if (event != null) {
+          final userDoc = await db.doc('users/${event.uid}').get();
 
-        if (user != null) {
-          ref.refresh(pCurrentUserProvider);
-          final userDoc = await db.doc('users/${user!.uid}').get();
-          isFirstTime = !userDoc.exists;
+          if (userDoc.exists) {
+            state = PUser.fromJson(userDoc.data()!);
+          } else {
+            final puser = PUser(
+              id: event.uid,
+              email: event.email!,
+              name: event.displayName ?? "",
+              profilePicture: PProfilePicture(link: event.photoURL ?? ""),
+            );
+
+            await db.doc('users/${event.uid}').set(puser.toJson());
+            state = puser;
+          }
+        } else {
+          state = null;
         }
-        notifyListeners();
+        ref.refresh(pCurrentUserProvider);
       },
     );
   }
@@ -54,7 +64,7 @@ class AuthNotifier extends ChangeNotifier {
 /// to access the currently active user use
 /// pCurrentUserPorivder, or pUserProvider to access any user
 /// through their uid
-final authProvider = ChangeNotifierProvider<AuthNotifier>(
+final authProvider = StateNotifierProvider<AuthNotifier, PUser?>(
   (ref) {
     return AuthNotifier(ref);
   },
@@ -64,18 +74,19 @@ final authProvider = ChangeNotifierProvider<AuthNotifier>(
 /// entry for the currently loggedin user changes.
 final pCurrentUserProvider = StreamProvider<PUser?>(
   (ref) async* {
-    final auth = ref.read(authProvider);
-    final user = auth.user!;
+    final user = ref.read(authProvider);
     final db = FirebaseFirestore.instance;
-    yield* db.doc('users/${user.uid}').snapshots().map(
-      (event) {
-        final data = event.data();
-        if (data != null) {
-          return PUser.fromJson(data);
-        }
-        return null;
-      },
-    );
+    if (user != null) {
+      yield* db.doc('users/${user.id}').snapshots().map(
+        (event) {
+          final data = event.data();
+          if (data != null) {
+            return PUser.fromJson(data);
+          }
+          return null;
+        },
+      );
+    }
   },
 );
 

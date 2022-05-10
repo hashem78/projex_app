@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/models/user_model/user_model.dart';
 import 'package:projex_app/screens/add_members/add_members_screen.dart';
 import 'package:projex_app/screens/add_roles_to_user/add_roles_to_user_screen.dart';
@@ -37,17 +38,11 @@ final routerProvider = Provider<GoRouter>(
     return GoRouter(
       debugLogDiagnostics: true,
       urlPathStrategy: UrlPathStrategy.path,
-      refreshListenable: auth,
+      refreshListenable: GoRouterRefreshStream(auth.stream),
       routes: [
         GoRoute(
           path: '/',
           builder: (context, state) => const HomeScreen(),
-          redirect: (state) {
-            if (auth.isFirstTime) {
-              return '/firstTime';
-            }
-            return null;
-          },
           routes: [
             GoRoute(
               path: 'profile',
@@ -96,8 +91,8 @@ final routerProvider = Provider<GoRouter>(
                 GoRoute(
                   path: 'editRole',
                   builder: (context, state) => EditRoleScreen(
-                    project: (state.extra as Map)['project'],
-                    role: (state.extra as Map)['role'],
+                    project: state.extra as PProject,
+                    roleId: state.queryParams['roleId']!,
                   ),
                 ),
               ],

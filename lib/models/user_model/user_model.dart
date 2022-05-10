@@ -156,7 +156,7 @@ class PUser with _$PUser {
     );
   }
 
-  const factory PUser.student({
+  const factory PUser({
     @Default("") String id,
     @Default("") String name,
     @Default("") String email,
@@ -164,7 +164,7 @@ class PUser with _$PUser {
     PProfilePicture? profilePicture,
     @Default([]) List<PSocial> socials,
     @Default([]) List<String> projectIds,
-  }) = _PUserStudent;
+  }) = _PUser;
 
   factory PUser.fromJson(Map<String, dynamic> json) => _$PUserFromJson(json);
 }
