@@ -1,5 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+enum EditReason {
+  profile,
+  project,
+}
+
 class EditingNotifier extends StateNotifier<bool> {
   EditingNotifier() : super(false);
 
@@ -12,6 +17,8 @@ class EditingNotifier extends StateNotifier<bool> {
   }
 }
 
-final allowEditingProjectProvider = StateNotifierProvider.autoDispose<EditingNotifier, bool>((ref) {
-  return EditingNotifier();
-});
+final editingProvider = StateNotifierProvider.autoDispose.family<EditingNotifier, bool, EditReason>(
+  (ref, reason) {
+    return EditingNotifier();
+  },
+);

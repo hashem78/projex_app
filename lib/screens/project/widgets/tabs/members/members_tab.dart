@@ -16,7 +16,7 @@ class MembersTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final allowEditing = ref.watch(allowEditingProjectProvider);
+    final isEditing = ref.watch(editingProvider(EditReason.project));
 
     return ListView.builder(
       itemBuilder: (context, index) {
@@ -27,7 +27,7 @@ class MembersTab extends ConsumerWidget {
               project: project,
               user: outterUser,
             );
-            if (allowEditing) {
+            if (isEditing) {
               return Row(
                 children: [
                   Expanded(child: child),

@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>To pick profile pictures and attachments</string>
+	<key>NSCameraUsageDescription</key>
+    <string>To pick profile pictures and attachments</string>
+	<key>NSMicrophoneUsageDescription</key>
+    <string>For video attachments</string>
 	<key>CFBundleLocalizations</key>
 	<array>
    	<string>en</string>

@@ -21,7 +21,7 @@ class ProjectRolesListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isEditing = ref.watch(allowEditingProjectProvider);
+    final isEditing = ref.watch(editingProvider(EditReason.project));
 
     final router = ref.watch(routerProvider);
     return FirestoreListView<PRole>(

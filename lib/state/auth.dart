@@ -37,8 +37,10 @@ class AuthNotifier extends StateNotifier<PUser?> {
             final puser = PUser(
               id: event.uid,
               email: event.email!,
-              name: event.displayName ?? "",
-              profilePicture: PProfilePicture(link: event.photoURL ?? ""),
+              name: event.displayName ?? event.email!.split('@').first,
+              profilePicture: PProfilePicture(
+                link: event.photoURL ?? "https://i.imgur.com/qW7gjGk.jpg",
+              ),
             );
             await db.doc('users/${event.uid}').set(puser.toJson());
             state = puser;

@@ -18,7 +18,8 @@ class ProjectSliverAppbar extends SliverOverlapAbsorber {
             actions: [
               Consumer(
                 builder: (context, ref, child) {
-                  final isEditing = ref.watch(allowEditingProjectProvider);
+                  final isEditing = ref.watch(editingProvider(EditReason.project));
+
                   return IconButton(
                     icon: !isEditing
                         ? const Icon(Icons.edit)
@@ -27,7 +28,11 @@ class ProjectSliverAppbar extends SliverOverlapAbsorber {
                             color: Colors.white,
                           ),
                     onPressed: () {
-                      ref.read(allowEditingProjectProvider.notifier).toggle();
+                      ref
+                          .read(
+                            editingProvider(EditReason.project).notifier,
+                          )
+                          .toggle();
                     },
                   );
                 },
