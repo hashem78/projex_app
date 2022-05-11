@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
@@ -6,7 +5,6 @@ import 'package:projex_app/screens/add_members/add_members_screen.dart';
 import 'package:projex_app/screens/add_roles_to_user/add_roles_to_user_screen.dart';
 import 'package:projex_app/screens/create_project/create_project_screen.dart';
 import 'package:projex_app/screens/edit_roles/edit_roles_screen.dart';
-import 'package:projex_app/screens/home/pages/settings/settings_page.dart';
 import 'package:projex_app/screens/project/project_screen.dart';
 import 'package:projex_app/screens/home/home_screen.dart';
 import 'package:projex_app/screens/login/login_screen.dart';
