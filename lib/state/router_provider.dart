@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
@@ -61,13 +62,13 @@ final routerProvider = Provider<GoRouter>(
                 GoRoute(
                   path: 'addMembers',
                   builder: (context, state) => AddMembersScreen(
-                    pid: state.queryParams['pid']!,
+                    pid: state.params['pid']!,
                   ),
                 ),
                 GoRoute(
                   path: 'addRolesToUser',
                   builder: (context, state) => AddRolesToUserScreen(
-                    pid: state.queryParams['pid']!,
+                    pid: state.params['pid']!,
                     uid: state.queryParams['uid']!,
                   ),
                 ),

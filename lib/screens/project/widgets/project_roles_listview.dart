@@ -40,7 +40,7 @@ class ProjectRolesListView extends ConsumerWidget {
           onTap: isEditing && !router.location.contains(role.id)
               ? () {
                   context.push(
-                    '/project/editRole?roleId=${role.id}',
+                    '/project/${project.id}/editRole?roleId=${role.id}',
                     extra: project,
                   );
                 }

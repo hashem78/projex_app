@@ -21,7 +21,7 @@ class PProjectScreenFAB extends ConsumerWidget {
         SpeedDialChild(
           backgroundColor: Colors.purple,
           onTap: () {
-            context.push('/project/addMembers?pid=${project.id}');
+            context.push('/project/${project.id}/addMembers');
           },
           child: const Icon(
             Icons.person,
@@ -42,7 +42,7 @@ class PProjectScreenFAB extends ConsumerWidget {
             );
             await project.createRole(newRole);
             context.push(
-              '/project/editRole?roleId=${newRole.id}',
+              '/project/${project.id}/editRole?roleId=${newRole.id}',
               extra: project,
             );
           },
