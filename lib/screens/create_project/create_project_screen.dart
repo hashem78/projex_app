@@ -8,13 +8,17 @@ import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/state/auth.dart';
 import 'package:uuid/uuid.dart';
 
-final createProjectKey = GlobalKey<FormBuilderState>();
-
-class CreateProjectScreen extends ConsumerWidget {
+class CreateProjectScreen extends ConsumerStatefulWidget {
   const CreateProjectScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<CreateProjectScreen> createState() => _CreateProjectScreenState();
+}
+
+class _CreateProjectScreenState extends ConsumerState<CreateProjectScreen> {
+  final createProjectKey = GlobalKey<FormBuilderState>();
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
