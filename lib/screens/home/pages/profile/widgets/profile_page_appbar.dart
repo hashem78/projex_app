@@ -52,14 +52,11 @@ class ProfileEditButton extends ConsumerWidget {
     final isEditing = ref.watch(editingProvider(EditReason.profile));
     return IconButton(
       onPressed: () {
+        final editing = ref.read(editingProvider(EditReason.profile));
+        if (editing) {}
         ref.read(editingProvider(EditReason.profile).notifier).toggle();
       },
-      icon: !isEditing
-          ? const Icon(Icons.edit)
-          : const Icon(
-              Icons.close,
-              color: Colors.red,
-            ),
+      icon: !isEditing ? const Icon(Icons.edit) : const Icon(Icons.done),
     );
   }
 }
