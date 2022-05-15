@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/models/role_model/role.dart';
+import 'package:projex_app/state/router_provider.dart';
 
-class DeleteRoleTile extends StatelessWidget {
+class DeleteRoleTile extends ConsumerWidget {
   const DeleteRoleTile({
     Key? key,
     required this.role,
@@ -14,7 +15,7 @@ class DeleteRoleTile extends StatelessWidget {
   final PProject project;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       leading: const Icon(
         Icons.delete,
@@ -48,7 +49,7 @@ class DeleteRoleTile extends StatelessWidget {
             ) ??
             false;
         if (shouldDelete) {
-          context.pop();
+          ref.read(routerProvider).pop();
           await project.removeRole(role.id);
         }
       },

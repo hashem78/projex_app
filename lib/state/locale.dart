@@ -24,7 +24,7 @@ final _arabic = TranslationsContainer(
 /// persisted to storage on change.
 class TranslationsNotifier extends StateNotifier<TranslationsContainer> {
   TranslationsNotifier(TranslationsContainer state, this.ref) : super(state) {
-    final window = WidgetsBinding.instance!.window;
+    final window = WidgetsBinding.instance.window;
     window.onLocaleChanged = () async {
       final locale = AppLocaleUtils.findDeviceLocale();
       await setTranslations(locale);

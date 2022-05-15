@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:projex_app/state/add_members.dart';
 import 'package:projex_app/state/auth.dart';
+import 'package:projex_app/state/router_provider.dart';
 
 class AddMembersButton extends ConsumerWidget {
   const AddMembersButton({
@@ -31,7 +31,7 @@ class AddMembersButton extends ConsumerWidget {
                       growable: false,
                     );
                 await user.addMembersToProject(projectId: pid, memberIds: memberIds);
-                context.pop();
+                ref.read(routerProvider).pop();
               }
             : null,
         child: const Text("Add members"),

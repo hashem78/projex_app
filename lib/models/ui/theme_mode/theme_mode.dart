@@ -16,7 +16,7 @@ class PThemeMode with _$PThemeMode {
       );
   @JsonKey(ignore: true)
   Brightness get flutterBrightness => when(
-        system: () => SchedulerBinding.instance!.window.platformBrightness,
+        system: () => SchedulerBinding.instance.window.platformBrightness,
         light: () => Brightness.light,
         dark: () => Brightness.dark,
       );
@@ -24,6 +24,5 @@ class PThemeMode with _$PThemeMode {
   const factory PThemeMode.light() = _PThemeModeLight;
   const factory PThemeMode.dark() = _PThemeModeDark;
 
-  factory PThemeMode.fromJson(Map<String, dynamic> json) =>
-      _$PThemeModeFromJson(json);
+  factory PThemeMode.fromJson(Map<String, dynamic> json) => _$PThemeModeFromJson(json);
 }

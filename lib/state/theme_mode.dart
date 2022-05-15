@@ -11,9 +11,9 @@ class PThemeModeNotifier extends StateNotifier<PThemeMode> {
   /// To be able to access the SharedPereferences instance
   final Ref _ref;
   void handleSystemTheme() {
-    final window = WidgetsBinding.instance!.window;
+    final window = WidgetsBinding.instance.window;
     window.onPlatformBrightnessChanged = () {
-      WidgetsBinding.instance?.handlePlatformBrightnessChanged();
+      WidgetsBinding.instance.handlePlatformBrightnessChanged();
       // We ignore the const here because const instances are all the same
       // And since rebuilds happen on state changes, the new state has to be
       // non const for a rebuild to happen.
@@ -23,9 +23,9 @@ class PThemeModeNotifier extends StateNotifier<PThemeMode> {
   }
 
   void handleDarkAndLightThemes() {
-    final window = WidgetsBinding.instance!.window;
+    final window = WidgetsBinding.instance.window;
     window.onPlatformBrightnessChanged =
-        WidgetsBinding.instance?.handlePlatformBrightnessChanged;
+        WidgetsBinding.instance.handlePlatformBrightnessChanged;
   }
 
   PThemeModeNotifier(PThemeMode state, this._ref) : super(state) {

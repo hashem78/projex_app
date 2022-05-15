@@ -4,6 +4,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/models/role_model/role.dart';
+import 'package:projex_app/state/router_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class PProjectScreenFAB extends ConsumerWidget {
@@ -41,10 +42,10 @@ class PProjectScreenFAB extends ConsumerWidget {
               name: 'New Role',
             );
             await project.createRole(newRole);
-            context.push(
-              '/project/${project.id}/editRole?roleId=${newRole.id}',
-              extra: project,
-            );
+            ref.read(routerProvider).push(
+                  '/project/${project.id}/editRole?roleId=${newRole.id}',
+                  extra: project,
+                );
           },
         ),
       ],
