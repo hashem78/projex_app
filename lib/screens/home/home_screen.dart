@@ -30,6 +30,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     super.dispose();
   }
 
+  final colorMappings = <int, Color>{
+    0: Colors.blue,
+    1: Colors.green,
+    2: Colors.teal,
+  };
+  final icons = [
+    Icons.home,
+    Icons.search,
+    Icons.settings,
+  ];
   @override
   Widget build(BuildContext context) {
     final isEditing = ref.watch(editingProvider(EditReason.profile));
@@ -37,12 +47,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       floatingActionButton: const HomeFAB(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: AnimatedBottomNavigationBar(
-        icons: const [
-          Icons.home,
-          Icons.list,
-          Icons.settings,
-        ],
-        activeColor: Colors.blue,
+        icons: icons,
+        activeColor: colorMappings[_selectedIndex],
         activeIndex: _selectedIndex,
         gapLocation: GapLocation.end,
         notchSmoothness: NotchSmoothness.defaultEdge,

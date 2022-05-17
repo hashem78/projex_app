@@ -28,19 +28,23 @@ class PProject with _$PProject {
   }
 
   const factory PProject({
+    required String creatorId,
     required String id,
     required String name,
     required String description,
     required DateTime startDate,
     required DateTime endDate,
+    @Default(true) public,
     @Default({}) Set<String> memberIds,
     @Default({}) Map<String, Set<String>> userRoleMap,
   }) = _PProject;
 
   const factory PProject.loading({
+    @Default('') String creatorId,
     @Default('') String id,
     @Default('') String name,
     @Default('') String description,
+    @Default(true) public,
     @Default({}) Set<String> memberIds,
     @Default({}) Map<String, Set<String>> userRoleMap,
   }) = _PProjectLoading;

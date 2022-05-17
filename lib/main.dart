@@ -94,7 +94,13 @@ class App extends ConsumerWidget {
               FormBuilderLocalizations.delegate,
             ],
             themeMode: themeState.flutterThemeMode,
-            theme: ThemeData(brightness: themeState.flutterBrightness),
+            theme: ThemeData(
+              brightness: themeState.flutterBrightness,
+              inputDecorationTheme: const InputDecorationTheme(
+                border: InputBorder.none,
+                filled: true,
+              ),
+            ),
             routeInformationParser: router.routeInformationParser,
             routerDelegate: router.routerDelegate,
           );
@@ -114,7 +120,9 @@ class App extends ConsumerWidget {
               ),
               FormBuilderLocalizations.delegate,
             ],
-            theme: CupertinoThemeData(brightness: themeState.flutterBrightness),
+            theme: CupertinoThemeData(
+              brightness: themeState.flutterBrightness,
+            ),
             routeInformationParser: router.routeInformationParser,
             routerDelegate: router.routerDelegate,
           );

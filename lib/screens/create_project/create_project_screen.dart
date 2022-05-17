@@ -87,6 +87,19 @@ class _CreateProjectScreenState extends ConsumerState<CreateProjectScreen> {
                       initialDate: DateTime.now().add(const Duration(days: 1)),
                       validator: FormBuilderValidators.required(),
                     ),
+                    FormBuilderSwitch(
+                      name: 'public',
+                      decoration: const InputDecoration(border: InputBorder.none),
+                      validator: FormBuilderValidators.required(),
+                      title: Text(
+                        'Make your project public',
+                        style: TextStyle(
+                          fontSize: 40.sp,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                      initialValue: true,
+                    ),
                     SizedBox(
                       width: 1.sw,
                       child: OutlinedButton(
@@ -101,13 +114,16 @@ class _CreateProjectScreenState extends ConsumerState<CreateProjectScreen> {
                             final desc = state['desc']!.value as String;
                             final startDate = state['start']!.value as DateTime;
                             final endDate = state['end']!.value as DateTime;
+                            final public = state['public']!.value as bool;
 
                             final project = PProject(
+                              creatorId: uid,
                               id: pid,
                               name: pname,
                               description: desc,
                               startDate: startDate,
                               endDate: endDate,
+                              public: public,
                               memberIds: {uid},
                               userRoleMap: {
                                 uid: {'owner'}
