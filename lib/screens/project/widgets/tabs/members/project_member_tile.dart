@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:projex_app/models/user_model/user_model.dart';
 import 'package:projex_app/screens/project/widgets/tabs/members/member_profile_image.dart';
 import 'package:projex_app/screens/project/widgets/tabs/members/member_role_list.dart';
+import 'package:projex_app/state/user_provider.dart';
 
-class ProjectMemberTile extends StatelessWidget {
-  final PUser user;
+class ProjectMemberTile extends ConsumerWidget {
   final bool showRoles;
   const ProjectMemberTile({
     super.key,
     this.showRoles = true,
-    required this.user,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
     return InkWell(
       onTap: () {
-        context.push('/profile/${user.id}', extra: user);
+        final user = ref.read(userProvider);
+        context.push('/profile/${user.id}');
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -37,10 +38,7 @@ class ProjectMemberTile extends StatelessWidget {
                     user.email,
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
-                  if (showRoles)
-                    MemberRoleList(
-                      user: user,
-                    ),
+                  if (showRoles) const MemberRoleList(),
                 ],
               ),
             ),

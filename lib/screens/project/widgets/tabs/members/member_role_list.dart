@@ -3,22 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:projex_app/models/role_model/role.dart';
-import 'package:projex_app/models/user_model/user_model.dart';
 import 'package:projex_app/screens/project/widgets/tabs/members/edit_project_user_roles_button.dart';
 import 'package:projex_app/screens/project/widgets/role_bage.dart';
 import 'package:projex_app/state/project_provider.dart';
+import 'package:projex_app/state/user_provider.dart';
 
 class MemberRoleList extends ConsumerWidget {
   const MemberRoleList({
     Key? key,
-    required this.user,
   }) : super(key: key);
-
-  final PUser user;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final project = ref.watch(projectProvider);
+    final user = ref.watch(userProvider);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -56,10 +54,7 @@ class MemberRoleList extends ConsumerWidget {
               return const SizedBox();
             },
           ),
-        EditProjectUserRolesButton(
-          pid: project.id,
-          uid: user.id,
-        ),
+        const EditProjectUserRolesButton(),
       ],
     );
   }

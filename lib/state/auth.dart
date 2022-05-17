@@ -83,20 +83,3 @@ final authProvider = StateNotifierProvider<AuthNotifier, PUser>(
     return AuthNotifier(ref);
   },
 );
-
-/// Provides a stream that changes whenever the database
-/// entry for a user changes.
-final pUserProvider = StreamProvider.autoDispose.family<PUser?, String>(
-  (ref, uid) async* {
-    final db = FirebaseFirestore.instance;
-    yield* db.doc('users/$uid').snapshots().map(
-      (event) {
-        final data = event.data();
-        if (data != null) {
-          return PUser.fromJson(data);
-        }
-        return null;
-      },
-    );
-  },
-);

@@ -4,15 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/state/editing.dart';
+import 'package:projex_app/state/project_provider.dart';
+import 'package:projex_app/state/user_provider.dart';
 
 class EditProjectUserRolesButton extends ConsumerWidget {
   const EditProjectUserRolesButton({
     Key? key,
-    required this.pid,
-    required this.uid,
   }) : super(key: key);
-  final String pid;
-  final String uid;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,6 +18,8 @@ class EditProjectUserRolesButton extends ConsumerWidget {
 
     return GestureDetector(
       onTap: () {
+        final uid = ref.read(selectedUserProvider);
+        final pid = ref.read(selectedProjectProvider);
         context.push('/project/$pid/addRolesToUser?uid=$uid');
       },
       child: isEditing
