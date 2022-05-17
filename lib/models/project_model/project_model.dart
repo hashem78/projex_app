@@ -7,6 +7,25 @@ part 'project_model.freezed.dart';
 @freezed
 class PProject with _$PProject {
   const PProject._();
+
+  Future<void> addInvitationTo(String uid) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('projects/$id').update(
+      {
+        'invitations': FieldValue.arrayUnion([uid]),
+      },
+    );
+  }
+
+  Future<void> removeInvitation(String uid) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('projects/$id').update(
+      {
+        'invitations': FieldValue.arrayRemove([uid]),
+      },
+    );
+  }
+
   Future<void> editRole(PRole role) async {
     final db = FirebaseFirestore.instance;
     await db.doc('projects/$id/roles/${role.id}').update(role.toJson());
@@ -36,6 +55,7 @@ class PProject with _$PProject {
     required DateTime endDate,
     @Default(true) public,
     @Default({}) Set<String> memberIds,
+    @Default({}) Set<String> invitations,
     @Default({}) Map<String, Set<String>> userRoleMap,
   }) = _PProject;
 
@@ -46,6 +66,7 @@ class PProject with _$PProject {
     @Default('') String description,
     @Default(true) public,
     @Default({}) Set<String> memberIds,
+    @Default({}) Set<String> invitations,
     @Default({}) Map<String, Set<String>> userRoleMap,
   }) = _PProjectLoading;
 

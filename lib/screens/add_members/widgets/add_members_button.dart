@@ -29,10 +29,12 @@ class AddMembersButton extends ConsumerWidget {
                     .toList(
                       growable: false,
                     );
-                await user.addMembersToProject(
-                  projectId: project.id,
-                  memberIds: memberIds,
-                );
+                for (final id in memberIds) {
+                  await user.addMemberToProject(
+                    projectId: project.id,
+                    memberId: id,
+                  );
+                }
                 ref.read(routerProvider).pop();
               }
             : null,

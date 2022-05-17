@@ -94,31 +94,48 @@ class PUser with _$PUser {
     await batch.commit();
   }
 
-  Future<void> addMembersToProject({
+  Future<void> addMemberToProject({
     required String projectId,
-    required List<String> memberIds,
+    required String memberId,
   }) async {
     final db = FirebaseFirestore.instance;
-
+    FirebaseFirestore.instance.doc('users/$memberId').update(
+      {
+        'projectIds': FieldValue.arrayUnion(
+          [
+            projectId,
+          ],
+        ),
+      },
+    );
     await db.doc('projects/$projectId').update(
       {
         "memberIds": FieldValue.arrayUnion(
-          memberIds,
+          [memberId],
         ),
       },
     );
   }
 
-  Future<void> removeMembersFromProject({
+  Future<void> removeMemberFromProject({
     required String projectId,
-    required List<String> memberIds,
+    required List<String> memberId,
   }) async {
     final db = FirebaseFirestore.instance;
+    FirebaseFirestore.instance.doc('users/$memberId').update(
+      {
+        'projectIds': FieldValue.arrayRemove(
+          [
+            projectId,
+          ],
+        ),
+      },
+    );
 
     await db.doc('projects/$projectId').update(
       {
         "memberIds": FieldValue.arrayRemove(
-          memberIds,
+          memberId,
         ),
       },
     );

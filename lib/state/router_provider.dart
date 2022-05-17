@@ -8,6 +8,7 @@ import 'package:projex_app/screens/edit_roles/edit_roles_screen.dart';
 import 'package:projex_app/screens/project/project_screen.dart';
 import 'package:projex_app/screens/home/home_screen.dart';
 import 'package:projex_app/screens/login/login_screen.dart';
+import 'package:projex_app/screens/review_invites/review_invites_screen.dart';
 import 'package:projex_app/state/auth.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/user_provider.dart';
@@ -64,6 +65,17 @@ final routerProvider = Provider<GoRouter>(
                 );
               },
               routes: [
+                GoRoute(
+                  path: 'reviewInvites',
+                  builder: (context, state) {
+                    return ProviderScope(
+                      overrides: [
+                        selectedProjectProvider.overrideWithValue(state.params['pid']!),
+                      ],
+                      child: const ReviewInvitesScreen(),
+                    );
+                  },
+                ),
                 GoRoute(
                   path: 'addMembers',
                   builder: (context, state) {

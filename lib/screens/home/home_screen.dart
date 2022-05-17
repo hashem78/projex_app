@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/screens/home/pages/profile/profie_page.dart';
 import 'package:projex_app/screens/home/pages/projects/projects_page.dart';
 import 'package:projex_app/screens/home/pages/settings/settings_page.dart';
-import 'package:projex_app/screens/home/widgets/home_fab.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:projex_app/state/editing.dart';
 
@@ -37,29 +36,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   };
   final icons = [
     Icons.home,
-    Icons.search,
+    Icons.list,
     Icons.settings,
   ];
   @override
   Widget build(BuildContext context) {
     final isEditing = ref.watch(editingProvider(EditReason.profile));
     return Scaffold(
-      floatingActionButton: const HomeFAB(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: AnimatedBottomNavigationBar(
-        icons: icons,
-        activeColor: colorMappings[_selectedIndex],
-        activeIndex: _selectedIndex,
-        gapLocation: GapLocation.end,
-        notchSmoothness: NotchSmoothness.defaultEdge,
-        onTap: (index) => setState(() {
-          _selectedIndex = index;
-          _pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 250),
-            curve: Curves.easeIn,
-          );
-        }),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+        child: AnimatedBottomNavigationBar(
+          icons: icons,
+          gapWidth: 0,
+          activeColor: colorMappings[_selectedIndex],
+          activeIndex: _selectedIndex,
+          onTap: (index) => setState(
+            () {
+              _selectedIndex = index;
+              _pageController.animateToPage(
+                index,
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeIn,
+              );
+            },
+          ),
+        ),
       ),
       body: PageView(
         physics: isEditing ? const NeverScrollableScrollPhysics() : null,

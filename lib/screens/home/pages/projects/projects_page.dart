@@ -6,22 +6,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
+import 'package:projex_app/state/auth.dart';
 import 'package:projex_app/state/user_provider.dart';
 
-class HomeProjectsPage extends StatelessWidget {
+class HomeProjectsPage extends ConsumerWidget {
   const HomeProjectsPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return CustomScrollView(
       slivers: [
         SliverAppBar(
           expandedHeight: 0.25.sh,
           backgroundColor: Colors.green,
           flexibleSpace: const FlexibleSpaceBar(
-            title: Text('Explore Projects'),
+            title: Text('My Projects'),
           ),
         ),
         FirestoreQueryBuilder<PProject>(
@@ -29,7 +30,10 @@ class HomeProjectsPage extends StatelessWidget {
               .collection(
                 '/projects',
               )
-              .where('public', isEqualTo: true)
+              .where(
+                'memberIds',
+                arrayContains: ref.watch(authProvider).id,
+              )
               .withConverter(
                 fromFirestore: (p, _) => PProject.fromJson(p.data()!),
                 toFirestore: (_, __) => {},
