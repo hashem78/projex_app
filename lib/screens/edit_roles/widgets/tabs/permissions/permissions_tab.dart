@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:projex_app/models/permission/permission_model.dart';
-import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/models/role_model/role.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:projex_app/state/project_provider.dart';
