@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterfire_ui/firestore.dart';
+import 'package:projex_app/models/permission/permission_model.dart';
 import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/screens/project/widgets/tabs/members/project_member_tile.dart';
 import 'package:projex_app/state/auth.dart';
@@ -41,21 +42,22 @@ class RoleMembersListView extends ConsumerWidget {
                     showRoles: false,
                   ),
                 ),
-                IconButton(
-                  onPressed: () async {
-                    final pid = ref.read(selectedProjectProvider);
-                    final cu = ref.read(authProvider);
-                    await cu.removeRoleFromUser(
-                      projectId: pid,
-                      userId: uid.data(),
-                      role: role,
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.close,
-                    color: Colors.red,
+                if (!role.permissions.contains(const PPermission.owner()))
+                  IconButton(
+                    onPressed: () async {
+                      final pid = ref.read(selectedProjectProvider);
+                      final cu = ref.read(authProvider);
+                      await cu.removeRoleFromUser(
+                        projectId: pid,
+                        userId: uid.data(),
+                        role: role,
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    ),
                   ),
-                ),
               ],
             ),
           );

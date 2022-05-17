@@ -4,6 +4,10 @@ part 'permission_model.g.dart';
 
 @freezed
 class PPermission with _$PPermission {
+  const factory PPermission.owner({
+    @Default('owner') String fieldName,
+    @Default('Owner') String title,
+  }) = _PPermissionOwner;
   const factory PPermission.admin({
     @Default('admin') String fieldName,
     @Default('Admin') String title,
@@ -57,6 +61,7 @@ class PPermission with _$PPermission {
     @Default('Read History') String title,
   }) = _PPermissionReadHistory;
   static const List<PPermission> values = [
+    PPermission.owner(),
     PPermission.admin(),
     PPermission.edit(),
     PPermission.changeNickName(),

@@ -4,7 +4,9 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
+import 'package:projex_app/models/permission/permission_model.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
+import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/state/auth.dart';
 import 'package:uuid/uuid.dart';
 
@@ -93,20 +95,40 @@ class _CreateProjectScreenState extends ConsumerState<CreateProjectScreen> {
                           if (isValid) {
                             final state = createProjectKey.currentState!.fields;
                             const uuid = Uuid();
+                            final uid = ref.read(authProvider).id;
                             final pid = uuid.v4();
                             final pname = state['name']!.value as String;
                             final desc = state['desc']!.value as String;
                             final startDate = state['start']!.value as DateTime;
                             final endDate = state['end']!.value as DateTime;
+
                             final project = PProject(
                               id: pid,
                               name: pname,
                               description: desc,
                               startDate: startDate,
                               endDate: endDate,
+                              memberIds: {uid},
+                              userRoleMap: {
+                                uid: {'owner'}
+                              },
                             );
                             final user = ref.read(authProvider);
                             await user.createProject(project: project);
+                            final role = PRole(
+                              color: Colors.red.value.toRadixString(16),
+                              id: 'owner',
+                              name: 'Owner',
+                              permissions: {
+                                const PPermission.owner(),
+                              },
+                            );
+                            await project.createRole(role);
+                            await user.assignRoleToUser(
+                              projectId: pid,
+                              userId: user.id,
+                              role: role,
+                            );
                           }
                         },
                         child: const Text("Create Project"),

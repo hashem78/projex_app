@@ -22,7 +22,11 @@ class PermissionsTab extends ConsumerWidget {
         final perm = _perms[index];
         return FormBuilderSwitch(
           initialValue: role.permissions.contains(perm),
-          enabled: perm == const PPermission.admin() || !role.permissions.contains(const PPermission.admin()),
+          enabled: perm != const PPermission.owner() &&
+              (perm == const PPermission.admin() ||
+                  !role.permissions.contains(
+                    const PPermission.admin(),
+                  )),
           onChanged: (val) async {
             final project = ref.read(projectProvider);
             if (val == null) return;

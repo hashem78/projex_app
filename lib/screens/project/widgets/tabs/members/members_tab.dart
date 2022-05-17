@@ -26,9 +26,9 @@ class MembersTab extends ConsumerWidget {
               selectedUserProvider.overrideWithValue(uid),
             ],
             child: Row(
-              children: const [
-                Expanded(child: ProjectMemberTile()),
-                RemoveMemberFromProjectButton(),
+              children: [
+                const Expanded(child: ProjectMemberTile()),
+                if (!project.userRoleMap[uid]!.contains('owner')) const RemoveMemberFromProjectButton(),
               ],
             ),
           );

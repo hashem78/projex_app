@@ -18,9 +18,10 @@ class ManageTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
-        DeleteRoleTile(
-          role: role,
-        ),
+        if (role.id != 'owner')
+          DeleteRoleTile(
+            role: role,
+          ),
         NumberOfMembersThatHaveRoleTile(
           role: role,
         ),

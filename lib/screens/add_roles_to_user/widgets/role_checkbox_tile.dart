@@ -22,7 +22,14 @@ class RoleCheckboxTile extends ConsumerWidget {
       title: Text(role.name),
       value: project.userRoleMap[user.id]?.contains(role.id) ?? false,
       onChanged: (val) async {
+        final project = ref.read(projectProvider);
         final user = ref.read(userProvider);
+        if (project.userRoleMap[user.id]!.contains('owner')) {
+          ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+            const SnackBar(content: Text('Can\'t remove Owner role!')),
+          );
+          return;
+        }
         if (!val!) {
           await user.removeRoleFromUser(
             projectId: project.id,
