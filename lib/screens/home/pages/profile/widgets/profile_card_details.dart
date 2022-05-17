@@ -12,7 +12,7 @@ class ProfileScreenCardDetails extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(authProvider)!;
+    final user = ref.watch(authProvider);
     final isEditing = ref.watch(editingProvider(EditReason.profile));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

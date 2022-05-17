@@ -44,7 +44,7 @@ class RoleMembersListView extends ConsumerWidget {
                   IconButton(
                     onPressed: () async {
                       final pid = ref.read(selectedProjectProvider);
-                      final cu = ref.read(authProvider)!;
+                      final cu = ref.read(authProvider);
                       await cu.removeRoleFromUser(
                         projectId: pid,
                         userId: user.id,

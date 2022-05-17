@@ -21,12 +21,12 @@ class ProfileImage extends ConsumerWidget {
   final double borderWidth;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(authProvider)!;
+    final user = ref.watch(authProvider);
     final isEditing = ref.watch(editingProvider(EditReason.profile));
     return GestureDetector(
       onTap: isEditing ? () async => await _changePfp(user.id, ref) : null,
       child: CachedNetworkImage(
-        imageUrl: user.profilePicture!.link,
+        imageUrl: user.profilePicture.link,
         imageBuilder: (context, imageProvider) {
           return AnimatedContainer(
             width: width,

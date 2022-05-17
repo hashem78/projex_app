@@ -14,7 +14,7 @@ class AddMembersButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final memberIds = ref.watch(memberEmailsProvider);
-    final user = ref.watch(authProvider)!;
+    final user = ref.watch(authProvider);
     return SizedBox(
       width: 1.sw,
       child: TextButton(

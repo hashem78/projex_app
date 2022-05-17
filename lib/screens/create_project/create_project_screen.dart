@@ -105,7 +105,7 @@ class _CreateProjectScreenState extends ConsumerState<CreateProjectScreen> {
                               startDate: startDate,
                               endDate: endDate,
                             );
-                            final user = ref.read(authProvider)!;
+                            final user = ref.read(authProvider);
                             await user.createProject(project: project);
                           }
                         },

@@ -17,7 +17,7 @@ class RemoveMemberFromProjectButton extends ConsumerWidget {
     return IconButton(
       icon: const Icon(Icons.close, color: Colors.red),
       onPressed: () async {
-        await ref.read(authProvider)!.removeMembersFromProject(
+        await ref.read(authProvider).removeMembersFromProject(
           projectId: project.id,
           memberIds: [uid],
         );

@@ -23,7 +23,7 @@ class ProjectMemberTile extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            MemberTileProfileImage(link: user.profilePicture?.link ?? ""),
+            MemberTileProfileImage(link: user.profilePicture.link),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(

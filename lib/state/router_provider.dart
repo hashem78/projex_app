@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/screens/add_members/add_members_screen.dart';
 import 'package:projex_app/screens/add_roles_to_user/add_roles_to_user_screen.dart';
 import 'package:projex_app/screens/create_project/create_project_screen.dart';
@@ -113,8 +113,8 @@ final routerProvider = Provider<GoRouter>(
       redirect: (state) {
         // if the user is not logged in, they need to login
         final isLoggingIn = state.subloc == '/login';
-
-        if (auth.isNotLoggedIn) {
+        final isNotLoggedIn = FirebaseAuth.instance.currentUser == null;
+        if (isNotLoggedIn) {
           return isLoggingIn ? null : '/login';
         }
 

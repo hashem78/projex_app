@@ -8,7 +8,7 @@ import 'package:projex_app/models/user_model/user_model.dart';
 
 /// The notifier for when the auth state changes
 /// to be used by authProvider.
-class AuthNotifier extends StateNotifier<PUser?> {
+class AuthNotifier extends StateNotifier<PUser> {
   static final auth = FirebaseAuth.instance;
   static final db = FirebaseFirestore.instance;
 
@@ -22,10 +22,7 @@ class AuthNotifier extends StateNotifier<PUser?> {
   StreamSubscription<User?>? subscription;
   StreamSubscription<PUser?>? psubscription;
 
-  bool get isLoggedIn => state != null;
-  bool get isNotLoggedIn => state == null;
-
-  AuthNotifier(this.ref) : super(null) {
+  AuthNotifier(this.ref) : super(const PUser()) {
     subscription ??= auth.userChanges().listen(
       (event) async {
         if (event != null) {
@@ -61,7 +58,7 @@ class AuthNotifier extends StateNotifier<PUser?> {
             },
           );
         } else {
-          state = null;
+          state = const PUser();
         }
       },
     );
@@ -81,7 +78,7 @@ class AuthNotifier extends StateNotifier<PUser?> {
 /// to access the currently active user use
 /// pCurrentUserPorivder, or pUserProvider to access any user
 /// through their uid
-final authProvider = StateNotifierProvider<AuthNotifier, PUser?>(
+final authProvider = StateNotifierProvider<AuthNotifier, PUser>(
   (ref) {
     return AuthNotifier(ref);
   },

@@ -179,13 +179,26 @@ class PUser with _$PUser {
   }
 
   const factory PUser({
-    @Default("") String id,
-    @Default("") String name,
-    @Default("") String email,
-    @Default("") String phoneNumber,
-    PProfilePicture? profilePicture,
-    @Default([]) List<PSocial> socials,
-    @Default([]) List<String> projectIds,
+    @Default("")
+        String id,
+    @Default("")
+        String name,
+    @Default("")
+        String email,
+    @Default("")
+        String phoneNumber,
+    @Default(
+      PProfilePicture(
+        link: 'https://i.imgur.com/kEqAm6K.png',
+        width: 120,
+        height: 120,
+      ),
+    )
+        PProfilePicture profilePicture,
+    @Default([])
+        List<PSocial> socials,
+    @Default([])
+        List<String> projectIds,
   }) = _PUser;
 
   factory PUser.fromJson(Map<String, dynamic> json) => _$PUserFromJson(json);
