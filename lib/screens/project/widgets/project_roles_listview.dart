@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/state/editing.dart';
 import 'package:projex_app/state/project_provider.dart';
-import 'package:projex_app/state/router_provider.dart';
 
 class ProjectRolesListView extends ConsumerWidget {
   const ProjectRolesListView({
@@ -22,7 +21,6 @@ class ProjectRolesListView extends ConsumerWidget {
     final isEditing = ref.watch(editingProvider(EditReason.project));
     final project = ref.watch(projectProvider);
 
-    final router = ref.watch(routerProvider);
     return FirestoreListView<PRole>(
       query: FirebaseFirestore.instance
           .collection(
@@ -36,7 +34,7 @@ class ProjectRolesListView extends ConsumerWidget {
         final role = snap.data();
         return ListTile(
           tileColor: Color(int.parse(role.color, radix: 16)),
-          onTap: isEditing && !router.location.contains(role.id)
+          onTap: isEditing
               ? () {
                   context.push(
                     '/project/${project.id}/editRole?roleId=${role.id}',
@@ -61,7 +59,7 @@ class ProjectRolesListView extends ConsumerWidget {
               ),
             ],
           ),
-          trailing: isEditing && showDelete
+          trailing: isEditing && showDelete && role.id != 'owner'
               ? IconButton(
                   color: Colors.red,
                   icon: const Icon(
