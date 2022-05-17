@@ -5,15 +5,14 @@ import 'package:projex_app/models/permission/permission_model.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/models/role_model/role.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:projex_app/state/project_provider.dart';
 
 class PermissionsTab extends ConsumerWidget {
   const PermissionsTab({
     Key? key,
-    required this.project,
     required this.role,
   }) : super(key: key);
 
-  final PProject project;
   final PRole role;
   static const _perms = PPermission.values;
   @override
@@ -26,6 +25,7 @@ class PermissionsTab extends ConsumerWidget {
           initialValue: role.permissions.contains(perm),
           enabled: perm == const PPermission.admin() || !role.permissions.contains(const PPermission.admin()),
           onChanged: (val) async {
+            final project = ref.read(projectProvider);
             if (val == null) return;
             if (val) {
               final newPerms = {

@@ -36,5 +36,14 @@ class PProject with _$PProject {
     @Default({}) Set<String> memberIds,
     @Default({}) Map<String, Set<String>> userRoleMap,
   }) = _PProject;
+
+  const factory PProject.loading({
+    @Default('') String id,
+    @Default('') String name,
+    @Default('') String description,
+    @Default({}) Set<String> memberIds,
+    @Default({}) Map<String, Set<String>> userRoleMap,
+  }) = _PProjectLoading;
+
   factory PProject.fromJson(Map<String, dynamic> json) => _$PProjectFromJson(json);
 }

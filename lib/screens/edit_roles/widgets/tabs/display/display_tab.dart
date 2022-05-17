@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:projex_app/models/project_model/project_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/screens/edit_roles/widgets/tabs/display/color_rows.dart';
+import 'package:projex_app/state/project_provider.dart';
 
-class DisplayTab extends StatelessWidget {
+class DisplayTab extends ConsumerWidget {
   const DisplayTab({
     Key? key,
-    required this.project,
     required this.role,
   }) : super(key: key);
 
-  final PProject project;
   final PRole role;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListView(
@@ -22,6 +21,7 @@ class DisplayTab extends StatelessWidget {
           TextFormField(
             initialValue: role.name,
             onChanged: (val) async {
+              final project = ref.read(projectProvider);
               await project.editRole(role.copyWith(name: val));
             },
             decoration: InputDecoration(
@@ -29,10 +29,7 @@ class DisplayTab extends StatelessWidget {
               hintText: role.name,
             ),
           ),
-          ColorRows(
-            role: role,
-            project: project,
-          ),
+          ColorRows(role: role),
         ],
       ),
     );

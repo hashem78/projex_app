@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/models/role_model/role.dart';
+import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/router_provider.dart';
 
 class DeleteRoleTile extends ConsumerWidget {
   const DeleteRoleTile({
     Key? key,
     required this.role,
-    required this.project,
   }) : super(key: key);
 
   final PRole role;
-  final PProject project;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,6 +48,7 @@ class DeleteRoleTile extends ConsumerWidget {
             false;
         if (shouldDelete) {
           ref.read(routerProvider).pop();
+          final project = ref.read(projectProvider);
           await project.removeRole(role.id);
         }
       },

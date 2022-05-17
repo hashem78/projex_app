@@ -1,26 +1,35 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:projex_app/screens/project/widgets/project_builder.dart';
-import 'package:projex_app/state/auth.dart';
 
-class HomeProjectsPage extends ConsumerWidget {
+import 'package:flutterfire_ui/firestore.dart';
+import 'package:go_router/go_router.dart';
+import 'package:projex_app/models/project_model/project_model.dart';
+
+class HomeProjectsPage extends StatelessWidget {
   const HomeProjectsPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(authProvider)!;
+  Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              final pid = user.projectIds[index];
-              return PProjectBuilder(
-                pid: pid,
-                builder: (context, project) {
+        FirestoreQueryBuilder<PProject>(
+          query: FirebaseFirestore.instance
+              .collection(
+                '/projects',
+              )
+              .withConverter(
+                fromFirestore: (p, _) => PProject.fromJson(p.data()!),
+                toFirestore: (_, __) => {},
+              ),
+          builder: (context, snapshot, child) {
+            return SliverList(
+              delegate: SliverChildBuilderDelegate(
+                childCount: snapshot.docs.length,
+                (context, index) {
+                  final project = snapshot.docs[index].data();
+
                   return ListTile(
                     title: Text(project.name),
                     onTap: () {
@@ -28,10 +37,9 @@ class HomeProjectsPage extends ConsumerWidget {
                     },
                   );
                 },
-              );
-            },
-            childCount: user.projectIds.length,
-          ),
+              ),
+            );
+          },
         ),
       ],
     );

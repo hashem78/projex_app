@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/screens/edit_roles/widgets/tabs/display/checkable_color_badge.dart';
 
-class ColorRows extends ConsumerWidget {
+class ColorRows extends StatelessWidget {
   const ColorRows({
     Key? key,
     required this.role,
-    required this.project,
   }) : super(key: key);
   final PRole role;
-  final PProject project;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final stateColor = Color(
       int.parse(role.color, radix: 16),
     );
@@ -31,18 +27,10 @@ class ColorRows extends ConsumerWidget {
         mainAxisSpacing: 4.0,
         children: Colors.primaries.map(
           (pcolor) {
-            return GestureDetector(
-              onTap: () async {
-                await project.editRole(
-                  role.copyWith(
-                    color: pcolor.value.toRadixString(16),
-                  ),
-                );
-              },
-              child: CheckableColorBadge(
-                color: pcolor,
-                roleColor: stateColor,
-              ),
+            return CheckableColorBadge(
+              color: pcolor,
+              roleColor: stateColor,
+              role: role,
             );
           },
         ).toList(),

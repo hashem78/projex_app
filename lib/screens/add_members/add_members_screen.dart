@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/screens/add_members/widgets/add_member_text_field.dart';
 import 'package:projex_app/screens/add_members/widgets/add_members_button.dart';
 import 'package:projex_app/screens/add_members/widgets/add_members_title.dart';
@@ -8,15 +7,13 @@ import 'package:projex_app/screens/add_members/widgets/members_to_be_added_list.
 
 final addMemberKey = GlobalKey<FormBuilderState>();
 
-class AddMembersScreen extends ConsumerWidget {
-  final String pid;
+class AddMembersScreen extends StatelessWidget {
   const AddMembersScreen({
     Key? key,
-    required this.pid,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -29,11 +26,11 @@ class AddMembersScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const AddMemberScreenTitle(),
-                const AddMemberEmailField(),
-                MembersToBeAddedList(pid: pid),
-                AddMembersButton(pid: pid),
+              children: const [
+                AddMemberScreenTitle(),
+                AddMemberEmailField(),
+                MembersToBeAddedList(),
+                AddMembersButton(),
               ],
             ),
           ),

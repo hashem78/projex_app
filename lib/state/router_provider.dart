@@ -9,6 +9,7 @@ import 'package:projex_app/screens/project/project_screen.dart';
 import 'package:projex_app/screens/home/home_screen.dart';
 import 'package:projex_app/screens/login/login_screen.dart';
 import 'package:projex_app/state/auth.dart';
+import 'package:projex_app/state/project_provider.dart';
 
 /// This provider sets up goRouter.
 ///
@@ -53,29 +54,51 @@ final routerProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'project/:pid',
-              builder: (context, state) => ProjectScreen(
-                id: state.params['pid']!,
-              ),
+              builder: (context, state) {
+                return ProviderScope(
+                  overrides: [
+                    selectedProjectProvider.overrideWithValue(state.params['pid']!),
+                  ],
+                  child: const ProjectScreen(),
+                );
+              },
               routes: [
                 GoRoute(
                   path: 'addMembers',
-                  builder: (context, state) => AddMembersScreen(
-                    pid: state.params['pid']!,
-                  ),
+                  builder: (context, state) {
+                    return ProviderScope(
+                      overrides: [
+                        selectedProjectProvider.overrideWithValue(state.params['pid']!),
+                      ],
+                      child: const AddMembersScreen(),
+                    );
+                  },
                 ),
                 GoRoute(
                   path: 'addRolesToUser',
-                  builder: (context, state) => AddRolesToUserScreen(
-                    pid: state.params['pid']!,
-                    uid: state.queryParams['uid']!,
-                  ),
+                  builder: (context, state) {
+                    return ProviderScope(
+                      overrides: [
+                        selectedProjectProvider.overrideWithValue(state.params['pid']!),
+                      ],
+                      child: AddRolesToUserScreen(
+                        uid: state.queryParams['uid']!,
+                      ),
+                    );
+                  },
                 ),
                 GoRoute(
                   path: 'editRole',
-                  builder: (context, state) => EditRoleScreen(
-                    project: state.extra as PProject,
-                    roleId: state.queryParams['roleId']!,
-                  ),
+                  builder: (context, state) {
+                    return ProviderScope(
+                      overrides: [
+                        selectedProjectProvider.overrideWithValue(state.params['pid']!),
+                      ],
+                      child: EditRoleScreen(
+                        roleId: state.queryParams['roleId']!,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

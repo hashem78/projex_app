@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:projex_app/state/project_provider.dart';
 
-class AddRolesAppBarTitle extends StatelessWidget {
+class AddRolesAppBarTitle extends ConsumerWidget {
   const AddRolesAppBarTitle({
     Key? key,
-    required this.projectName,
     required this.userName,
   }) : super(key: key);
-  final String projectName;
+
   final String userName;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final projectName = ref.watch(projectProvider.select((value) => value.name));
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,

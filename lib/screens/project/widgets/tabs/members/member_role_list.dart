@@ -1,24 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterfire_ui/firestore.dart';
-import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/models/user_model/user_model.dart';
 import 'package:projex_app/screens/project/widgets/tabs/members/edit_project_user_roles_button.dart';
 import 'package:projex_app/screens/project/widgets/role_bage.dart';
+import 'package:projex_app/state/project_provider.dart';
 
-class MemberRoleList extends StatelessWidget {
+class MemberRoleList extends ConsumerWidget {
   const MemberRoleList({
     Key? key,
-    required this.project,
     required this.user,
   }) : super(key: key);
 
-  final PProject project;
   final PUser user;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final project = ref.watch(projectProvider);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [

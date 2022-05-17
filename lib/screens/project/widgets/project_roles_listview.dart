@@ -3,25 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:go_router/go_router.dart';
-import 'package:projex_app/models/project_model/project_model.dart';
+
 import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/state/editing.dart';
+import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/router_provider.dart';
 
 class ProjectRolesListView extends ConsumerWidget {
   const ProjectRolesListView({
     Key? key,
-    required this.project,
     this.showDelete = true,
   }) : super(key: key);
-
-  final PProject project;
 
   final bool showDelete;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isEditing = ref.watch(editingProvider(EditReason.project));
+    final project = ref.watch(projectProvider);
 
     final router = ref.watch(routerProvider);
     return FirestoreListView<PRole>(
