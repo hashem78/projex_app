@@ -15,6 +15,11 @@ class PProject with _$PProject {
         'invitations': FieldValue.arrayUnion([uid]),
       },
     );
+    db.doc('users/$uid').update(
+      {
+        'invites': FieldValue.arrayUnion([id]),
+      },
+    );
   }
 
   Future<void> removeInvitation(String uid) async {
@@ -22,6 +27,11 @@ class PProject with _$PProject {
     await db.doc('projects/$id').update(
       {
         'invitations': FieldValue.arrayRemove([uid]),
+      },
+    );
+    db.doc('users/$uid').update(
+      {
+        'invites': FieldValue.arrayRemove([id]),
       },
     );
   }

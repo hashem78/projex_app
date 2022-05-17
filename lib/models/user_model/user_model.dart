@@ -195,27 +195,30 @@ class PUser with _$PUser {
     );
   }
 
+  Future<void> declineInviation(String pid) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('/users/$id').update(
+      {
+        'invites': FieldValue.arrayUnion([pid]),
+      },
+    );
+    await db.doc('/projects/$pid').update(
+      {
+        'invites': FieldValue.arrayUnion([id]),
+      },
+    );
+  }
+
   const factory PUser({
-    @Default("")
-        String id,
-    @Default("")
-        String name,
-    @Default("")
-        String email,
-    @Default("")
-        String phoneNumber,
-    @Default(
-      PProfilePicture(
-        link: 'https://i.imgur.com/kEqAm6K.png',
-        width: 120,
-        height: 120,
-      ),
-    )
+    @Default("") String id,
+    @Default("") String name,
+    @Default("") String email,
+    @Default("") String phoneNumber,
+    @Default(PProfilePicture(link: 'https://i.imgur.com/kEqAm6K.png', width: 120, height: 120))
         PProfilePicture profilePicture,
-    @Default([])
-        List<PSocial> socials,
-    @Default([])
-        List<String> projectIds,
+    @Default([]) List<PSocial> socials,
+    @Default({}) Set<String> invites,
+    @Default([]) List<String> projectIds,
   }) = _PUser;
 
   factory PUser.fromJson(Map<String, dynamic> json) => _$PUserFromJson(json);
