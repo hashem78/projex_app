@@ -15,10 +15,10 @@ class MembersTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isEditing = ref.watch(editingProvider(EditReason.project));
     final project = ref.watch(projectProvider);
-
     return ListView.builder(
       itemBuilder: (context, index) {
         final uid = project.memberIds.toList()[index];
+        var isOwner = project.userRoleMap[uid]?.contains('owner') ?? false;
 
         if (isEditing) {
           return ProviderScope(
@@ -28,7 +28,7 @@ class MembersTab extends ConsumerWidget {
             child: Row(
               children: [
                 const Expanded(child: ProjectMemberTile()),
-                if (!project.userRoleMap[uid]!.contains('owner')) const RemoveMemberFromProjectButton(),
+                if (!isOwner) const RemoveMemberFromProjectButton(),
               ],
             ),
           );
