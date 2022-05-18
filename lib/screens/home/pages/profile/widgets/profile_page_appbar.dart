@@ -33,7 +33,7 @@ class HomeProfilePageAppBar extends StatelessWidget {
             bottom: -0.070.sh,
             right: 0,
             left: 0,
-            child: const ProfileImage(),
+            child: const EditableProfileImage(),
           ),
         ],
       ),

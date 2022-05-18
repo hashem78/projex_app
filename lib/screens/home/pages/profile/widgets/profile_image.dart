@@ -5,12 +5,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:projex_app/models/profile_picture_model/profile_picture_model.dart';
 import 'package:projex_app/state/auth.dart';
 import 'package:projex_app/state/editing.dart';
 import 'package:projex_app/state/image_picker/image_picker.dart';
 
-class ProfileImage extends ConsumerWidget {
-  const ProfileImage({
+class EditableProfileImage extends ConsumerWidget {
+  const EditableProfileImage({
     this.borderWidth = 4,
     this.width = 120,
     this.height = 120,
@@ -25,33 +26,8 @@ class ProfileImage extends ConsumerWidget {
     final isEditing = ref.watch(editingProvider(EditReason.profile));
     return GestureDetector(
       onTap: isEditing ? () async => await _changePfp(user.id, ref) : null,
-      child: CachedNetworkImage(
-        imageUrl: user.profilePicture.link,
-        imageBuilder: (context, imageProvider) {
-          return AnimatedContainer(
-            width: width,
-            height: height,
-            decoration: BoxDecoration(
-              border: Border.all(
-                width: borderWidth,
-                color: Theme.of(context).canvasColor,
-              ),
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 5,
-                  color: Colors.black.withOpacity(0.5),
-                  spreadRadius: 1,
-                ),
-              ],
-              image: DecorationImage(
-                image: imageProvider,
-                fit: BoxFit.contain,
-              ),
-            ),
-            duration: const Duration(seconds: 1),
-          );
-        },
+      child: ProfileImage(
+        profilePicture: user.profilePicture,
       ),
     );
   }
@@ -81,5 +57,48 @@ class ProfileImage extends ConsumerWidget {
       );
       await FirebaseAuth.instance.currentUser?.updatePhotoURL(link);
     }
+  }
+}
+
+class ProfileImage extends StatelessWidget {
+  const ProfileImage({
+    Key? key,
+    required this.profilePicture,
+    this.borderWidth = 4,
+  }) : super(key: key);
+
+  final PProfilePicture profilePicture;
+  final double borderWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    return CachedNetworkImage(
+      imageUrl: profilePicture.link,
+      imageBuilder: (context, imageProvider) {
+        return AnimatedContainer(
+          width: profilePicture.width?.toDouble() ?? 120,
+          height: profilePicture.width?.toDouble() ?? 120,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: borderWidth,
+              color: Theme.of(context).canvasColor,
+            ),
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 5,
+                color: Colors.black.withOpacity(0.5),
+                spreadRadius: 1,
+              ),
+            ],
+            image: DecorationImage(
+              image: imageProvider,
+              fit: BoxFit.contain,
+            ),
+          ),
+          duration: const Duration(seconds: 1),
+        );
+      },
+    );
   }
 }

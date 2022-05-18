@@ -6,6 +6,7 @@ import 'package:projex_app/screens/add_roles_to_user/add_roles_to_user_screen.da
 import 'package:projex_app/screens/create_project/create_project_screen.dart';
 import 'package:projex_app/screens/edit_roles/edit_roles_screen.dart';
 import 'package:projex_app/screens/pending_invitations/pending_invitations_screen.dart';
+import 'package:projex_app/screens/profile/profile_screen.dart';
 import 'package:projex_app/screens/project/project_screen.dart';
 import 'package:projex_app/screens/home/home_screen.dart';
 import 'package:projex_app/screens/login/login_screen.dart';
@@ -48,7 +49,10 @@ final routerProvider = Provider<GoRouter>(
             GoRoute(
               path: 'profile/:uid',
               builder: (context, state) {
-                return const HomeScreen();
+                return ProviderScope(
+                  overrides: [selectedUserProvider.overrideWithValue(state.params['uid']!)],
+                  child: const ProfileScreen(),
+                );
               },
             ),
             GoRoute(
