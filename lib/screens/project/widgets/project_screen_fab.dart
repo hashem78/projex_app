@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:go_router/go_router.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/state/router_provider.dart';
@@ -19,16 +18,6 @@ class PProjectScreenFAB extends ConsumerWidget {
     return SpeedDial(
       icon: Icons.settings,
       children: [
-        SpeedDialChild(
-          backgroundColor: Colors.purple,
-          onTap: () {
-            context.push('/project/${project.id}/addMembers');
-          },
-          child: const Icon(
-            Icons.person,
-            color: Colors.white,
-          ),
-        ),
         SpeedDialChild(
           backgroundColor: Colors.green,
           child: const Icon(

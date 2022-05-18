@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/screens/project/widgets/tabs/members/project_member_tile.dart';
-import 'package:projex_app/state/auth.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/user_provider.dart';
 
-class ProjectInvitationTile extends ConsumerWidget {
-  const ProjectInvitationTile({
+class ProjectJoinRequestTile extends ConsumerWidget {
+  const ProjectJoinRequestTile({
     Key? key,
   }) : super(key: key);
 
@@ -24,10 +23,8 @@ class ProjectInvitationTile extends ConsumerWidget {
           color: Colors.green,
           onPressed: () async {
             final project = ref.read(projectProvider);
-            final authedUser = ref.read(authProvider);
             final user = ref.read(selectedUserProvider);
-            await authedUser.addMemberToProject(projectId: project.id, memberId: user);
-            await project.removeInvitation(user);
+            await project.acceptJoinRequest(user);
           },
         ),
         IconButton(
@@ -36,7 +33,7 @@ class ProjectInvitationTile extends ConsumerWidget {
           onPressed: () async {
             final project = ref.read(projectProvider);
             final user = ref.read(selectedUserProvider);
-            await project.removeInvitation(user);
+            await project.declineJoinRequest(user);
           },
         ),
       ],

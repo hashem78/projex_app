@@ -7,8 +7,104 @@ part 'project_model.freezed.dart';
 @freezed
 class PProject with _$PProject {
   const PProject._();
+  Future<void> addMemberToProject({
+    required String memberId,
+  }) async {
+    final db = FirebaseFirestore.instance;
+    FirebaseFirestore.instance.doc('users/$memberId').update(
+      {
+        'projectIds': FieldValue.arrayUnion(
+          [
+            id,
+          ],
+        ),
+      },
+    );
+    await db.doc('projects/$id').update(
+      {
+        "memberIds": FieldValue.arrayUnion(
+          [memberId],
+        ),
+      },
+    );
+  }
 
-  Future<void> addInvitationTo(String uid) async {
+  Future<void> removeMemberFromProject({
+    required List<String> memberId,
+  }) async {
+    final db = FirebaseFirestore.instance;
+    FirebaseFirestore.instance.doc('users/$memberId').update(
+      {
+        'projectIds': FieldValue.arrayRemove(
+          [
+            id,
+          ],
+        ),
+      },
+    );
+
+    await db.doc('projects/$id').update(
+      {
+        "memberIds": FieldValue.arrayRemove(
+          memberId,
+        ),
+      },
+    );
+  }
+
+  Future<void> assignRoleToUser({
+    required String userId,
+    required PRole role,
+  }) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('/projects/$id/roles/${role.id}').update(
+      {'count': FieldValue.increment(1)},
+    );
+    await db
+        .doc(
+      '/projects/$id/roles/${role.id}/userIds/$userId',
+    )
+        .set(
+      {
+        'id': userId,
+      },
+    );
+
+    await db.doc('projects/$id').set(
+      {
+        "userRoleMap": {
+          userId: FieldValue.arrayUnion([role.id]),
+        },
+      },
+      SetOptions(merge: true),
+    );
+  }
+
+  Future<void> removeRoleFromUser({
+    required String userId,
+    required PRole role,
+  }) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('/projects/$id/roles/${role.id}').update(
+      {'count': FieldValue.increment(-1)},
+    );
+
+    await db
+        .doc(
+          '/projects/$id/roles/${role.id}/userIds/$userId',
+        )
+        .delete();
+    await db.doc('projects/$id').set(
+      {
+        "userRoleMap": {
+          userId: FieldValue.arrayRemove([role.id]),
+        },
+      },
+      SetOptions(merge: true),
+    );
+  }
+
+  Future<void> sendInvitationTo(String uid) async {
     final db = FirebaseFirestore.instance;
     await db.doc('projects/$id').update(
       {
@@ -17,7 +113,7 @@ class PProject with _$PProject {
     );
     db.doc('users/$uid').update(
       {
-        'invites': FieldValue.arrayUnion([id]),
+        'invitations': FieldValue.arrayUnion([id]),
       },
     );
   }
@@ -31,7 +127,36 @@ class PProject with _$PProject {
     );
     db.doc('users/$uid').update(
       {
-        'invites': FieldValue.arrayRemove([id]),
+        'invitations': FieldValue.arrayRemove([id]),
+      },
+    );
+  }
+
+  Future<void> acceptJoinRequest(String uid) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('projects/$id').update(
+      {
+        'joinRequests': FieldValue.arrayRemove([uid]),
+      },
+    );
+    db.doc('users/$uid').update(
+      {
+        'joinRequests': FieldValue.arrayRemove([id]),
+      },
+    );
+    await addMemberToProject(memberId: uid);
+  }
+
+  Future<void> declineJoinRequest(String uid) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('projects/$id').update(
+      {
+        'joinRequests': FieldValue.arrayRemove([uid]),
+      },
+    );
+    db.doc('users/$uid').update(
+      {
+        'joinRequests': FieldValue.arrayRemove([id]),
       },
     );
   }
@@ -66,6 +191,7 @@ class PProject with _$PProject {
     @Default(true) public,
     @Default({}) Set<String> memberIds,
     @Default({}) Set<String> invitations,
+    @Default({}) Set<String> joinRequests,
     @Default({}) Map<String, Set<String>> userRoleMap,
   }) = _PProject;
 
@@ -77,6 +203,7 @@ class PProject with _$PProject {
     @Default(true) public,
     @Default({}) Set<String> memberIds,
     @Default({}) Set<String> invitations,
+    @Default({}) Set<String> joinRequests,
     @Default({}) Map<String, Set<String>> userRoleMap,
   }) = _PProjectLoading;
 

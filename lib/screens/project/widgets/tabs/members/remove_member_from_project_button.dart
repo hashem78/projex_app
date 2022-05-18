@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:projex_app/state/auth.dart';
+
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/user_provider.dart';
 
@@ -11,13 +11,11 @@ class RemoveMemberFromProjectButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final project = ref.watch(projectProvider);
     return IconButton(
       icon: const Icon(Icons.close, color: Colors.red),
       onPressed: () async {
         final uid = ref.read(selectedUserProvider);
-        await ref.read(authProvider).removeMemberFromProject(
-          projectId: project.id,
+        await ref.read(projectProvider).removeMemberFromProject(
           memberId: [uid],
         );
       },

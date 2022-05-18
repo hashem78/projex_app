@@ -140,8 +140,7 @@ class _CreateProjectScreenState extends ConsumerState<CreateProjectScreen> {
                               },
                             );
                             await project.createRole(role);
-                            await user.assignRoleToUser(
-                              projectId: pid,
+                            await project.assignRoleToUser(
                               userId: user.id,
                               role: role,
                             );

@@ -81,9 +81,12 @@ class _JoinProjectDialogState extends ConsumerState<JoinProjectDialog> {
                   k.currentState!.fields['piid']!.invalidate('You are already in this Project!');
                 } else {
                   if (project.invitations.contains(user.id)) {
-                    k.currentState!.fields['piid']!.invalidate('You already have an invite in this project');
+                    k.currentState!.fields['piid']!.invalidate('You already have an invitation to this project');
+                  } else if (project.joinRequests.contains(user.id)) {
+                    k.currentState!.fields['piid']!.invalidate('You have already requested to join this project.');
                   } else {
-                    await project.addInvitationTo(user.id);
+                    await user.requestToJoin(project.id);
+
                     if (!mounted) return;
                     ScaffoldMessenger.maybeOf(context)?.showSnackBar(
                       const SnackBar(

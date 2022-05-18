@@ -1,14 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:projex_app/screens/add_members/add_members_screen.dart';
+import 'package:projex_app/screens/invite_members/invite_members_screen.dart';
 import 'package:projex_app/screens/add_roles_to_user/add_roles_to_user_screen.dart';
 import 'package:projex_app/screens/create_project/create_project_screen.dart';
 import 'package:projex_app/screens/edit_roles/edit_roles_screen.dart';
+import 'package:projex_app/screens/pending_invitations/pending_invitations_screen.dart';
 import 'package:projex_app/screens/project/project_screen.dart';
 import 'package:projex_app/screens/home/home_screen.dart';
 import 'package:projex_app/screens/login/login_screen.dart';
-import 'package:projex_app/screens/review_invites/review_invites_screen.dart';
+import 'package:projex_app/screens/review_join_requests/review_join_requests_screen.dart';
 import 'package:projex_app/state/auth.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/user_provider.dart';
@@ -23,7 +24,7 @@ import 'package:projex_app/state/user_provider.dart';
 ///     =>   /settings
 ///     =>   /createProject
 ///     =>   /project
-///     =>     /project/addMembers
+///     =>     /project/inviteMembers
 ///     =>     /project/addRolesToUser
 ///     => /login
 ///
@@ -66,24 +67,35 @@ final routerProvider = Provider<GoRouter>(
               },
               routes: [
                 GoRoute(
-                  path: 'reviewInvites',
+                  path: 'reviewJoinRequests',
                   builder: (context, state) {
                     return ProviderScope(
                       overrides: [
                         selectedProjectProvider.overrideWithValue(state.params['pid']!),
                       ],
-                      child: const ReviewInvitesScreen(),
+                      child: const ReviewJoinRequestsScreen(),
                     );
                   },
                 ),
                 GoRoute(
-                  path: 'addMembers',
+                  path: 'pendingInvitations',
                   builder: (context, state) {
                     return ProviderScope(
                       overrides: [
                         selectedProjectProvider.overrideWithValue(state.params['pid']!),
                       ],
-                      child: const AddMembersScreen(),
+                      child: const PendingInvitationsScreen(),
+                    );
+                  },
+                ),
+                GoRoute(
+                  path: 'inviteMembers',
+                  builder: (context, state) {
+                    return ProviderScope(
+                      overrides: [
+                        selectedProjectProvider.overrideWithValue(state.params['pid']!),
+                      ],
+                      child: const InviteMembersScreen(),
                     );
                   },
                 ),

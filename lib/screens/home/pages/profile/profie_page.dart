@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:projex_app/screens/home/pages/profile/widgets/join_project_dialoag.dart';
 import 'package:projex_app/screens/home/pages/profile/widgets/profile_card.dart';
 import 'package:projex_app/screens/home/pages/profile/widgets/profile_page_appbar.dart';
+import 'package:projex_app/screens/home/pages/profile/widgets/profile_project_invitation_tile.dart';
+import 'package:projex_app/screens/home/pages/profile/widgets/profile_project_join_request_tile.dart';
 import 'package:projex_app/state/auth.dart';
 import 'package:projex_app/state/project_provider.dart';
 
@@ -52,7 +54,7 @@ class HomeProfilePage extends ConsumerWidget {
             },
           ),
         ),
-        if (user.invites.isNotEmpty)
+        if (user.invitations.isNotEmpty)
           SliverPadding(
             padding: const EdgeInsets.all(12.0),
             sliver: SliverToBoxAdapter(
@@ -62,79 +64,43 @@ class HomeProfilePage extends ConsumerWidget {
               ),
             ),
           ),
-        if (user.invites.isNotEmpty)
+        if (user.invitations.isNotEmpty)
           SliverList(
             delegate: SliverChildBuilderDelegate(
-              childCount: user.invites.length,
+              childCount: user.invitations.length,
               (context, index) {
-                final invite = user.invites.toList()[index];
+                final invite = user.invitations.toList()[index];
                 return ProviderScope(
                   overrides: [selectedProjectProvider.overrideWithValue(invite)],
-                  child: const ProfilePageProjectInviteTile(),
+                  child: const ProfilePageProjectInvitationTile(),
+                );
+              },
+            ),
+          ),
+        if (user.joinRequests.isNotEmpty)
+          SliverPadding(
+            padding: const EdgeInsets.all(12.0),
+            sliver: SliverToBoxAdapter(
+              child: Text(
+                'Pending Requests',
+                style: TextStyle(fontSize: 50.sp),
+              ),
+            ),
+          ),
+        if (user.joinRequests.isNotEmpty)
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              childCount: user.joinRequests.length,
+              (context, index) {
+                final joinRequest = user.joinRequests.toList()[index];
+                return ProviderScope(
+                  overrides: [selectedProjectProvider.overrideWithValue(joinRequest)],
+                  child: const ProfilePageProjectJoinRequestTile(),
                 );
               },
             ),
           ),
       ],
-    );
-  }
-}
-
-// TODO: distinguish between invitations and join requsts.
-class ProfilePageProjectInviteTile extends ConsumerWidget {
-  const ProfilePageProjectInviteTile({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final project = ref.watch(projectProvider);
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            child: Center(
-              child: Text(
-                project.name.isNotEmpty ? project.name[0] : "",
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.only(start: 16),
-            child: Text(
-              project.name,
-              style: TextStyle(
-                fontSize: 50.sp,
-              ),
-            ),
-          ),
-          const Spacer(),
-          IconButton(
-            onPressed: () async {
-              final user = ref.read(authProvider);
-              await project.removeInvitation(user.id);
-              await user.addMemberToProject(projectId: project.id, memberId: user.id);
-            },
-            icon: const Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-          ),
-          IconButton(
-            onPressed: () async {
-              final user = ref.read(authProvider);
-              await project.removeInvitation(user.id);
-            },
-            icon: const Icon(
-              Icons.close,
-              color: Colors.red,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

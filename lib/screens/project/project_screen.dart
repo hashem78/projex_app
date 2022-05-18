@@ -33,7 +33,7 @@ class ProjectScreen extends ConsumerWidget {
           floatHeaderSlivers: true,
           headerSliverBuilder: (context, _) => [
             ProjectSliverAppbar(context: context),
-            if (project.invitations.isNotEmpty)
+            if (project.joinRequests.isNotEmpty)
               SliverToBoxAdapter(
                 child: MaterialBanner(
                   backgroundColor: Colors.green,
@@ -42,11 +42,11 @@ class ProjectScreen extends ConsumerWidget {
                     color: Colors.white,
                   ),
                   contentTextStyle: const TextStyle(color: Colors.white),
-                  content: const Text('There are invitations pending'),
+                  content: const Text('There are join requests pending'),
                   actions: [
                     TextButton(
                       onPressed: () {
-                        context.push('/project/${project.id}/reviewInvites');
+                        context.push('/project/${project.id}/reviewJoinRequests');
                       },
                       child: const Text(
                         'Review',

@@ -94,117 +94,44 @@ class PUser with _$PUser {
     await batch.commit();
   }
 
-  Future<void> addMemberToProject({
-    required String projectId,
-    required String memberId,
-  }) async {
-    final db = FirebaseFirestore.instance;
-    FirebaseFirestore.instance.doc('users/$memberId').update(
-      {
-        'projectIds': FieldValue.arrayUnion(
-          [
-            projectId,
-          ],
-        ),
-      },
-    );
-    await db.doc('projects/$projectId').update(
-      {
-        "memberIds": FieldValue.arrayUnion(
-          [memberId],
-        ),
-      },
-    );
-  }
-
-  Future<void> removeMemberFromProject({
-    required String projectId,
-    required List<String> memberId,
-  }) async {
-    final db = FirebaseFirestore.instance;
-    FirebaseFirestore.instance.doc('users/$memberId').update(
-      {
-        'projectIds': FieldValue.arrayRemove(
-          [
-            projectId,
-          ],
-        ),
-      },
-    );
-
-    await db.doc('projects/$projectId').update(
-      {
-        "memberIds": FieldValue.arrayRemove(
-          memberId,
-        ),
-      },
-    );
-  }
-
-  Future<void> assignRoleToUser({
-    required String projectId,
-    required String userId,
-    required PRole role,
-  }) async {
-    final db = FirebaseFirestore.instance;
-    await db.doc('/projects/$projectId/roles/${role.id}').update(
-      {'count': FieldValue.increment(1)},
-    );
-    await db
-        .doc(
-      '/projects/$projectId/roles/${role.id}/userIds/$userId',
-    )
-        .set(
-      {
-        'id': userId,
-      },
-    );
-
-    await db.doc('projects/$projectId').set(
-      {
-        "userRoleMap": {
-          userId: FieldValue.arrayUnion([role.id]),
-        },
-      },
-      SetOptions(merge: true),
-    );
-  }
-
-  Future<void> removeRoleFromUser({
-    required String projectId,
-    required String userId,
-    required PRole role,
-  }) async {
-    final db = FirebaseFirestore.instance;
-    await db.doc('/projects/$projectId/roles/${role.id}').update(
-      {'count': FieldValue.increment(-1)},
-    );
-
-    await db
-        .doc(
-          '/projects/$projectId/roles/${role.id}/userIds/$userId',
-        )
-        .delete();
-    await db.doc('projects/$projectId').set(
-      {
-        "userRoleMap": {
-          userId: FieldValue.arrayRemove([role.id]),
-        },
-      },
-      SetOptions(merge: true),
-    );
-  }
-
   Future<void> declineInviation(String pid) async {
     final db = FirebaseFirestore.instance;
-    await db.doc('/users/$id').update(
+    await db.doc('users/$id').update(
       {
-        'invites': FieldValue.arrayUnion([pid]),
+        'invitations': FieldValue.arrayRemove([pid]),
       },
     );
-    await db.doc('/projects/$pid').update(
+    await db.doc('projects/$pid').update(
       {
-        'invites': FieldValue.arrayUnion([id]),
+        'invitations': FieldValue.arrayRemove([id]),
+      },
+    );
+  }
+
+  Future<void> requestToJoin(String pid) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('users/$id').update(
+      {
+        'joinRequests': FieldValue.arrayUnion([pid]),
+      },
+    );
+    await db.doc('projects/$pid').update(
+      {
+        'joinRequests': FieldValue.arrayUnion([id]),
+      },
+    );
+  }
+
+  Future<void> cancelJoinRequest(String pid) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('users/$id').update(
+      {
+        'joinRequests': FieldValue.arrayRemove([pid]),
+      },
+    );
+    await db.doc('projects/$pid').update(
+      {
+        'joinRequests': FieldValue.arrayRemove([id]),
       },
     );
   }
@@ -217,7 +144,8 @@ class PUser with _$PUser {
     @Default(PProfilePicture(link: 'https://i.imgur.com/kEqAm6K.png', width: 120, height: 120))
         PProfilePicture profilePicture,
     @Default([]) List<PSocial> socials,
-    @Default({}) Set<String> invites,
+    @Default({}) Set<String> invitations,
+    @Default({}) Set<String> joinRequests,
     @Default([]) List<String> projectIds,
   }) = _PUser;
 

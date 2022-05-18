@@ -5,7 +5,6 @@ import 'package:flutterfire_ui/firestore.dart';
 import 'package:projex_app/models/permission/permission_model.dart';
 import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/screens/project/widgets/tabs/members/project_member_tile.dart';
-import 'package:projex_app/state/auth.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/user_provider.dart';
 
@@ -45,10 +44,8 @@ class RoleMembersListView extends ConsumerWidget {
                 if (!role.permissions.contains(const PPermission.owner()))
                   IconButton(
                     onPressed: () async {
-                      final pid = ref.read(selectedProjectProvider);
-                      final cu = ref.read(authProvider);
-                      await cu.removeRoleFromUser(
-                        projectId: pid,
+                      final project = ref.read(projectProvider);
+                      await project.removeRoleFromUser(
                         userId: uid.data(),
                         role: role,
                       );

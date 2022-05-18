@@ -31,14 +31,12 @@ class RoleCheckboxTile extends ConsumerWidget {
           return;
         }
         if (!val!) {
-          await user.removeRoleFromUser(
-            projectId: project.id,
+          await project.removeRoleFromUser(
             userId: user.id,
             role: role,
           );
         } else {
-          await user.assignRoleToUser(
-            projectId: project.id,
+          await project.assignRoleToUser(
             userId: user.id,
             role: role,
           );
