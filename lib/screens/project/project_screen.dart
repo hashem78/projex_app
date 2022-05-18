@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:projex_app/screens/project/widgets/project_screen_fab.dart';
 import 'package:projex_app/screens/project/widgets/project_sliverappbar.dart';
 import 'package:projex_app/screens/project/widgets/project_tabbar_view.dart';
 import 'package:projex_app/state/auth.dart';
@@ -26,7 +25,6 @@ class ProjectScreen extends ConsumerWidget {
       },
     );
     return Scaffold(
-      floatingActionButton: PProjectScreenFAB(project: project),
       body: DefaultTabController(
         length: 3,
         child: NestedScrollView(
