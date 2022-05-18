@@ -20,7 +20,7 @@ class HomeProfilePage extends ConsumerWidget {
     final user = ref.watch(authProvider);
     return CustomScrollView(
       slivers: [
-        const ProfileScreenAppBar(),
+        const HomeProfilePageAppBar(),
         SliverPadding(
           padding: EdgeInsets.only(top: 0.065.sh, left: 12, right: 12),
           sliver: const ProfileCard(),

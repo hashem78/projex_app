@@ -1,13 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:projex_app/screens/home/pages/profile/widgets/profile_edit_button.dart';
 import 'package:projex_app/screens/home/pages/profile/widgets/profile_image.dart';
-import 'package:projex_app/state/editing.dart';
 
-class ProfileScreenAppBar extends StatelessWidget {
-  const ProfileScreenAppBar({
+class HomeProfilePageAppBar extends StatelessWidget {
+  const HomeProfilePageAppBar({
     Key? key,
   }) : super(key: key);
 
@@ -38,25 +37,6 @@ class ProfileScreenAppBar extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class ProfileEditButton extends ConsumerWidget {
-  const ProfileEditButton({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final isEditing = ref.watch(editingProvider(EditReason.profile));
-    return IconButton(
-      onPressed: () {
-        final editing = ref.read(editingProvider(EditReason.profile));
-        if (editing) {}
-        ref.read(editingProvider(EditReason.profile).notifier).toggle();
-      },
-      icon: !isEditing ? const Icon(Icons.edit) : const Icon(Icons.done),
     );
   }
 }
