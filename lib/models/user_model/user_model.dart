@@ -5,7 +5,6 @@ import 'package:projex_app/models/message_model/message_model.dart';
 import 'package:projex_app/models/notification_model/notification_model.dart';
 import 'package:projex_app/models/profile_picture_model/profile_picture_model.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
-import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/models/social_model/social_model.dart';
 import 'package:projex_app/models/task_model/task_mode.dart';
 part 'user_model.freezed.dart';
