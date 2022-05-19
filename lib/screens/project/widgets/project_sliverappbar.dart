@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:projex_app/models/popup_menu_selection/popup_menu_selection_model.dart';
 import 'package:projex_app/state/editing.dart';
 import 'package:projex_app/state/project_provider.dart';
 
@@ -20,21 +21,39 @@ class ProjectSliverAppbar extends SliverOverlapAbsorber {
                 floating: true,
                 snap: true,
                 actions: [
-                  IconButton(
-                    icon: !isEditing
-                        ? const Icon(Icons.edit)
-                        : const Icon(
-                            Icons.close,
-                            color: Colors.white,
-                          ),
-                    onPressed: () {
-                      ref
-                          .read(
-                            editingProvider(EditReason.project).notifier,
-                          )
-                          .toggle();
+                  PopupMenuButton<PopupMenuSelection>(
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (context) {
+                      return PopupMenuSelection.values.map(
+                        (e) {
+                          return e.when(
+                            edit: (name) {
+                              return PopupMenuItem<PopupMenuSelection>(
+                                value: e,
+                                onTap: () {
+                                  ref.read(editingProvider(EditReason.project).notifier).toggle();
+                                },
+                                child: !isEditing
+                                    ? const Text('Edit')
+                                    : const Text(
+                                        'Stop Editing',
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                              );
+                            },
+                            settings: (name) {
+                              return PopupMenuItem<PopupMenuSelection>(
+                                value: e,
+                                child: Text(name),
+                              );
+                            },
+                          );
+                        },
+                      ).toList();
                     },
-                  )
+                  ),
                 ],
                 title: const ProjectAppBarTitile(),
                 bottom: child as PreferredSizeWidget,
