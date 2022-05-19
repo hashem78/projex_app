@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:projex_app/screens/project/widgets/tabs/members/members_tab.dart';
-import 'package:projex_app/screens/project/widgets/tabs/roles/roles_tab.dart';
 import 'package:projex_app/screens/project/widgets/tabs/tasks/tasks_tab.dart';
 
 class ProjectTabBarView extends StatelessWidget {
@@ -15,7 +14,6 @@ class ProjectTabBarView extends StatelessWidget {
       children: [
         TasksTab(),
         MembersTab(),
-        RolesTab(),
       ],
     );
   }

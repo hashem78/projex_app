@@ -26,6 +26,7 @@ class ManageTabMemberTile extends ConsumerWidget {
               context.push('/profile/${user.id}');
             },
             showRoles: false,
+            allowAddingRoles: false,
           ),
         ),
         if (!role.permissions.contains(const PPermission.owner()))

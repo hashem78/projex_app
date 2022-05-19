@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum EditReason {
   profile,
-  project,
 }
 
 class EditingNotifier extends StateNotifier<bool> {

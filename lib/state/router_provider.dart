@@ -11,6 +11,7 @@ import 'package:projex_app/screens/profile/profile_screen.dart';
 import 'package:projex_app/screens/project/project_screen.dart';
 import 'package:projex_app/screens/home/home_screen.dart';
 import 'package:projex_app/screens/login/login_screen.dart';
+import 'package:projex_app/screens/project_settings/project_settings_screen.dart';
 import 'package:projex_app/screens/review_join_requests/review_join_requests_screen.dart';
 import 'package:projex_app/state/auth.dart';
 import 'package:projex_app/state/project_provider.dart';
@@ -71,6 +72,17 @@ final routerProvider = Provider<GoRouter>(
                 );
               },
               routes: [
+                GoRoute(
+                  path: 'settings',
+                  builder: (context, state) {
+                    return ProviderScope(
+                      overrides: [
+                        selectedProjectProvider.overrideWithValue(state.params['pid']!),
+                      ],
+                      child: const ProjectSettingsScreen(),
+                    );
+                  },
+                ),
                 GoRoute(
                   path: 'chatWith/:uid',
                   builder: (context, state) {

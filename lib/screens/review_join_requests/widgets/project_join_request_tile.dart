@@ -17,6 +17,7 @@ class ProjectJoinRequestTile extends ConsumerWidget {
         Expanded(
           child: ProjectMemberTile(
             showRoles: false,
+            allowAddingRoles: false,
             onTap: () {
               final user = ref.read(userProvider);
               context.push('/profile/${user.id}');

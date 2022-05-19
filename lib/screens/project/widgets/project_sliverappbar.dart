@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:projex_app/models/popup_menu_selection/popup_menu_selection_model.dart';
-import 'package:projex_app/state/editing.dart';
 import 'package:projex_app/state/project_provider.dart';
 
 class ProjectSliverAppbar extends SliverOverlapAbsorber {
@@ -16,7 +16,6 @@ class ProjectSliverAppbar extends SliverOverlapAbsorber {
           ),
           sliver: Consumer(
             builder: (context, ref, child) {
-              final isEditing = ref.watch(editingProvider(EditReason.project));
               return SliverAppBar(
                 floating: true,
                 snap: true,
@@ -27,24 +26,12 @@ class ProjectSliverAppbar extends SliverOverlapAbsorber {
                       return PopupMenuSelection.values.map(
                         (e) {
                           return e.when(
-                            edit: (name) {
-                              return PopupMenuItem<PopupMenuSelection>(
-                                value: e,
-                                onTap: () {
-                                  ref.read(editingProvider(EditReason.project).notifier).toggle();
-                                },
-                                child: !isEditing
-                                    ? const Text('Edit')
-                                    : const Text(
-                                        'Stop Editing',
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                        ),
-                                      ),
-                              );
-                            },
                             settings: (name) {
                               return PopupMenuItem<PopupMenuSelection>(
+                                onTap: () {
+                                  final projectId = ref.read(selectedProjectProvider);
+                                  context.push('/project/$projectId/settings');
+                                },
                                 value: e,
                                 child: Text(name),
                               );
@@ -63,7 +50,6 @@ class ProjectSliverAppbar extends SliverOverlapAbsorber {
               tabs: [
                 Tab(icon: Icon(Icons.home)),
                 Tab(icon: Icon(Icons.person)),
-                Tab(icon: Icon(Icons.people)),
               ],
             ),
           ),

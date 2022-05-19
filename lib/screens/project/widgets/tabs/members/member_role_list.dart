@@ -9,8 +9,10 @@ import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/user_provider.dart';
 
 class MemberRoleList extends ConsumerWidget {
+  final bool allowAddingRoles;
   const MemberRoleList({
     Key? key,
+    this.allowAddingRoles = false,
   }) : super(key: key);
 
   @override
@@ -54,7 +56,9 @@ class MemberRoleList extends ConsumerWidget {
               return const SizedBox();
             },
           ),
-        const EditProjectUserRolesButton(),
+        EditProjectUserRolesButton(
+          allowEditing: allowAddingRoles,
+        ),
       ],
     );
   }

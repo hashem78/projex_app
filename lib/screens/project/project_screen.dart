@@ -26,34 +26,11 @@ class ProjectScreen extends ConsumerWidget {
     );
     return Scaffold(
       body: DefaultTabController(
-        length: 3,
+        length: 2,
         child: NestedScrollView(
           floatHeaderSlivers: true,
           headerSliverBuilder: (context, _) => [
             ProjectSliverAppbar(context: context),
-            if (project.joinRequests.isNotEmpty)
-              SliverToBoxAdapter(
-                child: MaterialBanner(
-                  backgroundColor: Colors.green,
-                  leading: const Icon(
-                    Icons.mail,
-                    color: Colors.white,
-                  ),
-                  contentTextStyle: const TextStyle(color: Colors.white),
-                  content: const Text('There are join requests pending'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        context.push('/project/${project.id}/reviewJoinRequests');
-                      },
-                      child: const Text(
-                        'Review',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
           ],
           body: const ProjectTabBarView(),
         ),
