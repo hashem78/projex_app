@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:projex_app/screens/project/widgets/tabs/members/project_member_tile.dart';
 import 'package:projex_app/state/add_members.dart';
 import 'package:projex_app/state/user_provider.dart';
@@ -23,8 +24,13 @@ class MembersToBeInvitedList extends ConsumerWidget {
             ],
             child: Row(
               children: [
-                const Expanded(
-                  child: ProjectMemberTile(showRoles: false),
+                Expanded(
+                  child: ProjectMemberTile(
+                    onTap: () {
+                      context.push('/profile/${user.id}');
+                    },
+                    showRoles: false,
+                  ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.close),

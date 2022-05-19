@@ -9,8 +9,8 @@ class PMessage with _$PMessage {
     required String senderId,
     required String messageId,
     required String messageText,
+    required DateTime createdOn,
     Importance? importance,
   }) = _PMessage;
-  factory PMessage.fromJson(Map<String, dynamic> json) =>
-      _$PMessageFromJson(json);
+  factory PMessage.fromJson(Map<String, dynamic> json) => _$PMessageFromJson(json);
 }

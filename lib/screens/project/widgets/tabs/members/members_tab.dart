@@ -58,7 +58,16 @@ class MembersTab extends ConsumerWidget {
                   ],
                   child: Row(
                     children: [
-                      const Expanded(child: ProjectMemberTile()),
+                      Expanded(
+                        child: Consumer(builder: (context, ref, _) {
+                          return ProjectMemberTile(
+                            onTap: () {
+                              final user = ref.read(userProvider);
+                              context.push('/profile/${user.id}');
+                            },
+                          );
+                        }),
+                      ),
                       if (!isOwner) const RemoveMemberFromProjectButton(),
                     ],
                   ),
@@ -68,7 +77,14 @@ class MembersTab extends ConsumerWidget {
                   overrides: [
                     selectedUserProvider.overrideWithValue(uid),
                   ],
-                  child: const ProjectMemberTile(),
+                  child: Consumer(builder: (context, ref, _) {
+                    return ProjectMemberTile(
+                      onTap: () {
+                        final project = ref.read(projectProvider);
+                        context.push('/project/${project.id}/chatWith/$uid');
+                      },
+                    );
+                  }),
                 );
               }
             },

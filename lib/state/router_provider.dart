@@ -5,6 +5,7 @@ import 'package:projex_app/screens/invite_members/invite_members_screen.dart';
 import 'package:projex_app/screens/add_roles_to_user/add_roles_to_user_screen.dart';
 import 'package:projex_app/screens/create_project/create_project_screen.dart';
 import 'package:projex_app/screens/edit_roles/edit_roles_screen.dart';
+import 'package:projex_app/screens/chat/m2m_chat_screen.dart';
 import 'package:projex_app/screens/pending_invitations/pending_invitations_screen.dart';
 import 'package:projex_app/screens/profile/profile_screen.dart';
 import 'package:projex_app/screens/project/project_screen.dart';
@@ -70,6 +71,18 @@ final routerProvider = Provider<GoRouter>(
                 );
               },
               routes: [
+                GoRoute(
+                  path: 'chatWith/:uid',
+                  builder: (context, state) {
+                    return ProviderScope(
+                      overrides: [
+                        selectedUserProvider.overrideWithValue(state.params['uid']!),
+                        selectedProjectProvider.overrideWithValue(state.params['pid']!),
+                      ],
+                      child: const M2MChatScreen(),
+                    );
+                  },
+                ),
                 GoRoute(
                   path: 'reviewJoinRequests',
                   builder: (context, state) {
