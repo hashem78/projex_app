@@ -13,8 +13,6 @@ class ProjectScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final project = ref.watch(projectProvider);
-
     ref.listen<Set<String>>(
       projectProvider.select((value) => value.memberIds),
       (previous, next) {
