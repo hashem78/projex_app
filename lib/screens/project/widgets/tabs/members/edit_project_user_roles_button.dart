@@ -22,28 +22,25 @@ class EditProjectUserRolesButton extends ConsumerWidget {
         final pid = ref.read(selectedProjectProvider);
         context.push('/project/$pid/addRolesToUser?uid=$uid');
       },
-      child: Padding(
-        padding: const EdgeInsetsDirectional.only(start: 4.0),
-        child: Badge(
-          shape: BadgeShape.square,
-          toAnimate: false,
-          badgeColor: Colors.blue,
-          borderRadius: BorderRadius.circular(8),
-          badgeContent: Row(
-            children: [
-              const Icon(
-                Icons.add,
-                color: Colors.white,
-                size: 18,
-              ),
-              16.horizontalSpace,
-              const Text(
-                'Add Roles',
-                style: TextStyle(color: Colors.white),
-              ),
-              16.horizontalSpace,
-            ],
-          ),
+      child: Badge(
+        shape: BadgeShape.square,
+        toAnimate: false,
+        badgeColor: Colors.blue,
+        borderRadius: BorderRadius.circular(8),
+        badgeContent: Row(
+          children: [
+            const Icon(
+              Icons.add,
+              color: Colors.white,
+              size: 18,
+            ),
+            16.horizontalSpace,
+            const Text(
+              'Add Roles',
+              style: TextStyle(color: Colors.white),
+            ),
+            16.horizontalSpace,
+          ],
         ),
       ),
     );

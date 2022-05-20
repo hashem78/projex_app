@@ -19,8 +19,9 @@ class MemberRoleList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final project = ref.watch(projectProvider);
     final user = ref.watch(userProvider);
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+    return Wrap(
+      direction: Axis.vertical,
+      spacing: 5.0,
       children: [
         if (project.userRoleMap.containsKey(user.id) && project.userRoleMap[user.id]!.isNotEmpty)
           FirestoreQueryBuilder<PRole>(
@@ -40,16 +41,13 @@ class MemberRoleList extends ConsumerWidget {
               if (snap.hasData) {
                 final roles = snap.docs;
                 if (roles.isNotEmpty) {
-                  return SizedBox(
-                    height: 30,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount: roles.length,
-                      itemBuilder: (context, index) {
-                        return RoleBadge(role: roles[index].data());
-                      },
-                    ),
+                  return Wrap(
+                    spacing: 5.0,
+                    children: roles
+                        .map(
+                          (role) => RoleBadge(role: role.data()),
+                        )
+                        .toList(),
                   );
                 }
               }
