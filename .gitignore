@@ -59,7 +59,6 @@ env.dat
 
 # Node.js dependency directory
 node_modules/
-functions/
 functions/node_modules/
 # Compiled JavaScript files
 functions/lib/**/*.js
