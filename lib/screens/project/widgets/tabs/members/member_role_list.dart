@@ -19,45 +19,43 @@ class MemberRoleList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final project = ref.watch(projectProvider);
     final user = ref.watch(userProvider);
-    return Wrap(
-      direction: Axis.vertical,
-      spacing: 5.0,
-      children: [
-        if (project.userRoleMap.containsKey(user.id) && project.userRoleMap[user.id]!.isNotEmpty)
-          FirestoreQueryBuilder<PRole>(
-            query: FirebaseFirestore.instance
-                .collection(
-                  'projects/${project.id}/roles',
-                )
-                .where(
-                  'id',
-                  whereIn: project.userRoleMap[user.id]?.toList(),
-                )
-                .withConverter<PRole>(
-                  fromFirestore: (r, _) => PRole.fromJson(r.data()!),
-                  toFirestore: (r, _) => r.toJson(),
+    if (project.userRoleMap.containsKey(user.id) && project.userRoleMap[user.id]!.isNotEmpty) {
+      return FirestoreQueryBuilder<PRole>(
+        query: FirebaseFirestore.instance
+            .collection(
+              'projects/${project.id}/roles',
+            )
+            .where(
+              'id',
+              whereIn: project.userRoleMap[user.id]?.toList(),
+            )
+            .withConverter<PRole>(
+              fromFirestore: (r, _) => PRole.fromJson(r.data()!),
+              toFirestore: (r, _) => r.toJson(),
+            ),
+        builder: (context, snap, _) {
+          if (snap.hasData) {
+            final roles = snap.docs;
+
+            return Wrap(
+              spacing: 2.0,
+              runSpacing: 2.0,
+              children: [
+                ...roles.map(
+                  (role) => RoleBadge(role: role.data()),
                 ),
-            builder: (context, snap, _) {
-              if (snap.hasData) {
-                final roles = snap.docs;
-                if (roles.isNotEmpty) {
-                  return Wrap(
-                    spacing: 5.0,
-                    children: roles
-                        .map(
-                          (role) => RoleBadge(role: role.data()),
-                        )
-                        .toList(),
-                  );
-                }
-              }
-              return const SizedBox();
-            },
-          ),
-        EditProjectUserRolesButton(
-          allowEditing: allowAddingRoles,
-        ),
-      ],
-    );
+                EditProjectUserRolesButton(
+                  allowEditing: allowAddingRoles,
+                ),
+              ],
+            );
+          }
+          return EditProjectUserRolesButton(
+            allowEditing: allowAddingRoles,
+          );
+        },
+      );
+    }
+    return const SizedBox();
   }
 }

@@ -30,13 +30,13 @@ class EditProjectUserRolesButton extends ConsumerWidget {
         badgeContent: Row(
           children: [
             const Icon(
-              Icons.add,
+              Icons.edit,
               color: Colors.white,
               size: 18,
             ),
             16.horizontalSpace,
             const Text(
-              'Add Roles',
+              'Edit Roles',
               style: TextStyle(color: Colors.white),
             ),
             16.horizontalSpace,
