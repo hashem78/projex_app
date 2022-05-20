@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:projex_app/screens/chat/group_chat_screen.dart';
+import 'package:projex_app/screens/edit_chat_group/edit_chat_group_screen.dart';
 import 'package:projex_app/screens/invite_members/invite_members_screen.dart';
 import 'package:projex_app/screens/add_roles_to_user/add_roles_to_user_screen.dart';
 import 'package:projex_app/screens/create_project/create_project_screen.dart';
@@ -14,6 +16,7 @@ import 'package:projex_app/screens/login/login_screen.dart';
 import 'package:projex_app/screens/project_settings/project_settings_screen.dart';
 import 'package:projex_app/screens/review_join_requests/review_join_requests_screen.dart';
 import 'package:projex_app/state/auth.dart';
+import 'package:projex_app/state/group_chat.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/user_provider.dart';
 
@@ -80,6 +83,30 @@ final routerProvider = Provider<GoRouter>(
                         selectedProjectProvider.overrideWithValue(state.params['pid']!),
                       ],
                       child: const ProjectSettingsScreen(),
+                    );
+                  },
+                ),
+                GoRoute(
+                  path: 'groupChat/:gid',
+                  builder: (context, state) {
+                    return ProviderScope(
+                      overrides: [
+                        selectedProjectProvider.overrideWithValue(state.params['pid']!),
+                        selectedGroupProvider.overrideWithValue(state.params['gid']!),
+                      ],
+                      child: const GroupChatScreen(),
+                    );
+                  },
+                ),
+                GoRoute(
+                  path: 'editChatGroup/:gid',
+                  builder: (context, state) {
+                    return ProviderScope(
+                      overrides: [
+                        selectedProjectProvider.overrideWithValue(state.params['pid']!),
+                        selectedGroupProvider.overrideWithValue(state.params['gid']!),
+                      ],
+                      child: const EditChatGroupScreen(),
                     );
                   },
                 ),

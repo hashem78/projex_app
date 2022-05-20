@@ -56,3 +56,14 @@ android/app/google-services.json
 
 # Ignore the environment file
 env.dat
+
+# Node.js dependency directory
+node_modules/
+functions/
+functions/node_modules/
+# Compiled JavaScript files
+functions/lib/**/*.js
+functions/lib/**/*.js.map
+
+# TypeScript v1 declaration files
+functions/typings/

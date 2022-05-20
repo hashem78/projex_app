@@ -10,9 +10,11 @@ class ChatBubbleList extends ConsumerWidget {
   const ChatBubbleList({
     Key? key,
     required this.chatId,
+    this.showSenders = false,
   }) : super(key: key);
 
   final String chatId;
+  final bool showSenders;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,6 +38,7 @@ class ChatBubbleList extends ConsumerWidget {
 
         return PChatBubble(
           message: message,
+          showSender: showSenders,
         );
       },
     );

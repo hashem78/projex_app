@@ -26,7 +26,7 @@ class ProjectScreen extends ConsumerWidget {
     );
     return Scaffold(
       body: DefaultTabController(
-        length: 2,
+        length: 3,
         child: NestedScrollView(
           floatHeaderSlivers: true,
           headerSliverBuilder: (context, _) => [
