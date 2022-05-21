@@ -56,6 +56,8 @@ class MemberRoleList extends ConsumerWidget {
         },
       );
     }
-    return const SizedBox();
+    return EditProjectUserRolesButton(
+      allowEditing: allowAddingRoles,
+    );
   }
 }
