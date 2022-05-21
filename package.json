@@ -1,5 +1,11 @@
 {
   "dependencies": {
     "firebase-admin": "^10.2.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/parser": "^5.25.0",
+    "eslint": "^8.16.0",
+    "eslint-config-google": "^0.14.0"
   }
 }
