@@ -69,11 +69,14 @@ class _ManageGroupsTabState extends ConsumerState<ManageGroupsTab> {
               final group = ChatGroup(id: uuid, name: 'New Group Chat');
               await FirebaseFirestore.instance
                   .doc(
-                    'projects/$projectId/groupChats/$uuid',
-                  )
+                'projects/$projectId/groupChats/$uuid',
+              )
                   .set(
-                    group.toJson(),
-                  );
+                {
+                  ...group.toJson(),
+                  'tokens': <String>[],
+                },
+              );
               if (!mounted) return;
               context.push('/project/$projectId/editChatGroup/$uuid');
             },

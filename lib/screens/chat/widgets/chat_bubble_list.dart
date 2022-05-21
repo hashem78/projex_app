@@ -23,7 +23,7 @@ class ChatBubbleList extends ConsumerWidget {
       reverse: true,
       query: FirebaseFirestore.instance
           .collection(
-            'projects/$projectId/chats/$chatId/messages',
+            'projects/$projectId/groupChats/$chatId/messages',
           )
           .orderBy(
             'createdOn',

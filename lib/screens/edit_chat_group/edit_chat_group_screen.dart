@@ -44,7 +44,7 @@ class EditChatGroupScreen extends ConsumerWidget {
                       .doc(
                         'projects/$projectId/groupChats/$groupId',
                       )
-                      .set(
+                      .update(
                         group.toJson(),
                       );
                 },

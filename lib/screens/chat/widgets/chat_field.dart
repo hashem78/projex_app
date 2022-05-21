@@ -10,9 +10,11 @@ class ChatField extends ConsumerStatefulWidget {
   const ChatField({
     Key? key,
     required this.chatId,
+    required this.isForGroup,
   }) : super(key: key);
 
   final String chatId;
+  final bool isForGroup;
 
   @override
   ConsumerState<ChatField> createState() => _ChatFieldState();
@@ -60,13 +62,23 @@ class _ChatFieldState extends ConsumerState<ChatField> {
                   senderId: senderId,
                 );
                 final db = FirebaseFirestore.instance;
-                await db
-                    .doc(
-                      'projects/$projectId/chats/${widget.chatId}/messages/${message.messageId}',
-                    )
-                    .set(
-                      message.toJson(),
-                    );
+                if (!widget.isForGroup) {
+                  await db
+                      .doc(
+                        'projects/$projectId/chats/${widget.chatId}/messages/${message.messageId}',
+                      )
+                      .set(
+                        message.toJson(),
+                      );
+                } else {
+                  await db
+                      .doc(
+                        'projects/$projectId/groupChats/${widget.chatId}/messages/${message.messageId}',
+                      )
+                      .set(
+                        message.toJson(),
+                      );
+                }
                 controller.clear();
               }
             },

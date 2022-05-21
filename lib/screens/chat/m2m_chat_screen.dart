@@ -32,6 +32,7 @@ class M2MChatScreen extends ConsumerWidget {
             8.verticalSpace,
             ChatField(
               chatId: chatId,
+              isForGroup: false,
             ),
           ],
         ),

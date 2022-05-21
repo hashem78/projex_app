@@ -31,6 +31,7 @@ class GroupChatScreen extends ConsumerWidget {
             8.verticalSpace,
             ChatField(
               chatId: chatId,
+              isForGroup: true,
             ),
           ],
         ),
