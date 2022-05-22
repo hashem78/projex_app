@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:async/async.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,7 +19,7 @@ void setupDeviceTokenStream(String pid, List<ChatGroup> groups) {
   );
 }
 
-final userGroupChatsProvider = FutureProvider.autoDispose<List<ChatGroup>>(
+final availableGroupsProvider = FutureProvider.autoDispose<List<ChatGroup>>(
   (ref) async {
     final fc = FirebaseFunctions.instance;
     final fm = FirebaseMessaging.instance;

@@ -27,6 +27,7 @@ class M2MChatScreen extends ConsumerWidget {
             Expanded(
               child: ChatBubbleList(
                 chatId: chatId,
+                isForGroup: false,
               ),
             ),
             8.verticalSpace,

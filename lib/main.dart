@@ -27,6 +27,12 @@ import 'package:projex_app/state/theme_mode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+const androidChannel = AndroidNotificationChannel(
+  'high_importance_channel', // id
+  'High Importance Notifications', // title
+  description: 'This channel is used for important notifications.', // description
+  importance: Importance.max,
+);
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,14 +55,8 @@ Future<void> main() async {
     badge: true,
     sound: true,
   );
-  const channel = AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    description: 'This channel is used for important notifications.', // description
-    importance: Importance.max,
-  );
 
-  const androidSettings = AndroidInitializationSettings('app_icon');
+  const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
   const notificationSettings = InitializationSettings(android: androidSettings);
 
   final sucess = await flutterLocalNotificationsPlugin.initialize(
@@ -74,7 +74,7 @@ Future<void> main() async {
 
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
+      ?.createNotificationChannel(androidChannel);
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     final notification = message.notification;
     final android = message.notification?.android;
@@ -88,9 +88,9 @@ Future<void> main() async {
           notification.body,
           NotificationDetails(
             android: AndroidNotificationDetails(
-              channel.id,
-              channel.name,
-              channelDescription: channel.description,
+              androidChannel.id,
+              androidChannel.name,
+              channelDescription: androidChannel.description,
             ),
           ));
     }

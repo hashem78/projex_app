@@ -6,9 +6,10 @@ part 'message_model.g.dart';
 @freezed
 class PMessage with _$PMessage {
   const factory PMessage({
+    required String senderToken,
     required String senderId,
-    required String messageId,
-    required String messageText,
+    required String id,
+    required String text,
     required DateTime createdOn,
     Importance? importance,
   }) = _PMessage;

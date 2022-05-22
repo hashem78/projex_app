@@ -42,16 +42,33 @@ export const groupNotificationTrigger = functions.firestore
   .document('projects/{projectId}/groupChats/{groupId}/messages/{docId}')
   .onWrite(async (change, context) => {
     // get tokens for the group chat
-    const pid = context.params.projectId!;
-    const gid = context.params.groupId!;
+    const pid = context.params.projectId;
+    const gid = context.params.groupId;
+    // get group data
     const group = await db.doc(`projects/${pid}/groupChats/${gid}`).get();
     const groupData = group.data()!;
-    const groupTokens = groupData.tokens!;
-    return messaging.sendMulticast({
-      tokens: groupTokens,
-      notification: {
-        title: 'New notification',
-        body: 'this is a new notification',
-      },
+
+    // get message data
+    const messageData = change.after.data()!;
+
+    // get the message senderData
+    const senderId = messageData.senderId;
+    const sender = await db.doc(`users/${senderId}`).get();
+    const senderData = sender.data()!;
+    const senderToken = messageData.senderToken;
+    // get the tokens of the group and exclude the sender.
+    const groupTokens = groupData.tokens.filter((item: any) => {
+      return item !== senderToken;
     });
+    if (groupTokens.length != 0) {
+      return messaging.sendMulticast({
+        tokens: groupTokens,
+        notification: {
+          title: `${senderData.name} has sent a new message in ${groupData.name}`,
+          body: messageData.text,
+        },
+      });
+    } else {
+      return Promise.resolve();
+    }
   });

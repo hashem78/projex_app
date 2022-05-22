@@ -57,7 +57,7 @@ class PChatBubble extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               SelectableText(
-                message.messageText,
+                message.text,
                 style: TextStyle(
                   color: textColor,
                 ),

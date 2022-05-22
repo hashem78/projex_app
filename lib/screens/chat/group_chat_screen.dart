@@ -26,6 +26,7 @@ class GroupChatScreen extends ConsumerWidget {
               child: ChatBubbleList(
                 chatId: chatId,
                 showSenders: true,
+                isForGroup: true,
               ),
             ),
             8.verticalSpace,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/models/message_model/message_model.dart';
@@ -56,29 +57,20 @@ class _ChatFieldState extends ConsumerState<ChatField> {
                 final projectId = ref.read(selectedProjectProvider);
                 final senderId = ref.read(authProvider).id;
                 final message = PMessage(
-                  messageId: const Uuid().v4(),
-                  messageText: controller.text,
+                  id: const Uuid().v4(),
+                  text: controller.text,
                   createdOn: DateTime.now(),
                   senderId: senderId,
+                  senderToken: (await FirebaseMessaging.instance.getToken())!,
                 );
                 final db = FirebaseFirestore.instance;
+                late final String path;
                 if (!widget.isForGroup) {
-                  await db
-                      .doc(
-                        'projects/$projectId/chats/${widget.chatId}/messages/${message.messageId}',
-                      )
-                      .set(
-                        message.toJson(),
-                      );
+                  path = 'projects/$projectId/chats/${widget.chatId}/messages/${message.id}';
                 } else {
-                  await db
-                      .doc(
-                        'projects/$projectId/groupChats/${widget.chatId}/messages/${message.messageId}',
-                      )
-                      .set(
-                        message.toJson(),
-                      );
+                  path = 'projects/$projectId/groupChats/${widget.chatId}/messages/${message.id}';
                 }
+                await db.doc(path).set(message.toJson());
                 controller.clear();
               }
             },

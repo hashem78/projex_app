@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:projex_app/state/group_chats.dart';
+import 'package:projex_app/state/available_groups.dart';
 import 'package:projex_app/state/project_provider.dart';
 
 class GroupsTab extends ConsumerStatefulWidget {
@@ -15,11 +15,11 @@ class _GroupsTabState extends ConsumerState<GroupsTab> with AutomaticKeepAliveCl
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final groupsFuture = ref.watch(userGroupChatsProvider);
+    final groupsFuture = ref.watch(availableGroupsProvider);
     ref.listen(
       projectProvider.select((p) => p.userRoleMap),
       (before, after) {
-        ref.refresh(userGroupChatsProvider);
+        ref.refresh(availableGroupsProvider);
       },
     );
     return groupsFuture.when(

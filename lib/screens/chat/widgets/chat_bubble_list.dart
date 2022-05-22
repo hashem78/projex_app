@@ -11,20 +11,27 @@ class ChatBubbleList extends ConsumerWidget {
     Key? key,
     required this.chatId,
     this.showSenders = false,
+    required this.isForGroup,
   }) : super(key: key);
 
   final String chatId;
   final bool showSenders;
+  final bool isForGroup;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final projectId = ref.watch(selectedProjectProvider);
+    late final String path;
+    if (isForGroup) {
+      path = 'projects/$projectId/groupChats/$chatId/messages';
+    } else {
+      path = 'projects/$projectId/chats/$chatId/messages';
+    }
+
     return FirestoreListView<PMessage>(
       reverse: true,
       query: FirebaseFirestore.instance
-          .collection(
-            'projects/$projectId/groupChats/$chatId/messages',
-          )
+          .collection(path)
           .orderBy(
             'createdOn',
             descending: true,
