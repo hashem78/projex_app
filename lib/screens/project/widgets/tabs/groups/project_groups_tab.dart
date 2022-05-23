@@ -22,41 +22,46 @@ class _GroupsTabState extends ConsumerState<GroupsTab> with AutomaticKeepAliveCl
         ref.refresh(availableGroupsProvider);
       },
     );
-    return groupsFuture.when(
-      data: (groups) {
-        if (groups.isNotEmpty) {
-          return ListView.builder(
-            itemCount: groups.length,
-            itemBuilder: (context, index) {
-              final group = groups[index];
-              return ListTile(
-                onTap: () {
-                  final projectId = ref.read(selectedProjectProvider);
-                  context.push('/project/$projectId/groupChat/${group.id}');
-                },
-                title: Text(group.name),
-              );
-            },
-          );
-        } else {
-          return const Center(
-            child: Text('You are not part of any groups'),
-          );
-        }
+    return RefreshIndicator(
+      onRefresh: () async {
+        ref.refresh(availableGroupsProvider);
       },
-      error: (_, __) {
-        debugPrint(_.toString());
-        debugPrint(__.toString());
+      child: groupsFuture.when(
+        data: (groups) {
+          if (groups.isNotEmpty) {
+            return ListView.builder(
+              itemCount: groups.length,
+              itemBuilder: (context, index) {
+                final group = groups[index];
+                return ListTile(
+                  onTap: () {
+                    final projectId = ref.read(selectedProjectProvider);
+                    context.push('/project/$projectId/groupChat/${group.id}');
+                  },
+                  title: Text(group.name),
+                );
+              },
+            );
+          } else {
+            return const Center(
+              child: Text('You are not part of any groups'),
+            );
+          }
+        },
+        error: (_, __) {
+          debugPrint(_.toString());
+          debugPrint(__.toString());
 
-        return const Center(
-          child: Text('Error'),
-        );
-      },
-      loading: () {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
+          return const Center(
+            child: Text('Error'),
+          );
+        },
+        loading: () {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      ),
     );
   }
 
