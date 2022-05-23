@@ -21,6 +21,12 @@ class RoleProivderData {
   int get hashCode => pid.hashCode ^ rid.hashCode;
 }
 
+final selectedRoleProvider = Provider.autoDispose<String>(
+  (ref) {
+    throw UnimplementedError('selectedRoleProvider should be overriden');
+  },
+);
+
 final roleProvider = StreamProvider.autoDispose.family<PRole, RoleProivderData>(
   (ref, data) async* {
     final db = FirebaseFirestore.instance;
