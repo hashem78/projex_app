@@ -11,16 +11,16 @@ class GroupChatNotifier extends StateNotifier<ChatGroup> {
   GroupChatNotifier(super.state, this.ref) {
     final db = FirebaseFirestore.instance;
     final pid = ref.read(selectedProjectProvider);
-    subscription = db
-        .doc('projects/$pid/groupChats/${state.id}')
-        .snapshots()
-        .map<ChatGroup>(
-          (event) => ChatGroup.fromJson(event.data()!),
-        )
-        .listen(
+    subscription = db.doc('projects/$pid/groupChats/${state.id}').snapshots().map<ChatGroup>(
       (event) {
-        state = event;
+        final data = event.data();
+        if (data == null) {
+          return const ChatGroup(id: '');
+        }
+        return ChatGroup.fromJson(data);
       },
+    ).listen(
+      (event) => state = event,
     );
   }
   Future<void> addRole(String rid) async {
