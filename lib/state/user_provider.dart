@@ -7,6 +7,7 @@ import 'package:projex_app/models/user_model/user_model.dart';
 class UserNotifier extends StateNotifier<PUser> {
   StreamSubscription? subscription;
   UserNotifier(String uid) : super(const PUser()) {
+    if (uid.isEmpty) return;
     final db = FirebaseFirestore.instance;
     subscription = db
         .doc(
