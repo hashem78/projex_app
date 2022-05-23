@@ -16,31 +16,35 @@ class EditProjectUserRolesButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (!allowEditing) return const SizedBox();
-    return GestureDetector(
-      onTap: () {
-        final uid = ref.read(selectedUserProvider);
-        final pid = ref.read(selectedProjectProvider);
-        context.push('/project/$pid/addRolesToUser?uid=$uid');
-      },
-      child: Badge(
-        shape: BadgeShape.square,
-        toAnimate: false,
-        badgeColor: Colors.blue,
-        borderRadius: BorderRadius.circular(8),
-        badgeContent: Row(
-          children: [
-            const Icon(
-              Icons.edit,
-              color: Colors.white,
-              size: 18,
+    return IntrinsicHeight(
+      child: IntrinsicWidth(
+        child: GestureDetector(
+          onTap: () {
+            final uid = ref.read(selectedUserProvider);
+            final pid = ref.read(selectedProjectProvider);
+            context.push('/project/$pid/addRolesToUser?uid=$uid');
+          },
+          child: Badge(
+            shape: BadgeShape.square,
+            toAnimate: false,
+            badgeColor: Colors.blue,
+            borderRadius: BorderRadius.circular(8),
+            badgeContent: Row(
+              children: [
+                const Icon(
+                  Icons.edit,
+                  color: Colors.white,
+                  size: 18,
+                ),
+                16.horizontalSpace,
+                const Text(
+                  'Edit Roles',
+                  style: TextStyle(color: Colors.white),
+                ),
+                16.horizontalSpace,
+              ],
             ),
-            16.horizontalSpace,
-            const Text(
-              'Edit Roles',
-              style: TextStyle(color: Colors.white),
-            ),
-            16.horizontalSpace,
-          ],
+          ),
         ),
       ),
     );
