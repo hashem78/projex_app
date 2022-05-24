@@ -8,12 +8,14 @@ import 'package:projex_app/screens/project/widgets/tabs/tasks/tasks_tab.dart';
 class ProjectTabBarView extends StatelessWidget {
   const ProjectTabBarView({
     Key? key,
+    required this.tabController,
   }) : super(key: key);
-
+  final TabController tabController;
   @override
   Widget build(BuildContext context) {
-    return const TabBarView(
-      children: [
+    return TabBarView(
+      controller: tabController,
+      children: const [
         TasksTab(),
         MembersTab(),
         GroupsTab(),

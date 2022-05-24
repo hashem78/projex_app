@@ -9,6 +9,7 @@ class ProjectSliverAppbar extends SliverOverlapAbsorber {
   ProjectSliverAppbar({
     Key? key,
     required BuildContext context,
+    required TabController tabController,
   }) : super(
           key: key,
           handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
@@ -46,8 +47,9 @@ class ProjectSliverAppbar extends SliverOverlapAbsorber {
                 bottom: child as PreferredSizeWidget,
               );
             },
-            child: const TabBar(
-              tabs: [
+            child: TabBar(
+              controller: tabController,
+              tabs: const [
                 Tab(
                   text: 'Tasks',
                   icon: Icon(Icons.task),

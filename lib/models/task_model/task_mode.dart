@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:projex_app/enums/status.dart';
+
 import 'package:projex_app/models/feedback_model/feedback_model.dart';
+import 'package:projex_app/models/task_status/task_status.dart';
 part 'task_mode.freezed.dart';
 part 'task_mode.g.dart';
 
@@ -26,19 +27,17 @@ class PTask with _$PTask {
     // TODO: task.addAssignees()
   }
   const factory PTask({
-    required String taskId,
-    required String subTasksCollectionId,
-    required String projectId,
-    required String creatorId,
+    @Default('') String id,
+    @Default('') String creatorId,
     @Default([]) List<String> assignedToIds,
-    required String title,
-    required String description,
-    @Default([]) List<PFeedBack>? feedback,
-    required DateTime startDate,
-    required DateTime endDate,
-    required DateTime dueDate,
-    required PStatus status,
-    required int rating,
+    @Default('') String title,
+    @Default('') String description,
+    @Default([]) List<PFeedBack> feedback,
+    DateTime? startDate,
+    DateTime? endDate,
+    DateTime? dueDate,
+    @Default(PTaskStatus.incomplete()) PTaskStatus status,
+    int? rating,
   }) = _PTask;
   factory PTask.fromJson(Map<String, dynamic> json) => _$PTaskFromJson(json);
 }

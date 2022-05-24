@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:projex_app/models/role_model/role.dart';
+import 'package:projex_app/models/task_model/task_mode.dart';
 part 'project_model.g.dart';
 part 'project_model.freezed.dart';
 
@@ -193,6 +194,53 @@ class PProject with _$PProject {
     );
   }
 
+  Future<void> editTask(PTask task) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('projects/$id/tasks/${task.id}').update(task.toJson());
+  }
+
+  Future<void> createTask(PTask task) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('projects/$id/tasks/${task.id}').set(task.toJson());
+  }
+
+  Future<void> removeTask(String tid) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('projects/$id/tasks/$tid').delete();
+    final newUserTaskMap = {...userTaskMap};
+
+    for (final v in userTaskMap.values) {
+      v.remove(tid);
+    }
+
+    db.doc('projects/$id').set(
+      {
+        'newUserTaskMap': newUserTaskMap.map(
+          (k, e) => MapEntry(
+            k,
+            e.toList(),
+          ),
+        ),
+      },
+      SetOptions(merge: true),
+    );
+  }
+
+  Future<void> editSubTask(String tid, PTask subTask) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('projects/$id/tasks/$tid/subTasks/${subTask.id}').update(subTask.toJson());
+  }
+
+  Future<void> createSubTask(String tid, PTask subTask) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('projects/$id/tasks/$tid/subTasks/${subTask.id}').set(subTask.toJson());
+  }
+
+  Future<void> removeSubTask(String tid, PTask subTask) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('projects/$id/tasks/$tid/subTasks/${subTask.id}').delete();
+  }
+
   const factory PProject({
     required String creatorId,
     required String id,
@@ -205,6 +253,7 @@ class PProject with _$PProject {
     @Default({}) Set<String> invitations,
     @Default({}) Set<String> joinRequests,
     @Default({}) Map<String, Set<String>> userRoleMap,
+    @Default({}) Map<String, Set<String>> userTaskMap,
   }) = _PProject;
 
   const factory PProject.loading({
@@ -217,6 +266,7 @@ class PProject with _$PProject {
     @Default({}) Set<String> invitations,
     @Default({}) Set<String> joinRequests,
     @Default({}) Map<String, Set<String>> userRoleMap,
+    @Default({}) Map<String, Set<String>> userTaskMap,
   }) = _PProjectLoading;
 
   factory PProject.fromJson(Map<String, dynamic> json) => _$PProjectFromJson(json);

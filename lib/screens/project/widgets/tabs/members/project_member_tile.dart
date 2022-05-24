@@ -7,12 +7,12 @@ import 'package:projex_app/state/user_provider.dart';
 class ProjectMemberTile extends ConsumerWidget {
   final bool showRoles;
   final bool allowAddingRoles;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   const ProjectMemberTile({
     super.key,
     this.showRoles = true,
     required this.allowAddingRoles,
-    required this.onTap,
+    this.onTap,
   });
 
   @override

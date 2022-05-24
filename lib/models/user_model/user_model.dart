@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:projex_app/enums/status.dart';
 import 'package:projex_app/models/message_model/message_model.dart';
 import 'package:projex_app/models/notification_model/notification_model.dart';
 import 'package:projex_app/models/profile_picture_model/profile_picture_model.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/models/social_model/social_model.dart';
 import 'package:projex_app/models/task_model/task_mode.dart';
+import 'package:projex_app/models/task_status/task_status.dart';
 part 'user_model.freezed.dart';
 part 'user_model.g.dart';
 
@@ -70,7 +70,7 @@ class PUser with _$PUser {
   Future<void> setTaskStatus({
     @Default("") required String projectId,
     @Default("") required String taskId,
-    required PStatus statuss,
+    required PTaskStatus statuss,
   }) async {
     // TODO: user.setTaskStatus
   }
