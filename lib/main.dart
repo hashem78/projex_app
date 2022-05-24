@@ -134,7 +134,7 @@ class App extends ConsumerWidget {
     final translations = ref.watch(translationProvider);
     return ScreenUtilInit(
       designSize: const Size(1080, 2340),
-      builder: (context) {
+      builder: (context, _) {
         if (kIsWeb || Platform.isAndroid) {
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
