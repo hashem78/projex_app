@@ -15,6 +15,13 @@ class TaskStatusRadio extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final task = ref.watch(taskProvider);
+    bool canChange = true;
+    defaultStatus.whenOrNull(
+      complete: (_, __) {
+        canChange = task.canCompleteTask;
+      },
+    );
+
     return RadioListTile<PTaskStatus>(
       activeColor: Colors.white,
       contentPadding: EdgeInsets.zero,
@@ -27,13 +34,15 @@ class TaskStatusRadio extends ConsumerWidget {
           color: Colors.white,
         ),
       ),
-      onChanged: (val) {
-        final project = ref.read(projectProvider);
-        final task = ref.read(taskProvider);
-        project.editTask(
-          task.copyWith(status: val!),
-        );
-      },
+      onChanged: canChange
+          ? (val) {
+              final project = ref.read(projectProvider);
+              final task = ref.read(taskProvider);
+              project.editTask(
+                task.copyWith(status: val!),
+              );
+            }
+          : null,
     );
   }
 }

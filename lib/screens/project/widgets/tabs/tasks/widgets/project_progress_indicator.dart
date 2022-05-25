@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:projex_app/state/project_provider.dart';
 
-class ProjectProgressIndicator extends StatelessWidget {
-  final int progress;
+class ProjectProgressIndicator extends ConsumerWidget {
   const ProjectProgressIndicator({
     Key? key,
-    required this.progress,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final progress = ref.watch(projectProvider.select((value) => value.progress));
+
     return SizedBox(
       width: 0.5.sw,
       height: 0.3.sh,
@@ -21,8 +23,7 @@ class ProjectProgressIndicator extends StatelessWidget {
         reverse: true,
         lineWidth: 15,
         circularStrokeCap: CircularStrokeCap.round,
-        //progressColor: Colors.blue,
-        percent: progress / 100,
+        percent: progress.toDouble(),
         rotateLinearGradient: true,
         linearGradient: LinearGradient(
           colors: [
@@ -38,7 +39,8 @@ class ProjectProgressIndicator extends StatelessWidget {
           ],
         ),
         center: Text(
-          "$progress%",
+          "${(progress * 100).round()}%",
+          maxLines: 1,
           style: TextStyle(
             fontSize: 150.sp,
             color: Colors.purple,

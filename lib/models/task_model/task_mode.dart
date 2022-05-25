@@ -33,6 +33,8 @@ class PTask with _$PTask {
     @Default('') String title,
     @Default('') String description,
     @Default([]) List<PFeedBack> feedback,
+    @Default(0) num progress,
+    @Default(true) bool canCompleteTask,
     DateTime? startDate,
     DateTime? endDate,
     DateTime? dueDate,

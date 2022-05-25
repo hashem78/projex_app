@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable padded-blocks */
 /* eslint-disable indent */
-/* eslint-disable linebreak-style */
 /* eslint-disable max-len */
 import * as admin from 'firebase-admin';
 import * as app from 'firebase-admin/app';
@@ -34,7 +34,6 @@ export const getAllowedGroupsForUser = functions.https.onCall(
         }
       });
     });
-    console.log(`Found ${userGroups}`);
     return userGroups;
   });
 
@@ -71,4 +70,140 @@ export const groupNotificationTrigger = functions.firestore
     } else {
       return Promise.resolve();
     }
+  });
+
+const _getTaskProgress = async (pid: string, tid: string) => {
+
+  // calculate the progress by looping over the subtasks
+  const subTasksCollection = await db.collection(`projects/${pid}/tasks/${tid}/subTasks`).get();
+  if (subTasksCollection.size != 0) {
+    let progress = 0;
+    const subTasksDocs = subTasksCollection.docs;
+    subTasksDocs.forEach((subTaskDoc) => {
+      const subTask = subTaskDoc.data()!;
+      if (subTask.status.runtimeType === 'complete') {
+        progress += 1;
+      }
+    });
+    return Promise.resolve(progress / subTasksCollection.size);
+  }
+
+  return Promise.resolve(0);
+};
+
+
+export const _getProjectProgress = async (pid: string) => {
+  let progress = 0;
+  const tasksCollection = await db.collection(`projects/${pid}/tasks`).get();
+  if (tasksCollection.size != 0) {
+    const taskDocs = tasksCollection.docs;
+    taskDocs.forEach(async (taskDoc) => {
+      if (taskDoc.exists) {
+        const task = taskDoc.data()!;
+        if (task.status.runtimeType === 'complete') {
+          progress++;
+        } else {
+          progress += await _getTaskProgress(pid, task.id);
+        }
+      }
+    });
+    return Promise.resolve(progress / tasksCollection.size);
+  }
+  return Promise.resolve(0);
+
+};
+
+export const taskWatcherTrigger = functions.firestore
+  .document('projects/{projectId}/tasks/{taskId}').onWrite(async (change, context) => {
+
+    const pid = context.params.projectId;
+    if (!change.after.exists) {
+      await db.doc(`projects/${pid}`).update({
+        progress: await _getProjectProgress(pid),
+      });
+      return Promise.resolve();
+    }
+    const tid = context.params.taskId;
+    const beforeStatus = change.before.get('status');
+    const afterStatus = change.after.get('status');
+    if (beforeStatus !== afterStatus) {
+      if (afterStatus.runtimeType === 'complete') {
+        await db.doc(`projects/${pid}/tasks/${tid}`).update({
+          progress: 1,
+        });
+      } else {
+        await db.doc(`projects/${pid}/tasks/${tid}`).update({
+          progress: await _getTaskProgress(pid, tid),
+        });
+      }
+      await db.doc(`projects/${pid}`).update({
+        progress: await _getProjectProgress(pid),
+      });
+    }
+    return Promise.resolve();
+  });
+export const subTaskWatcherTrigger = functions.firestore
+  .document('projects/{projectId}/tasks/{taskId}/subTasks/{subTaskId}').onWrite(async (change, context) => {
+
+    const pid = context.params.projectId;
+    const tid = context.params.taskId;
+    if (!change.after.exists) {
+      await db.doc(`projects/${pid}/tasks/${tid}`).update({
+        progress: await _getTaskProgress(pid, tid),
+      });
+      return Promise.resolve();
+    }
+    const beforeStatus = change.before.get('status');
+    const afterStatus = change.after.get('status');
+    if (beforeStatus !== afterStatus) {
+      let canCompleteTask = true;
+      const subTasksCollection = await db.collection(`projects/${pid}/tasks/${tid}/subTasks`).get();
+
+      if (subTasksCollection.size != 0) {
+        const subTasksDocs = subTasksCollection.docs;
+        subTasksDocs.forEach((subTaskDoc) => {
+          const subTask = subTaskDoc.data()!;
+          if (subTask.status.runtimeType !== 'complete') {
+            canCompleteTask = false;
+            return;
+          }
+        });
+      }
+
+      if (canCompleteTask) {
+        await db.doc(`projects/${pid}/tasks/${tid}`).update({
+          progress: 1,
+          canCompleteTask: true,
+          status: {
+            name: 'Complete',
+            runtimeType: 'complete',
+          },
+        });
+      } else {
+        await db.doc(`projects/${pid}/tasks/${tid}`).update({
+          progress: await _getTaskProgress(pid, tid),
+          canCompleteTask: false,
+          status: {
+            name: 'Incomplete',
+            runtimeType: 'incomplete',
+          },
+        });
+      }
+      await db.doc(`projects/${pid}`).update({
+        progress: await _getProjectProgress(pid),
+      });
+
+    }
+    return Promise.resolve();
+
+  });
+export const taskCountIncrementer = functions.firestore
+  .document('projects/{projectId}/tasks/{taskId}').onCreate(async (snap, context) => {
+    return snap.ref.parent.parent!.update('numberOfTasks', admin.firestore.FieldValue.increment(1));
+
+  });
+export const taskCountDecrementer = functions.firestore
+  .document('projects/{projectId}/tasks/{taskId}').onDelete(async (snap, context) => {
+    return snap.ref.parent.parent!.update('numberOfTasks', admin.firestore.FieldValue.increment(-1));
+
   });
