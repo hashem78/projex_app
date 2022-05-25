@@ -3,8 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:projex_app/models/feedback_model/feedback_model.dart';
 import 'package:projex_app/models/task_status/task_status.dart';
-part 'task_mode.freezed.dart';
-part 'task_mode.g.dart';
+part 'task_model.freezed.dart';
+part 'task_model.g.dart';
 
 @freezed
 class PTask with _$PTask {

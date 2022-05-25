@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:projex_app/models/task_model/task_mode.dart';
+import 'package:projex_app/models/task_model/task_model.dart';
 import 'package:projex_app/state/project_provider.dart';
 
 final selectedTaskProvider = Provider.autoDispose<String>(

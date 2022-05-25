@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterfire_ui/firestore.dart';
-import 'package:projex_app/models/task_model/task_mode.dart';
+import 'package:projex_app/models/task_model/task_model.dart';
 import 'package:projex_app/screens/project/widgets/tabs/tasks/widgets/project_task_tile.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/task_provider.dart';
