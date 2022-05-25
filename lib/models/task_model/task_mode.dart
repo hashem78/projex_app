@@ -16,16 +16,6 @@ class PTask with _$PTask {
     // TODO: task.addFeedBack()
   }
 
-  Future<double> calculateProgressEstimation() async {
-    // TODO: task.calculateProgressEstimation()
-    return 0;
-  }
-
-  Future<void> addAssignees({
-    required List<String> assigneeIds,
-  }) async {
-    // TODO: task.addAssignees()
-  }
   const factory PTask({
     @Default('') String id,
     @Default('') String creatorId,

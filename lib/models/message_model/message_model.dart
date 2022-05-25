@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:projex_app/enums/importance.dart';
 part 'message_model.freezed.dart';
 part 'message_model.g.dart';
 
@@ -11,7 +10,6 @@ class PMessage with _$PMessage {
     required String id,
     required String text,
     required DateTime createdOn,
-    Importance? importance,
   }) = _PMessage;
   factory PMessage.fromJson(Map<String, dynamic> json) => _$PMessageFromJson(json);
 }

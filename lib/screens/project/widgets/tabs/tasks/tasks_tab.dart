@@ -14,7 +14,6 @@ class TasksTab extends ConsumerWidget {
     final numberOfTasks = ref.watch(
       projectProvider.select((value) => value.numberOfTasks),
     );
-    print(numberOfTasks);
     if (numberOfTasks == 0) {
       return const Center(
         child: Text('There are no tasks in this project'),

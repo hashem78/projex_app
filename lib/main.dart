@@ -59,18 +59,14 @@ Future<void> main() async {
   const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
   const notificationSettings = InitializationSettings(android: androidSettings);
 
-  final sucess = await flutterLocalNotificationsPlugin.initialize(
-        notificationSettings,
-        onSelectNotification: (String? payload) async {
-          if (payload != null) {
-            debugPrint('notification payload: $payload');
-          }
-        },
-      ) ??
-      false;
-  if (sucess) {
-    print('flutter local notifications sucess!');
-  }
+  await flutterLocalNotificationsPlugin.initialize(
+    notificationSettings,
+    onSelectNotification: (String? payload) async {
+      if (payload != null) {
+        debugPrint('notification payload: $payload');
+      }
+    },
+  );
 
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
@@ -100,7 +96,6 @@ Future<void> main() async {
   final prefs = await SharedPreferences.getInstance();
   await dotenv.load(fileName: "assets/env.dat");
 
-  // TODO: Add more sign in providers
   FlutterFireUIAuth.configureProviders(
     [
       const EmailProviderConfiguration(),
