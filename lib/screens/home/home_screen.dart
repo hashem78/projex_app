@@ -4,7 +4,6 @@ import 'package:projex_app/screens/home/pages/profile/profie_page.dart';
 import 'package:projex_app/screens/home/pages/projects/projects_page.dart';
 import 'package:projex_app/screens/home/pages/settings/settings_page.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:projex_app/state/editing.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -41,7 +40,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    final isEditing = ref.watch(editingProvider(EditReason.profile));
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
@@ -63,7 +61,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
       ),
       body: PageView(
-        physics: isEditing ? const NeverScrollableScrollPhysics() : null,
         controller: _pageController,
         onPageChanged: (index) {
           setState(() => _selectedIndex = index);
