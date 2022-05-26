@@ -24,7 +24,7 @@ class TaskDescriptionTextField extends ConsumerWidget {
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: 'Task Description',
-        hintText: task.title,
+        hintText: task.description,
       ),
     );
   }
