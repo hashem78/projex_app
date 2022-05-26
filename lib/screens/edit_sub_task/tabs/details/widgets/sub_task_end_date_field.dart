@@ -13,8 +13,11 @@ class SubTaskEndDateField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final project = ref.watch(projectProvider);
     final task = ref.watch(subTaskProvider);
+
     return FormBuilderDateTimePicker(
+      key: ValueKey(project),
       name: 'dt2',
       initialValue: task.endDate!,
       format: DateFormat("EEEE, MMMM d, yyyy 'at' h:mma"),

@@ -13,17 +13,19 @@ class ProjectSettingsStartDateField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final date = ref.watch(projectProvider.select((value) => value.endDate)) ?? DateTime.now();
+    final project = ref.watch(projectProvider);
+    final date = ref.watch(projectProvider.select((value) => value.startDate));
     return FormBuilderDateTimePicker(
-      decoration: InputDecoration(
-        hintText: formatter.format(date),
+      key: ValueKey(project),
+      initialValue: date,
+      decoration: const InputDecoration(
         labelText: 'Start Date',
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
       onChanged: (val) {
         if (val != null) {
           final project = ref.read(projectProvider);
-          project.updateField('start', val.toIso8601String());
+          project.updateField('startDate', val.toIso8601String());
         }
       },
       name: 'start',

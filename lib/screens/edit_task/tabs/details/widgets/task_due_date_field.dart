@@ -12,19 +12,24 @@ class TaskDueDateField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final task = ref.watch(taskProvider);
+    final project = ref.watch(projectProvider);
+    final dueDate = ref.watch(taskProvider.select((value) => value.dueDate));
 
     return FormBuilderDateTimePicker(
+      key: ValueKey(project),
       name: 'dt3',
-      initialValue: task.dueDate!,
+      initialValue: dueDate,
       format: DateFormat("EEEE, MMMM d, yyyy 'at' h:mma"),
       decoration: const InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: 'Due Date',
       ),
       onChanged: (val) async {
-        final project = ref.read(projectProvider);
-        await project.editTask(task.copyWith(dueDate: val));
+        if (val != null) {
+          final project = ref.read(projectProvider);
+          final task = ref.read(taskProvider);
+          await project.editTask(task.copyWith(dueDate: val));
+        }
       },
     );
   }

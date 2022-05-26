@@ -14,24 +14,33 @@ class SubTaskTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final task = ref.watch(subTaskProvider);
     return ListTile(
-      onTap: () {
-        final tid = ref.read(selectedTaskProvider);
-        final subTid = ref.read(selectedSubTaskProvider);
-        final pid = ref.read(selectedProjectProvider);
-        context.push('/project/$pid/editTask/$tid/editSubTask/$subTid');
-      },
       title: Text(task.title),
-      trailing: IconButton(
-        onPressed: () async {
-          final project = ref.read(projectProvider);
-          final tid = ref.read(selectedTaskProvider);
-          final subTask = ref.read(subTaskProvider);
-          await project.removeSubTask(tid, subTask);
+      trailing: PopupMenuButton<int>(
+        onSelected: (val) {
+          if (val == 1) {
+            final tid = ref.read(selectedTaskProvider);
+            final subTid = ref.read(selectedSubTaskProvider);
+            final pid = ref.read(selectedProjectProvider);
+            context.push('/project/$pid/editTask/$tid/editSubTask/$subTid');
+          } else {
+            final project = ref.read(projectProvider);
+            final tid = ref.read(selectedTaskProvider);
+            final subTask = ref.read(subTaskProvider);
+            project.removeSubTask(tid, subTask);
+          }
         },
-        icon: const Icon(
-          Icons.close,
-          color: Colors.red,
-        ),
+        itemBuilder: (context) {
+          return [
+            const PopupMenuItem<int>(
+              value: 1,
+              child: Text('Edit'),
+            ),
+            const PopupMenuItem<int>(
+              value: 2,
+              child: Text('Delete'),
+            )
+          ];
+        },
       ),
     );
   }

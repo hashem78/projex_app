@@ -30,8 +30,8 @@ class _CreateSubTaskTileState extends ConsumerState<CreateSubTaskTile> {
         final now = DateTime.now();
         final tomorrow = now.add(const Duration(days: 1));
         final task = PTask(
-          title: 'A new task',
-          description: 'This is a new task',
+          title: 'A new sub task',
+          description: 'This is a new sub task',
           creatorId: authedUser.id,
           id: id,
           startDate: now,
@@ -48,7 +48,7 @@ class _CreateSubTaskTileState extends ConsumerState<CreateSubTaskTile> {
         Icons.add,
         color: Colors.green,
       ),
-      title: const Text('Add subtask'),
+      title: const Text('Add sub task'),
     );
   }
 }

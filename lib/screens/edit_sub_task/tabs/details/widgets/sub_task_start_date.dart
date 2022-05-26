@@ -13,11 +13,13 @@ class SubTaskStartDateField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final task = ref.watch(subTaskProvider);
+    final project = ref.watch(projectProvider);
+    final startDate = ref.watch(subTaskProvider.select((value) => value.startDate));
 
     return FormBuilderDateTimePicker(
+      key: ValueKey(project),
       name: 'dt1',
-      initialValue: task.startDate!,
+      initialValue: startDate,
       format: DateFormat("EEEE, MMMM d, yyyy 'at' h:mma"),
       decoration: const InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -25,7 +27,6 @@ class SubTaskStartDateField extends ConsumerWidget {
       ),
       onChanged: (val) async {
         final task = ref.read(taskProvider);
-
         final project = ref.read(projectProvider);
         final tid = ref.read(selectedTaskProvider);
         await project.editSubTask(

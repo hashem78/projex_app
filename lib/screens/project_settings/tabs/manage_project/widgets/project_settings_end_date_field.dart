@@ -13,10 +13,12 @@ class ProjectSettingsEndDateField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final date = ref.watch(projectProvider.select((value) => value.startDate)) ?? DateTime.now();
+    final project = ref.watch(projectProvider);
+    final date = ref.watch(projectProvider.select((value) => value.endDate));
     return FormBuilderDateTimePicker(
-      decoration: InputDecoration(
-        hintText: formatter.format(date),
+      key: ValueKey(project),
+      initialValue: date,
+      decoration: const InputDecoration(
         labelText: 'End Date',
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),

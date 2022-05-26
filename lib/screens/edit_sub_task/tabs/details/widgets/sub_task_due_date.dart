@@ -13,11 +13,13 @@ class SubTaskDueDateField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final task = ref.watch(subTaskProvider);
+    final project = ref.watch(projectProvider);
+    final dueDate = ref.watch(subTaskProvider.select((value) => value.dueDate));
 
     return FormBuilderDateTimePicker(
+      key: ValueKey(project),
       name: 'dt3',
-      initialValue: task.dueDate!,
+      initialValue: dueDate,
       format: DateFormat("EEEE, MMMM d, yyyy 'at' h:mma"),
       decoration: const InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -26,9 +28,10 @@ class SubTaskDueDateField extends ConsumerWidget {
       onChanged: (val) async {
         final project = ref.read(projectProvider);
         final tid = ref.read(selectedTaskProvider);
+        final subTask = ref.read(subTaskProvider);
         await project.editSubTask(
           tid,
-          task.copyWith(dueDate: val),
+          subTask.copyWith(dueDate: val),
         );
       },
     );

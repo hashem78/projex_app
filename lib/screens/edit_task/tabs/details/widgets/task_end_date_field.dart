@@ -12,20 +12,24 @@ class TaskEndDateField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final task = ref.watch(taskProvider);
+    final project = ref.watch(projectProvider);
+    final endDate = ref.watch(taskProvider.select((value) => value.endDate));
+
     return FormBuilderDateTimePicker(
+      key: ValueKey(project),
       name: 'dt2',
-      initialValue: task.endDate!,
+      initialValue: endDate,
       format: DateFormat("EEEE, MMMM d, yyyy 'at' h:mma"),
       decoration: const InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: 'End Date',
       ),
       onChanged: (val) async {
-        final task = ref.read(taskProvider);
-
-        final project = ref.read(projectProvider);
-        await project.editTask(task.copyWith(endDate: val));
+        if (val != null) {
+          final task = ref.read(taskProvider);
+          final project = ref.read(projectProvider);
+          await project.editTask(task.copyWith(endDate: val));
+        }
       },
     );
   }

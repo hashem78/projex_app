@@ -31,7 +31,7 @@ class SubTaskList extends ConsumerWidget {
         if (subtasks.isEmpty) {
           return const SliverToBoxAdapter(
             child: Center(
-              child: Text('There are no subtasks'),
+              child: Text('There are no sub tasks'),
             ),
           );
         }

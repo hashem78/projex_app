@@ -10,12 +10,15 @@ class TaskDescriptionTextField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final task = ref.watch(taskProvider);
+    final project = ref.watch(projectProvider);
+
+    final description = ref.watch(taskProvider.select((value) => value.description));
 
     return TextFormField(
-      initialValue: task.description,
+      key: ValueKey(project),
+      initialValue: description,
       onChanged: (val) async {
-        final task = ref.watch(taskProvider);
+        final task = ref.read(taskProvider);
 
         final project = ref.read(projectProvider);
         await project.editTask(task.copyWith(description: val));
@@ -24,7 +27,7 @@ class TaskDescriptionTextField extends ConsumerWidget {
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: 'Task Description',
-        hintText: task.description,
+        hintText: description,
       ),
     );
   }
