@@ -9,11 +9,6 @@ part 'user_model.g.dart';
 @freezed
 class PUser with _$PUser {
   const PUser._();
-  Future<void> addSoicals({
-    required List<PSocial> social,
-  }) async {
-    // TODO: user.addSocial()
-  }
 
   Future<void> createProject({
     required PProject project,

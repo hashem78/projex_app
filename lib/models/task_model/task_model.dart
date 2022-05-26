@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:projex_app/models/feedback_model/feedback_model.dart';
@@ -9,12 +8,6 @@ part 'task_model.g.dart';
 @freezed
 class PTask with _$PTask {
   const PTask._();
-
-  Future<void> addFeedBack({
-    required Feedback feedback,
-  }) async {
-    // TODO: task.addFeedBack()
-  }
 
   const factory PTask({
     @Default('') String id,
