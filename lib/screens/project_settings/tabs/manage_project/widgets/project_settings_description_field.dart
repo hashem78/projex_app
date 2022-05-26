@@ -12,7 +12,7 @@ class ProjectSettingsDescriptionField extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final project = ref.watch(projectProvider);
+    final project = ref.watch(projectProvider.select((value) => value.id));
     final description = ref.watch(projectProvider.select((value) => value.description));
     return FormBuilderTextField(
       initialValue: description,

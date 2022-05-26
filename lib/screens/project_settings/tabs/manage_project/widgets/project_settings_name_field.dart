@@ -13,11 +13,11 @@ class ProjectSettingsNameField extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final project = ref.watch(projectProvider);
+    final project = ref.watch(projectProvider.select((value) => value.id));
     final name = ref.watch(projectProvider.select((value) => value.name));
     return FormBuilderTextField(
-      initialValue: name,
       key: ValueKey(project),
+      initialValue: name,
       inputFormatters: [
         LengthLimitingTextInputFormatter(30),
       ],

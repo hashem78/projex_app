@@ -13,11 +13,12 @@ class ProjectSettingsStartDateField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final project = ref.watch(projectProvider);
+    final project = ref.watch(projectProvider.select((value) => value.id));
     final date = ref.watch(projectProvider.select((value) => value.startDate));
     return FormBuilderDateTimePicker(
       key: ValueKey(project),
       initialValue: date,
+      format: formatter,
       decoration: const InputDecoration(
         labelText: 'Start Date',
         floatingLabelBehavior: FloatingLabelBehavior.always,
