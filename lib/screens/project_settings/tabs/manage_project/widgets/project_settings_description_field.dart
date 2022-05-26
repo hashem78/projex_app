@@ -20,6 +20,7 @@ class ProjectSettingsDescriptionField extends HookConsumerWidget {
       inputFormatters: [
         LengthLimitingTextInputFormatter(30),
       ],
+      maxLines: 5,
       onChanged: (val) async {
         final project = ref.read(projectProvider);
         if (val == null) {
@@ -37,7 +38,7 @@ class ProjectSettingsDescriptionField extends HookConsumerWidget {
       ),
       decoration: InputDecoration(
         hintText: description,
-        labelText: 'Name',
+        labelText: 'Description',
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
       name: '',

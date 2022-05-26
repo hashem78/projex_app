@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:projex_app/screens/edit_task/tabs/details/widgets/created_by_field.dart';
-import 'package:projex_app/screens/edit_task/tabs/details/widgets/task_description_field.dart';
-import 'package:projex_app/screens/edit_task/tabs/details/widgets/task_due_date_field.dart';
-import 'package:projex_app/screens/edit_task/tabs/details/widgets/task_end_date_field.dart';
-import 'package:projex_app/screens/edit_task/tabs/details/widgets/task_start_date.dart';
-import 'package:projex_app/screens/edit_task/tabs/details/widgets/task_status_field.dart';
-import 'package:projex_app/screens/edit_task/tabs/details/widgets/task_title_field.dart';
+import 'package:projex_app/screens/task/tabs/details/widgets/created_by_field.dart';
+import 'package:projex_app/screens/task/tabs/details/widgets/task_description_field.dart';
+import 'package:projex_app/screens/task/tabs/details/widgets/task_due_date_field.dart';
+import 'package:projex_app/screens/task/tabs/details/widgets/task_end_date_field.dart';
+import 'package:projex_app/screens/task/tabs/details/widgets/task_start_date.dart';
+import 'package:projex_app/screens/task/tabs/details/widgets/task_status_field.dart';
+import 'package:projex_app/screens/task/tabs/details/widgets/task_title_field.dart';
 
 class TaskDetailsTab extends StatelessWidget {
   const TaskDetailsTab({

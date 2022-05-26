@@ -42,7 +42,7 @@ class _CreateSubTaskTileState extends ConsumerState<CreateSubTaskTile> {
         final db = FirebaseFirestore.instance;
         await db.doc('projects/$pid/tasks/$tid/subTasks/$id').set(task.toJson());
         if (!mounted) return;
-        context.push('/project/$pid/editTask/$tid/editSubTask/$id');
+        context.push('/project/$pid/task/$tid/subTask/$id');
       },
       leading: const Icon(
         Icons.add,

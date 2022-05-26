@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:projex_app/models/task_model/task_model.dart';
-import 'package:projex_app/screens/edit_task/tabs/details/widgets/sub_task_tile.dart';
+import 'package:projex_app/screens/task/tabs/subtasks/widgets/sub_task_tile.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/sub_task_provider.dart';
 import 'package:projex_app/state/task_provider.dart';

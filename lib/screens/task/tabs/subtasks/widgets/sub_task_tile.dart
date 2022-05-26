@@ -14,6 +14,12 @@ class SubTaskTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final task = ref.watch(subTaskProvider);
     return ListTile(
+      onTap: () {
+        final tid = ref.read(selectedTaskProvider);
+        final subTid = ref.read(selectedSubTaskProvider);
+        final pid = ref.read(selectedProjectProvider);
+        context.push('/project/$pid/task/$tid/subTask/$subTid');
+      },
       title: Text(task.title),
       trailing: PopupMenuButton<int>(
         onSelected: (val) {
@@ -21,7 +27,7 @@ class SubTaskTile extends ConsumerWidget {
             final tid = ref.read(selectedTaskProvider);
             final subTid = ref.read(selectedSubTaskProvider);
             final pid = ref.read(selectedProjectProvider);
-            context.push('/project/$pid/editTask/$tid/editSubTask/$subTid');
+            context.push('/project/$pid/task/$tid/subTask/$subTid');
           } else {
             final project = ref.read(projectProvider);
             final tid = ref.read(selectedTaskProvider);
@@ -33,11 +39,16 @@ class SubTaskTile extends ConsumerWidget {
           return [
             const PopupMenuItem<int>(
               value: 1,
-              child: Text('Edit'),
+              child: Text('View'),
             ),
             const PopupMenuItem<int>(
               value: 2,
-              child: Text('Delete'),
+              child: Text(
+                'Delete',
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              ),
             )
           ];
         },

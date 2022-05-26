@@ -42,7 +42,7 @@ class _ProjectScreenFABState extends ConsumerState<ProjectScreenFAB> {
           final db = FirebaseFirestore.instance;
           await db.doc('projects/$pid/tasks/$id').set(task.toJson());
           if (!mounted) return;
-          context.push('/project/$pid/editTask/$id');
+          context.push('/project/$pid/task/$id');
         },
         child: const Text('Create Task'),
       ),
