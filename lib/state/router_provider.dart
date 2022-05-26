@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/screens/chat/group_chat_screen.dart';
 import 'package:projex_app/screens/edit_chat_group/edit_chat_group_screen.dart';
+import 'package:projex_app/screens/feeback/feedback_screen.dart';
 import 'package:projex_app/screens/sub_task/sub_task_screen.dart';
 import 'package:projex_app/screens/invite_members/invite_members_screen.dart';
 import 'package:projex_app/screens/add_roles_to_user/add_roles_to_user_screen.dart';
@@ -82,6 +83,18 @@ final routerProvider = Provider<GoRouter>(
                 GoRoute(
                   path: 'task/:tid',
                   routes: [
+                    GoRoute(
+                      path: 'feedback',
+                      builder: (context, state) {
+                        return ProviderScope(
+                          overrides: [
+                            selectedTaskProvider.overrideWithValue(state.params['tid']!),
+                            selectedProjectProvider.overrideWithValue(state.params['pid']!),
+                          ],
+                          child: const FeedBackScreen(),
+                        );
+                      },
+                    ),
                     GoRoute(
                       path: 'subTask/:subTid',
                       builder: (context, state) {

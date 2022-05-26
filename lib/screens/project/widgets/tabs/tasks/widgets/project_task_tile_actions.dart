@@ -18,7 +18,11 @@ class ProjectTaskTileActions extends ConsumerWidget {
           final pid = ref.read(selectedProjectProvider);
           final tid = ref.read(selectedTaskProvider);
           context.push('/project/$pid/task/$tid');
-        } else {
+        } else if (val == 1) {
+          final pid = ref.read(selectedProjectProvider);
+          final tid = ref.read(selectedTaskProvider);
+          context.push('/project/$pid/task/$tid/feedback');
+        } else if (val == 2) {
           final delete = await showDialog<bool>(
                 context: context,
                 builder: (_) => const DeleteTaskDialog(),
@@ -36,6 +40,12 @@ class ProjectTaskTileActions extends ConsumerWidget {
           const PopupMenuItem(
             value: 0,
             child: Text('View'),
+          ),
+          const PopupMenuItem(
+            value: 1,
+            child: Text(
+              'Feedback',
+            ),
           ),
           const PopupMenuItem(
             value: 1,

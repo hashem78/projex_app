@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:projex_app/models/feedback_model/feedback_model.dart';
 import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/models/task_model/task_model.dart';
 part 'project_model.g.dart';
@@ -8,6 +10,24 @@ part 'project_model.freezed.dart';
 @freezed
 class PProject with _$PProject {
   const PProject._();
+  Future<void> removeFeedBackFromTask(String tid, String fid) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('projects/$id/tasks/$tid/feedback/$fid').delete();
+  }
+
+  Future<void> feedBackOnTask(
+    String tid,
+    PFeedBack feedback,
+  ) async {
+    final db = FirebaseFirestore.instance;
+
+    final doc = await db.doc('projects/$id/tasks/$tid/feedback/${feedback.id}').get();
+    if (doc.exists) {
+      db.doc('projects/$id/tasks/$tid/feedback/${feedback.id}').update(feedback.toJson());
+    } else {
+      db.doc('projects/$id/tasks/$tid/feedback/${feedback.id}').set(feedback.toJson());
+    }
+  }
 
   Future<void> updateField(String field, String newFieldData) async {
     final db = FirebaseFirestore.instance;

@@ -5,11 +5,9 @@ part 'feedback_model.g.dart';
 @freezed
 class PFeedBack with _$PFeedBack {
   const factory PFeedBack({
-    required String id,
-    required String creatorId,
-    required String taskId,
-    required String feedBackText,
+    @Default('') String id,
+    @Default('') String creatorId,
+    @Default('') String text,
   }) = P_FeedBack;
-  factory PFeedBack.fromJson(Map<String, dynamic> json) =>
-      _$PFeedBackFromJson(json);
+  factory PFeedBack.fromJson(Map<String, dynamic> json) => _$PFeedBackFromJson(json);
 }

@@ -8,10 +8,12 @@ class ProfileImage extends StatelessWidget {
     Key? key,
     required this.profilePicture,
     this.borderWidth = 4,
+    this.size,
   }) : super(key: key);
 
   final PProfilePicture profilePicture;
   final double borderWidth;
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +21,8 @@ class ProfileImage extends StatelessWidget {
       imageUrl: profilePicture.link,
       imageBuilder: (context, imageProvider) {
         return AnimatedContainer(
-          width: profilePicture.width?.toDouble() ?? 120,
-          height: profilePicture.width?.toDouble() ?? 120,
+          width: profilePicture.width?.toDouble() ?? size ?? 120,
+          height: profilePicture.width?.toDouble() ?? size ?? 120,
           decoration: BoxDecoration(
             border: Border.all(
               width: borderWidth,
@@ -39,7 +41,9 @@ class ProfileImage extends StatelessWidget {
               fit: BoxFit.contain,
             ),
           ),
-          duration: const Duration(seconds: 1),
+          duration: const Duration(
+            milliseconds: 250,
+          ),
         );
       },
     );
