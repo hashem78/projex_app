@@ -13,7 +13,7 @@ final selectedProjectProvider = Provider.autoDispose<String>(
 class ProjectNotifier extends StateNotifier<PProject> {
   final String pid;
   StreamSubscription? subscription;
-  ProjectNotifier(this.pid) : super(const PProject.loading()) {
+  ProjectNotifier(this.pid) : super(const PProject()) {
     final db = FirebaseFirestore.instance;
     subscription = db
         .doc(
@@ -21,7 +21,7 @@ class ProjectNotifier extends StateNotifier<PProject> {
         )
         .snapshots()
         .map(
-          (event) => PProject.fromJson(event.data()!),
+          (event) => event.data() != null ? PProject.fromJson(event.data()!) : const PProject(),
         )
         .listen((event) => state = event);
   }

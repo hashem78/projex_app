@@ -8,6 +8,16 @@ part 'project_model.freezed.dart';
 @freezed
 class PProject with _$PProject {
   const PProject._();
+
+  Future<void> updateField(String field, String newFieldData) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('/projects/$id').update(
+      {
+        field: newFieldData,
+      },
+    );
+  }
+
   Future<void> addMemberToProject({
     required String memberId,
   }) async {
@@ -242,12 +252,12 @@ class PProject with _$PProject {
   }
 
   const factory PProject({
-    required String creatorId,
-    required String id,
-    required String name,
-    required String description,
-    required DateTime startDate,
-    required DateTime endDate,
+    @Default('') String creatorId,
+    @Default('') String id,
+    @Default('') String name,
+    @Default('') String description,
+    DateTime? startDate,
+    DateTime? endDate,
     @Default(0) int numberOfTasks,
     @Default(0) num progress,
     @Default({}) Set<String> memberIds,
@@ -256,20 +266,6 @@ class PProject with _$PProject {
     @Default({}) Map<String, Set<String>> userRoleMap,
     @Default({}) Map<String, Set<String>> userTaskMap,
   }) = _PProject;
-
-  const factory PProject.loading({
-    @Default('') String creatorId,
-    @Default('') String id,
-    @Default('') String name,
-    @Default('') String description,
-    @Default(0) int numberOfTasks,
-    @Default(0) num progress,
-    @Default({}) Set<String> memberIds,
-    @Default({}) Set<String> invitations,
-    @Default({}) Set<String> joinRequests,
-    @Default({}) Map<String, Set<String>> userRoleMap,
-    @Default({}) Map<String, Set<String>> userTaskMap,
-  }) = _PProjectLoading;
 
   factory PProject.fromJson(Map<String, dynamic> json) => _$PProjectFromJson(json);
 }

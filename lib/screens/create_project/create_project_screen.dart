@@ -50,7 +50,7 @@ class _CreateProjectScreenState extends ConsumerState<CreateProjectScreen> {
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(),
-                            FormBuilderValidators.maxLength(15),
+                            FormBuilderValidators.maxLength(30),
                             FormBuilderValidators.minLength(5),
                           ],
                         ),
@@ -66,7 +66,7 @@ class _CreateProjectScreenState extends ConsumerState<CreateProjectScreen> {
                           ),
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(),
-                            FormBuilderValidators.maxLength(50),
+                            FormBuilderValidators.maxLength(100),
                             FormBuilderValidators.minLength(10),
                           ]),
                         ),
