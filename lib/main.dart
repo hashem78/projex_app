@@ -21,6 +21,7 @@ import 'package:projex_app/firebase_options.dart';
 import 'package:projex_app/i18n/translations.g.dart';
 import 'package:projex_app/screens/login/login_localizations.dart';
 import 'package:projex_app/state/locale.dart';
+import 'package:projex_app/state/notifications.dart';
 import 'package:projex_app/state/router_provider.dart';
 import 'package:projex_app/state/shared_perferences_provider.dart';
 import 'package:projex_app/state/theme_mode.dart';
@@ -33,7 +34,8 @@ const androidChannel = AndroidNotificationChannel(
   description: 'This channel is used for important notifications.', // description
   importance: Importance.max,
 );
-
+const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+const notificationSettings = InitializationSettings(android: androidSettings);
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -56,9 +58,6 @@ Future<void> main() async {
     sound: true,
   );
 
-  const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
-  const notificationSettings = InitializationSettings(android: androidSettings);
-
   await flutterLocalNotificationsPlugin.initialize(
     notificationSettings,
     onSelectNotification: (String? payload) async {
@@ -71,14 +70,15 @@ Future<void> main() async {
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(androidChannel);
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    final notification = message.notification;
-    final android = message.notification?.android;
+  FirebaseMessaging.onMessage.listen(
+    (message) {
+      final notification = message.notification;
+      final android = message.notification?.android;
 
-    // If `onMessage` is triggered with a notification, construct our own
-    // local notification to show to users using the created channel.
-    if (notification != null && android != null) {
-      flutterLocalNotificationsPlugin.show(
+      // If `onMessage` is triggered with a notification, construct our own
+      // local notification to show to users using the created channel.
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
           notification.hashCode,
           notification.title,
           notification.body,
@@ -88,9 +88,12 @@ Future<void> main() async {
               androidChannel.name,
               channelDescription: androidChannel.description,
             ),
-          ));
-    }
-  });
+          ),
+        );
+      }
+    },
+  );
+  await setupTokenRefreshListener();
   // Loads the SharedPereferences instance for later
   // overriding.
   final prefs = await SharedPreferences.getInstance();

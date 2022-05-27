@@ -43,25 +43,50 @@ export const groupNotificationTrigger = functions.firestore
     // get tokens for the group chat
     const pid = context.params.projectId;
     const gid = context.params.groupId;
-    // get group data
-    const group = await db.doc(`projects/${pid}/groupChats/${gid}`).get();
-    const groupData = group.data()!;
-
-    // get message data
-    const messageData = change.after.data()!;
 
     // get the message senderData
+    const messageData = change.after.data()!;
     const senderId = messageData.senderId;
     const sender = await db.doc(`users/${senderId}`).get();
     const senderData = sender.data()!;
-    const senderToken = messageData.senderToken;
-    // get the tokens of the group and exclude the sender.
-    const groupTokens = groupData.tokens.filter((item: any) => {
-      return item !== senderToken;
+
+    // get group data
+    const group = await db.doc(`projects/${pid}/groupChats/${gid}`).get();
+    const project = await db.doc(`projects/${pid}`).get();
+    const projectData = project.data()!;
+    const groupData = group.data()!;
+
+    const groupMembersList: Set<string> = new Set([]);
+
+    // get the group members
+    // based on the allowedRoleIds
+    groupData.allowedRoleIds.forEach((rid: string) => {
+      Object.entries(projectData.userRoleMap).forEach(([key, value]: any) => {
+        value.forEach((innerRid: string) => {
+          console.log(innerRid);
+          if (innerRid === rid) {
+            groupMembersList.add(key);
+          }
+        });
+      });
+
     });
-    if (groupTokens.length != 0) {
+    console.log(groupMembersList);
+
+    // get the actual device tokens
+    const tokenList: Array<string> = [];
+
+    for (const memberId of groupMembersList) {
+      const tokenDoc = await db.doc(`tokens/${memberId}`).get();
+      const tokenData = tokenDoc.data()!;
+      if (memberId != senderId) {
+        tokenList.push(tokenData.token);
+      }
+    }
+    console.log(tokenList);
+    if (tokenList.length != 0) {
       return messaging.sendMulticast({
-        tokens: groupTokens,
+        tokens: tokenList,
         notification: {
           title: `${senderData.name} has sent a new message in ${groupData.name}`,
           body: messageData.text,
