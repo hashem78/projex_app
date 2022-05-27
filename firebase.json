@@ -1,16 +1,24 @@
 {
   "emulators": {
     "auth": {
+      "host": "192.168.8.103",
       "port": 9099
     },
     "ui": {
+      "host": "192.168.8.103",
       "enabled": true
     },
     "firestore": {
+      "host": "192.168.8.103",
       "port": 8080
     },
     "storage": {
+      "host": "192.168.8.103",
       "port": 9199
+    },
+    "functions": {
+      "host": "192.168.8.103",
+      "port": 5001
     }
   },
   "storage": {

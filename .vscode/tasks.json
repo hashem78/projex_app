@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Flutter-Launch-All",
+            "dependsOn": [
+                "Flutter-Launch-Emulator",
+                "Flutter-Launch-Android",
+            ]
+        },
+        {
+            "label": "Flutter-Launch-Emulator",
+            "type": "shell",
+            "command": "flutter run -d 'emulator-5554' "
+        },
+        {
+            "label": "Flutter-Launch-Android",
+            "type": "shell",
+            "command": "flutter run -d 'R58R50HDX1E' "
+        },
+    ]
+}

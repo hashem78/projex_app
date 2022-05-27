@@ -46,10 +46,10 @@ Future<void> main() async {
   // For debugging purposes.
   // Make sure to run firebase eumlators:start
   if (kDebugMode) {
-    await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-    await FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
-    FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
-    FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5001);
+    await FirebaseAuth.instance.useAuthEmulator('192.168.8.103', 9099);
+    await FirebaseStorage.instance.useStorageEmulator('192.168.8.103', 9199);
+    FirebaseFirestore.instance.useFirestoreEmulator('192.168.8.103', 8080);
+    FirebaseFunctions.instance.useFunctionsEmulator('192.168.8.103', 5001);
   }
   await FirebaseMessaging.instance.requestPermission();
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
