@@ -5,7 +5,6 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +46,6 @@ Future<void> main() async {
   // Make sure to run firebase eumlators:start
   if (kDebugMode) {
     await FirebaseAuth.instance.useAuthEmulator('192.168.8.103', 9099);
-    await FirebaseStorage.instance.useStorageEmulator('192.168.8.103', 9199);
     FirebaseFirestore.instance.useFirestoreEmulator('192.168.8.103', 8080);
     FirebaseFunctions.instance.useFunctionsEmulator('192.168.8.103', 5001);
   }
