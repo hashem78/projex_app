@@ -131,56 +131,32 @@ class App extends ConsumerWidget {
     return ScreenUtilInit(
       designSize: const Size(1080, 2340),
       builder: (context, _) {
-        if (kIsWeb || Platform.isAndroid) {
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            locale: translations.locale.flutterLocale,
-            // We support the locales in AppLocale, but AppLocale locales
-            // are different and need to be mapped to flutter locales.
-            supportedLocales: AppLocale.values.map((e) => e.flutterLocale),
-            localizationsDelegates: [
-              ...GlobalMaterialLocalizations.delegates,
-              GlobalWidgetsLocalizations.delegate,
-              // override the default pacakage:flutterfire_ui strings
-              FlutterFireUILocalizations.withDefaultOverrides(
-                LoginLocalilzations(translations.translations),
-              ),
-              FormBuilderLocalizations.delegate,
-            ],
-            themeMode: themeState.flutterThemeMode,
-            theme: ThemeData(
-              brightness: themeState.flutterBrightness,
-              inputDecorationTheme: const InputDecorationTheme(
-                border: InputBorder.none,
-                filled: true,
-              ),
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          locale: translations.locale.flutterLocale,
+          // We support the locales in AppLocale, but AppLocale locales
+          // are different and need to be mapped to flutter locales.
+          supportedLocales: AppLocale.values.map((e) => e.flutterLocale),
+          localizationsDelegates: [
+            ...GlobalMaterialLocalizations.delegates,
+            GlobalWidgetsLocalizations.delegate,
+            // override the default pacakage:flutterfire_ui strings
+            FlutterFireUILocalizations.withDefaultOverrides(
+              LoginLocalilzations(translations.translations),
             ),
-            routeInformationParser: router.routeInformationParser,
-            routerDelegate: router.routerDelegate,
-          );
-        } else {
-          return CupertinoApp.router(
-            debugShowCheckedModeBanner: false,
-            locale: translations.locale.flutterLocale,
-            // We support the locales in AppLocale, but AppLocale locales
-            // are different and need to be mapped to flutter locales.
-            supportedLocales: AppLocale.values.map((e) => e.flutterLocale),
-            localizationsDelegates: [
-              ...GlobalCupertinoLocalizations.delegates,
-              GlobalWidgetsLocalizations.delegate,
-              // override the default pacakage:flutterfire_ui strings
-              FlutterFireUILocalizations.withDefaultOverrides(
-                LoginLocalilzations(translations.translations),
-              ),
-              FormBuilderLocalizations.delegate,
-            ],
-            theme: CupertinoThemeData(
-              brightness: themeState.flutterBrightness,
+            FormBuilderLocalizations.delegate,
+          ],
+          themeMode: themeState.flutterThemeMode,
+          theme: ThemeData(
+            brightness: themeState.flutterBrightness,
+            inputDecorationTheme: const InputDecorationTheme(
+              border: InputBorder.none,
+              filled: true,
             ),
-            routeInformationParser: router.routeInformationParser,
-            routerDelegate: router.routerDelegate,
-          );
-        }
+          ),
+          routeInformationParser: router.routeInformationParser,
+          routerDelegate: router.routerDelegate,
+        );
       },
     );
   }
