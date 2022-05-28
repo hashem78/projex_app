@@ -39,11 +39,19 @@ class HomeProjectsPage extends ConsumerWidget {
                 toFirestore: (_, __) => {},
               ),
           builder: (context, snapshot, child) {
+            final docs = snapshot.docs;
+            if (docs.isEmpty) {
+              return const SliverToBoxAdapter(
+                child: Center(
+                  child: Text('There are no projects'),
+                ),
+              );
+            }
             return SliverList(
               delegate: SliverChildBuilderDelegate(
-                childCount: snapshot.docs.length,
+                childCount: docs.length,
                 (context, index) {
-                  final project = snapshot.docs[index].data();
+                  final project = docs[index].data();
 
                   return ProviderScope(
                     overrides: [
