@@ -48,7 +48,7 @@ class ProjectTaskTileActions extends ConsumerWidget {
             ),
           ),
           const PopupMenuItem(
-            value: 1,
+            value: 2,
             child: Text(
               'Delete',
               style: TextStyle(color: Colors.red),
