@@ -15,6 +15,7 @@ class EditChatRoleListTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final group = ref.watch(groupChatProvider);
     return CheckboxListTile(
+      enabled: role.id != 'owner',
       value: group.allowedRoleIds.contains(role.id),
       title: Text(role.name),
       onChanged: (val) {

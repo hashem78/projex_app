@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/screens/edit_roles/widgets/tabs/display/checkable_color_badge.dart';
+import 'package:projex_app/state/locale.dart';
 
-class ColorRows extends StatelessWidget {
+class ColorRows extends ConsumerWidget {
   const ColorRows({
     Key? key,
     required this.role,
@@ -10,13 +12,14 @@ class ColorRows extends StatelessWidget {
   final PRole role;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final translations = ref.watch(translationProvider).translations.editRolePage;
     final stateColor = Color(
       int.parse(role.color, radix: 16),
     );
     return InputDecorator(
-      decoration: const InputDecoration(
-        label: Text("Role color"),
+      decoration: InputDecoration(
+        label: Text(translations.displayTabColorFieldTitleText),
         border: InputBorder.none,
       ),
       child: GridView.count(

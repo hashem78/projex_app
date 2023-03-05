@@ -7,6 +7,7 @@ import 'package:flutterfire_ui/firestore.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/state/auth.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/user_provider.dart';
 
 class HomeProjectsPage extends ConsumerWidget {
@@ -16,13 +17,14 @@ class HomeProjectsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final translations = ref.watch(translationProvider).translations.projects;
     return CustomScrollView(
       slivers: [
         SliverAppBar(
           expandedHeight: 0.25.sh,
           backgroundColor: Colors.green,
-          flexibleSpace: const FlexibleSpaceBar(
-            title: Text('My Projects'),
+          flexibleSpace: FlexibleSpaceBar(
+            title: Text(translations.name),
           ),
         ),
         FirestoreQueryBuilder<PProject>(

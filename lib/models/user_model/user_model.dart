@@ -69,6 +69,15 @@ class PUser with _$PUser {
     );
   }
 
+  Future<void> updateProfilePicture(PProfilePicture picture) async {
+    final db = FirebaseFirestore.instance;
+    await db.doc('users/$id').update(
+      {
+        'profilePicture': picture.toJson(),
+      },
+    );
+  }
+
   const factory PUser({
     @Default("") String id,
     @Default("") String name,

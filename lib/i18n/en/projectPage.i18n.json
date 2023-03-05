@@ -1,0 +1,14 @@
+{
+    "projectTabBarGroupsTitle": "Groups",
+    "projectTabBarMembersTitle": "Members",
+    "projectTabBarTasksTitle": "Tasks",
+    "projectCreateTaskButtonText": "Create Task",
+    "projectMenuSettingsItemText": "Settings",
+    "projectNotPartOfAnyGroup": "You are not part of any groups yet",
+    "projectNoTasksInProject": "There are no tasks in this project yet",
+    "projectTaskMenuViewItemText": "View",
+    "projectTaskMenuFeedBackItemText": "FeedBack",
+    "projectTaskMenuDeleteItemText": "Delete",
+    "newTaskDefaultTitle": "New Task",
+    "newTaskDefaultDescription": "This is a new Task"
+}

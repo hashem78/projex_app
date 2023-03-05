@@ -1,0 +1,10 @@
+{
+    "appBarTitle": "البيت",
+    "createProjectTitle": "انشاء مشروع",
+    "joinProjectTile": "الانضمام لمشروع",
+    "pendingRequestsTitle": "طلبات الانضمام المعلقة",
+    "joinProjectDialogTitle": "انضم لمشروع",
+    "joinProjectDialogSubTitle": "ادخل رقم دعوة الانضمام",
+    "joinProjectDialogJoinButtonText": "ارسل طلب الانضمام",
+    "joinProjectDialogCancelButtonText": "الغاء"
+}

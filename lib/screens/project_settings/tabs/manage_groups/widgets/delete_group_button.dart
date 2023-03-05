@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:projex_app/screens/project_settings/tabs/manage_groups/widgets/delete_group_dialog.dart';
+import 'package:projex_app/screens/widgets/delete_something_dialog.dart';
 import 'package:projex_app/state/group_chat.dart';
 import 'package:projex_app/state/project_provider.dart';
 
@@ -18,9 +18,7 @@ class DeleteGroupButton extends ConsumerWidget {
         final db = FirebaseFirestore.instance;
         final shouldDelete = await showDialog<bool>(
           context: context,
-          builder: (context) => DeleteGroupDialog(
-            groupName: groupName,
-          ),
+          builder: (context) => DeleteSomethingDialog(name: groupName),
         );
         if (shouldDelete != null && shouldDelete) {
           final projectId = ref.read(selectedProjectProvider);

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:projex_app/screens/sub_task/tabs/assigness/sub_task_assignees_tab.dart';
 import 'package:projex_app/screens/sub_task/tabs/details/sub_task_details_tab.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/sub_task_provider.dart';
 
@@ -13,6 +14,7 @@ class SubTaskScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final project = ref.watch(projectProvider);
     final task = ref.watch(subTaskProvider);
+    final translations = ref.watch(translationProvider).translations.taskPage;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -27,10 +29,10 @@ class SubTaskScreen extends ConsumerWidget {
                     Text(task.title),
                   ],
                 ),
-                bottom: const TabBar(
+                bottom: TabBar(
                   tabs: [
-                    Tab(text: 'Details'),
-                    Tab(text: 'Asignees'),
+                    Tab(text: translations.taskDetailsTabBarTabTitle),
+                    Tab(text: translations.taskAssigneesTabBarTabTitle),
                   ],
                 ),
               ),

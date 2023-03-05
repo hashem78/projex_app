@@ -1,0 +1,20 @@
+{
+    "title": "Settings",
+    "tabBarManageTabTitleText": "Manage",
+    "tabBarMembersTabTitleText": "Members",
+    "tabBarRolesTabTitleText": "Roles",
+    "tabBarGroupsTabTitleText": "Groups",
+    "manageTabNameFieldTitleText": "Name",
+    "manageTabDescriptionFieldTitleText": "Description",
+    "manageTabStartDateTitleText": "Start Date & Time",
+    "manageTabEndDateTitleText": "End Date & Time",
+    "manageTabDeleteProjectButtonText": "Delete Project",
+    "membersTabInviteMembersButtonText": "Invite Members",
+    "membersTabPendingInvitationsButtonText": "Pending Invitations",
+    "membersTabPendingJoinRequestsButtonText": "Join Requests",
+    "membersTabProjectMembersTitleText": "Project Members",
+    "membersTabEditRolesButtonText": "Edit Roles",
+    "rolesTabCreateRoleButtonText": "Create Role",
+    "groupsTabCreateGroupButtonText": "Create Group",
+    "groupsTabDefaultGroupName": "New Group"
+}

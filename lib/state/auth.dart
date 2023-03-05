@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/models/profile_picture_model/profile_picture_model.dart';
 import 'package:projex_app/models/user_model/user_model.dart';
+import 'package:projex_app/state/router_provider.dart';
 
 /// The notifier for when the auth state changes
 /// to be used by authProvider.
@@ -43,6 +44,8 @@ class AuthNotifier extends StateNotifier<PUser> {
             state = puser;
           }
 
+          ref.read(routerProvider).pushReplacement('/');
+
           psubscription?.cancel();
           psubscription = db
               .doc(
@@ -59,6 +62,7 @@ class AuthNotifier extends StateNotifier<PUser> {
           );
         } else {
           state = const PUser();
+          ref.read(routerProvider).pushReplacementNamed('login');
         }
       },
     );

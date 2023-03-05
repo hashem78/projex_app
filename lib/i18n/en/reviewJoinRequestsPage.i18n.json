@@ -1,0 +1,5 @@
+{
+    "title": "Review Join Requests",
+    "subTitleNoJoinRequestsText": "There are no join requests",
+    "subTitleJoinRequestsText": "There are $number join request(s)"
+}

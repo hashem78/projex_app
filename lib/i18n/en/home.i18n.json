@@ -1,0 +1,10 @@
+{
+    "appBarTitle": "Home",
+    "createProjectTitle": "Create Project",
+    "joinProjectTile": "Join Project",
+    "pendingRequestsTitle": "Pending Requests",
+    "joinProjectDialogTitle": "Join a Project",
+    "joinProjectDialogSubTitle": "Enter an invite code",
+    "joinProjectDialogJoinButtonText": "Send Join Request",
+    "joinProjectDialogCancelButtonText": "Cancel"
+}

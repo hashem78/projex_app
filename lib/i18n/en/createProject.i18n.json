@@ -1,0 +1,8 @@
+{
+    "createProjectTitle": "Create A New Project",
+    "projectNameTextFieldLabel": "Name",
+    "projectDescriptionTextFieldLabel": "Description",
+    "projectStartDateFieldLabel": "Start Date & Time",
+    "projectEndDateFieldLabel": "End Date & Time",
+    "createProjectButtonText": "Create Project"
+}

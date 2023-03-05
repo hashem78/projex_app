@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 
 class ProjectSettingsDescriptionField extends HookConsumerWidget {
@@ -14,6 +15,7 @@ class ProjectSettingsDescriptionField extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final project = ref.watch(projectProvider.select((value) => value.id));
     final description = ref.watch(projectProvider.select((value) => value.description));
+    final translations = ref.watch(translationProvider).translations.projectSettings;
     return FormBuilderTextField(
       initialValue: description,
       key: ValueKey(project),
@@ -38,7 +40,7 @@ class ProjectSettingsDescriptionField extends HookConsumerWidget {
       ),
       decoration: InputDecoration(
         hintText: description,
-        labelText: 'Description',
+        labelText: translations.manageTabDescriptionFieldTitleText,
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
       name: '',

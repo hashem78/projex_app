@@ -8,6 +8,7 @@ import 'package:projex_app/screens/home/pages/profile/widgets/profile_page_appba
 import 'package:projex_app/screens/home/pages/profile/widgets/profile_project_invitation_tile.dart';
 import 'package:projex_app/screens/home/pages/profile/widgets/profile_project_join_request_tile.dart';
 import 'package:projex_app/state/auth.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 
 class HomeProfilePage extends ConsumerWidget {
@@ -18,12 +19,13 @@ class HomeProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(authProvider);
+    final translations = ref.watch(translationProvider).translations.home;
     return CustomScrollView(
       slivers: [
         const HomeProfilePageAppBar(),
-        SliverPadding(
-          padding: EdgeInsets.only(top: 0.065.sh, left: 12, right: 12),
-          sliver: const ProfileCard(),
+        const SliverPadding(
+          padding: EdgeInsets.only(left: 12, right: 12),
+          sliver: ProfileCard(),
         ),
         SliverToBoxAdapter(
           child: ListTile(
@@ -31,7 +33,7 @@ class HomeProfilePage extends ConsumerWidget {
               Icons.add,
               color: Colors.green,
             ),
-            title: const Text('Create Project'),
+            title: Text(translations.createProjectTitle),
             contentPadding: const EdgeInsetsDirectional.only(start: 20.0),
             onTap: () {
               context.push('/createProject');
@@ -44,7 +46,7 @@ class HomeProfilePage extends ConsumerWidget {
               Icons.door_back_door,
               color: Colors.blue,
             ),
-            title: const Text('Join Project'),
+            title: Text(translations.joinProjectTile),
             contentPadding: const EdgeInsetsDirectional.only(start: 20.0),
             onTap: () async {
               await showDialog(
@@ -82,7 +84,7 @@ class HomeProfilePage extends ConsumerWidget {
             padding: const EdgeInsets.all(12.0),
             sliver: SliverToBoxAdapter(
               child: Text(
-                'Pending Requests',
+                translations.pendingRequestsTitle,
                 style: TextStyle(fontSize: 50.sp),
               ),
             ),

@@ -1,0 +1,8 @@
+{
+    "createProjectTitle": "انشء مشروع جديد",
+    "projectNameTextFieldLabel": "الاسم",
+    "projectDescriptionTextFieldLabel": "الوصف",
+    "projectStartDateFieldLabel": "وقت وتاريخ بداية المشروع",
+    "projectEndDateFieldLabel": "وقت و تاريخ نهاية المشروع",
+    "createProjectButtonText": "انسء المشروع"
+}

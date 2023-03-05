@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
-
-final formatter = DateFormat("EEEE, MMMM d, yyyy 'at' h:mma");
 
 class ProjectSettingsStartDateField extends ConsumerWidget {
   const ProjectSettingsStartDateField({
@@ -15,12 +14,16 @@ class ProjectSettingsStartDateField extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final project = ref.watch(projectProvider.select((value) => value.id));
     final date = ref.watch(projectProvider.select((value) => value.startDate));
+    final container = ref.watch(translationProvider);
+    final translations = container.translations.projectSettings;
+    final locale = container.locale;
+    final formatter = DateFormat("EEEE, MMMM d, yyyy 'at' h:mma", locale.name);
     return FormBuilderDateTimePicker(
       key: ValueKey(project),
       initialValue: date,
       format: formatter,
-      decoration: const InputDecoration(
-        labelText: 'Start Date',
+      decoration: InputDecoration(
+        labelText: translations.manageTabStartDateTitleText,
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
       onChanged: (val) {

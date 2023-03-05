@@ -1,0 +1,5 @@
+{
+    "title": "مراجعة طلبات الانضمام",
+    "subTitleNoJoinRequestsText": "لا يوجد طلبات انضمام",
+    "subTitleJoinRequestsText": "يوجد $number طلبات انضمام"
+}

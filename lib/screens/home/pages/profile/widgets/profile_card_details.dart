@@ -16,11 +16,11 @@ class ProfileScreenCardDetails extends ConsumerWidget {
         Text(
           user.name,
           maxLines: 1,
-          style: Theme.of(context).textTheme.headline5,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
         Text(
           user.email,
-          style: Theme.of(context).textTheme.caption,
+          style: Theme.of(context).textTheme.bodySmall,
         ),
       ],
     );

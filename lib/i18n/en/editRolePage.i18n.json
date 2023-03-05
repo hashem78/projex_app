@@ -1,0 +1,10 @@
+{
+    "editRoleAppBarTitle": "Edit Role",
+    "displayTabBarTitle": "Display",
+    "permissionsTabBarTitle": "Permissions",
+    "manageTabBarTitle": "Manage",
+    "displayTabRoleNameFieldTitleText": "Name",
+    "displayTabColorFieldTitleText": "Color",
+    "manageTabDeleteRoleButtonText": "Delete Role",
+    "manageTabMembersHaveThisRoleText": "$number Members Have This Role"
+}

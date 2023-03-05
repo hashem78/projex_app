@@ -1,0 +1,6 @@
+{
+    "deleteRoleDialogTitleText": "Delete $name",
+    "deleteRoleDialogConfirmationText": "Are you sure you want to delete $name? this action is irreversable!",
+    "deleteRoleDialogConfirmationButtonText": "Yes",
+    "deleteRoleDialogCancellationButtonText": "No"
+}

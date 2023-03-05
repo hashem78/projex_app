@@ -5,6 +5,7 @@ import 'package:projex_app/screens/project_settings/tabs/manage_groups/manage_gr
 import 'package:projex_app/screens/project_settings/tabs/manage_project/manage_project_tab.dart';
 import 'package:projex_app/screens/project_settings/tabs/members/manage_members_tab.dart';
 import 'package:projex_app/screens/project_settings/tabs/roles/roles_tab.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 
 class ProjectSettingsScreen extends ConsumerWidget {
@@ -13,6 +14,7 @@ class ProjectSettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final name = ref.watch(projectProvider.select((value) => value.name));
+    final translations = ref.watch(translationProvider).translations.projectSettings;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -24,13 +26,13 @@ class ProjectSettingsScreen extends ConsumerWidget {
             headerSliverBuilder: (context, _) {
               return [
                 SliverAppBar(
-                  title: Text('$name Settings'),
-                  bottom: const TabBar(
+                  title: Text('${translations.title} $name'),
+                  bottom: TabBar(
                     tabs: [
-                      Tab(text: 'Manage'),
-                      Tab(text: 'Members'),
-                      Tab(text: 'Roles'),
-                      Tab(text: 'Groups'),
+                      Tab(text: translations.tabBarManageTabTitleText),
+                      Tab(text: translations.tabBarMembersTabTitleText),
+                      Tab(text: translations.tabBarRolesTabTitleText),
+                      Tab(text: translations.tabBarGroupsTabTitleText),
                     ],
                   ),
                 ),

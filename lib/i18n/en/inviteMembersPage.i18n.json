@@ -1,0 +1,9 @@
+{
+    "title": "Invite Members",
+    "searchFieldHintText": "Email",
+    "inviteMembersButtonText": "Invite Members",
+    "userDoesNotExistError": "This email does not exist",
+    "userIsAlreadyAMemberErrorText": "User is already a member of this project",
+    "userHasAPendingRequestErrorText": "There is a pending join request for this user",
+    "userHasAPendingInviteErrorText": "There is a pending invitation for this user"
+}

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/screens/edit_roles/widgets/tabs/display/color_rows.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 
 class DisplayTab extends ConsumerWidget {
@@ -14,6 +15,7 @@ class DisplayTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final translations = ref.watch(translationProvider).translations.editRolePage;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListView(
@@ -25,7 +27,7 @@ class DisplayTab extends ConsumerWidget {
               await project.editRole(role.copyWith(name: val));
             },
             decoration: InputDecoration(
-              label: const Text('Role name'),
+              label: Text(translations.displayTabRoleNameFieldTitleText),
               hintText: role.name,
             ),
           ),

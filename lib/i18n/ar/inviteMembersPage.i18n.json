@@ -1,0 +1,9 @@
+{
+    "title": "دعوة اعضاء",
+    "searchFieldHintText": "البريد الاكتروني",
+    "inviteMembersButtonText": "ارسال دعوة",
+    "userDoesNotExistError": "لم يتم العثور على المستخدم",
+    "userIsAlreadyAMemberErrorText": "المستخدم موجود في هذا المشروع",
+    "userHasAPendingRequestErrorText": "المستخدم لديه طلب انصمام",
+    "userHasAPendingInviteErrorText": "يوجد دعوة سابقة لهذا المستخدم"
+}

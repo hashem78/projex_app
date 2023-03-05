@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:projex_app/state/add_members.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/router_provider.dart';
 
@@ -13,6 +14,7 @@ class InviteMembersButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final memberIds = ref.watch(memberEmailsProvider);
+    final translations = ref.watch(translationProvider).translations.inviteMembersPage;
 
     return SliverToBoxAdapter(
       child: SizedBox(
@@ -35,7 +37,7 @@ class InviteMembersButton extends ConsumerWidget {
                   ref.read(routerProvider).pop();
                 }
               : null,
-          child: const Text("Invite members"),
+          child: Text(translations.inviteMembersButtonText),
         ),
       ),
     );

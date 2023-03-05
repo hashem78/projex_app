@@ -3,6 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:projex_app/state/locale.dart';
 
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/task_provider.dart';
@@ -16,6 +17,7 @@ class TaskTitleTextField extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final project = ref.watch(projectProvider);
     final title = ref.watch(taskProvider.select((value) => value.title));
+    final translations = ref.watch(translationProvider).translations.taskPage;
 
     return FormBuilderTextField(
       key: ValueKey(project),
@@ -32,7 +34,7 @@ class TaskTitleTextField extends ConsumerWidget {
       },
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        labelText: 'Task Title',
+        labelText: translations.taskTitleTextFieldLabelText,
         hintText: title,
       ),
       autovalidateMode: AutovalidateMode.onUserInteraction,

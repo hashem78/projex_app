@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/models/popup_menu_selection/popup_menu_selection_model.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 
 class ProjectSliverAppbar extends SliverOverlapAbsorber {
@@ -17,6 +18,8 @@ class ProjectSliverAppbar extends SliverOverlapAbsorber {
           ),
           sliver: Consumer(
             builder: (context, ref, child) {
+              final translations = ref.watch(translationProvider).translations;
+
               return SliverAppBar(
                 floating: true,
                 snap: true,
@@ -34,7 +37,7 @@ class ProjectSliverAppbar extends SliverOverlapAbsorber {
                                   context.push('/project/$projectId/settings');
                                 },
                                 value: e,
-                                child: Text(name),
+                                child: Text(translations[name]),
                               );
                             },
                           );
@@ -44,26 +47,25 @@ class ProjectSliverAppbar extends SliverOverlapAbsorber {
                   ),
                 ],
                 title: const ProjectAppBarTitile(),
-                bottom: child as PreferredSizeWidget,
+                bottom: TabBar(
+                  controller: tabController,
+                  tabs: [
+                    Tab(
+                      text: translations.projectPage.projectTabBarTasksTitle,
+                      icon: const Icon(Icons.task),
+                    ),
+                    Tab(
+                      text: translations.projectPage.projectTabBarMembersTitle,
+                      icon: const Icon(Icons.person),
+                    ),
+                    Tab(
+                      text: translations.projectPage.projectTabBarGroupsTitle,
+                      icon: const Icon(Icons.group),
+                    ),
+                  ],
+                ),
               );
             },
-            child: TabBar(
-              controller: tabController,
-              tabs: const [
-                Tab(
-                  text: 'Tasks',
-                  icon: Icon(Icons.task),
-                ),
-                Tab(
-                  text: 'Members',
-                  icon: Icon(Icons.person),
-                ),
-                Tab(
-                  text: 'Groups',
-                  icon: Icon(Icons.group),
-                ),
-              ],
-            ),
           ),
         );
 }

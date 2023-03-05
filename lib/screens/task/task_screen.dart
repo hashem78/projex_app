@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:projex_app/screens/task/tabs/assignees/task_assignees_tab.dart';
 import 'package:projex_app/screens/task/tabs/details/task_details_tab.dart';
 import 'package:projex_app/screens/task/tabs/subtasks/subtasks_tab.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/task_provider.dart';
 
@@ -14,6 +15,7 @@ class TaskScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final project = ref.watch(projectProvider);
     final task = ref.watch(taskProvider);
+    final translations = ref.watch(translationProvider).translations.taskPage;
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -28,11 +30,11 @@ class TaskScreen extends ConsumerWidget {
                     Text(task.title),
                   ],
                 ),
-                bottom: const TabBar(
+                bottom: TabBar(
                   tabs: [
-                    Tab(text: 'Details'),
-                    Tab(text: 'Asignees'),
-                    Tab(text: 'Sub tasks'),
+                    Tab(text: translations.taskDetailsTabBarTabTitle),
+                    Tab(text: translations.taskAssigneesTabBarTabTitle),
+                    Tab(text: translations.taskSubTasksTabBarTabTitle),
                   ],
                 ),
               ),

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/models/task_model/task_model.dart';
 import 'package:projex_app/state/auth.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -19,6 +20,7 @@ class ProjectScreenFAB extends ConsumerStatefulWidget {
 class _ProjectScreenFABState extends ConsumerState<ProjectScreenFAB> {
   @override
   Widget build(BuildContext context) {
+    final translations = ref.watch(translationProvider).translations.projectPage;
     return SizedBox(
       width: 100,
       child: FloatingActionButton(
@@ -30,8 +32,8 @@ class _ProjectScreenFABState extends ConsumerState<ProjectScreenFAB> {
           final now = DateTime.now();
           final tomorrow = now.add(const Duration(days: 1));
           final task = PTask(
-            title: 'A new task',
-            description: 'This is a new task',
+            title: translations.newTaskDefaultTitle,
+            description: translations.newTaskDefaultDescription,
             creatorId: authedUser.id,
             id: id,
             startDate: now,
@@ -44,7 +46,7 @@ class _ProjectScreenFABState extends ConsumerState<ProjectScreenFAB> {
           if (!mounted) return;
           context.push('/project/$pid/task/$id');
         },
-        child: const Text('Create Task'),
+        child: Text(translations.projectCreateTaskButtonText),
       ),
     );
   }

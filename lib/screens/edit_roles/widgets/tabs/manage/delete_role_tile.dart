@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/models/role_model/role.dart';
+import 'package:projex_app/screens/widgets/delete_something_dialog.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/router_provider.dart';
 
@@ -14,6 +16,8 @@ class DeleteRoleTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final translations = ref.watch(translationProvider).translations.editRolePage;
+
     return ListTile(
       leading: const Icon(
         Icons.delete,
@@ -22,28 +26,7 @@ class DeleteRoleTile extends ConsumerWidget {
       onTap: () async {
         final shouldDelete = await showDialog<bool>(
               context: context,
-              builder: (context) {
-                return AlertDialog(
-                  content: Text(
-                    'Are you sure you want to delete ${role.name}, this action is irreversable!',
-                  ),
-                  title: Text("Delete ${role.name}"),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context, true);
-                      },
-                      child: const Text('Yes'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context, false);
-                      },
-                      child: const Text('No'),
-                    ),
-                  ],
-                );
-              },
+              builder: (_) => DeleteSomethingDialog(name: role.name),
             ) ??
             false;
         if (shouldDelete) {
@@ -52,9 +35,9 @@ class DeleteRoleTile extends ConsumerWidget {
           await project.removeRole(role.id);
         }
       },
-      title: const Text(
-        'Delete Role',
-        style: TextStyle(color: Colors.red),
+      title: Text(
+        translations.manageTabDeleteRoleButtonText,
+        style: const TextStyle(color: Colors.red),
       ),
     );
   }

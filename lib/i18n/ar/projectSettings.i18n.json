@@ -1,0 +1,20 @@
+{
+    "title": "اعدادات",
+    "tabBarManageTabTitleText": "الادارة",
+    "tabBarMembersTabTitleText": "الاعضاء",
+    "tabBarRolesTabTitleText": "الأدوار",
+    "tabBarGroupsTabTitleText": "المجموعات",
+    "manageTabDescriptionFieldTitleText": "الوصف",
+    "manageTabNameFieldTitleText": "الاسم",
+    "manageTabStartDateTitleText": "وقت وتاريخ البداية",
+    "manageTabEndDateTitleText": "وقت وتاريخ النهاية",
+    "manageTabDeleteProjectButtonText": "حذف المشروع",
+    "membersTabInviteMembersButtonText": "ارسال الدعوات",
+    "membersTabPendingInvitationsButtonText": "الدعوات المعلقة",
+    "membersTabPendingJoinRequestsButtonText": "طلبات الانضمام",
+    "membersTabProjectMembersTitleText": "الأعضاء",
+    "membersTabEditRolesButtonText": "تعديل الأدوار",
+    "rolesTabCreateRoleButtonText": "انشاء دور جديد",
+    "groupsTabCreateGroupButtonText": "انشاء مجموعة جديدة",
+    "groupsTabDefaultGroupName": "مجموعة جديدة"
+}

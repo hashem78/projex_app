@@ -1,0 +1,12 @@
+{
+    "taskDetailsTabBarTabTitle": "التفاصيل",
+    "taskAssigneesTabBarTabTitle": "المناطون",
+    "taskSubTasksTabBarTabTitle": "الفرعيات",
+    "taskCreatedByTitle": "انسء من قبل",
+    "taskTitleTextFieldLabelText": "العنوان",
+    "taskDescriptionTextFieldLabelText": "الوصف",
+    "taskStartDateFieldLabelText": "وقت وتاريخ البداية",
+    "taskEndDateFieldLabelText": "وقت وتاريخ النهاية",
+    "taskDueDateFieldLabelText": "الوقت النهائي للتسليم",
+    "taskStatusLabelText": "الحالة"
+}

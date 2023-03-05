@@ -9,6 +9,7 @@ import 'package:projex_app/models/permission/permission_model.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/models/role_model/role.dart';
 import 'package:projex_app/state/auth.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:uuid/uuid.dart';
 
 class CreateProjectScreen extends ConsumerStatefulWidget {
@@ -22,6 +23,8 @@ class _CreateProjectScreenState extends ConsumerState<CreateProjectScreen> {
   final createProjectKey = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
+    final translations = ref.watch(translationProvider).translations;
+    final locale = ref.watch(translationProvider).locale;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -33,8 +36,8 @@ class _CreateProjectScreenState extends ConsumerState<CreateProjectScreen> {
             slivers: [
               SliverAppBar(
                 collapsedHeight: 0.25.sh,
-                flexibleSpace: const FlexibleSpaceBar(
-                  title: Text('Create a new Project'),
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Text(translations.createProject.createProjectTitle),
                 ),
               ),
               SliverPadding(
@@ -44,8 +47,8 @@ class _CreateProjectScreenState extends ConsumerState<CreateProjectScreen> {
                     [
                       FormBuilderTextField(
                         name: "name",
-                        decoration: const InputDecoration(
-                          hintText: "Name",
+                        decoration: InputDecoration(
+                          hintText: translations.createProject.projectNameTextFieldLabel,
                         ),
                         validator: FormBuilderValidators.compose(
                           [
@@ -61,8 +64,8 @@ class _CreateProjectScreenState extends ConsumerState<CreateProjectScreen> {
                         child: FormBuilderTextField(
                           maxLines: 5,
                           name: "desc",
-                          decoration: const InputDecoration(
-                            hintText: "Description",
+                          decoration: InputDecoration(
+                            hintText: translations.createProject.projectDescriptionTextFieldLabel,
                           ),
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(),
@@ -75,9 +78,9 @@ class _CreateProjectScreenState extends ConsumerState<CreateProjectScreen> {
                       FormBuilderDateTimePicker(
                         name: 'start',
                         inputType: InputType.both,
-                        format: DateFormat("EEEE, MMMM d, yyyy 'at' h:mma"),
-                        decoration: const InputDecoration(
-                          labelText: 'Start date',
+                        format: DateFormat("EEEE, MMMM d, yyyy 'at' h:mma", locale.name),
+                        decoration: InputDecoration(
+                          labelText: translations.createProject.projectStartDateFieldLabel,
                         ),
                         initialDate: DateTime.now(),
                         validator: FormBuilderValidators.required(),
@@ -86,10 +89,10 @@ class _CreateProjectScreenState extends ConsumerState<CreateProjectScreen> {
                       FormBuilderDateTimePicker(
                         name: 'end',
                         inputType: InputType.both,
-                        decoration: const InputDecoration(
-                          labelText: 'End date',
+                        decoration: InputDecoration(
+                          labelText: translations.createProject.projectEndDateFieldLabel,
                         ),
-                        format: DateFormat("EEEE, MMMM d, yyyy 'at' h:mma"),
+                        format: DateFormat("EEEE, MMMM d, yyyy 'at' h:mma", locale.name),
                         initialDate: DateTime.now().add(const Duration(days: 1)),
                         validator: FormBuilderValidators.required(),
                       ),
@@ -145,7 +148,7 @@ class _CreateProjectScreenState extends ConsumerState<CreateProjectScreen> {
                         context.push('/project/$pid');
                       }
                     },
-                    child: const Text("Create Project"),
+                    child: Text(translations.createProject.createProjectButtonText),
                   ),
                 ),
               )

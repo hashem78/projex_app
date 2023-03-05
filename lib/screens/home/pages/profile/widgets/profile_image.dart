@@ -7,7 +7,7 @@ class ProfileImage extends StatelessWidget {
   const ProfileImage({
     Key? key,
     required this.profilePicture,
-    this.borderWidth = 4,
+    this.borderWidth = 2,
     this.size,
   }) : super(key: key);
 
@@ -21,8 +21,8 @@ class ProfileImage extends StatelessWidget {
       imageUrl: profilePicture.link,
       imageBuilder: (context, imageProvider) {
         return AnimatedContainer(
-          width: profilePicture.width?.toDouble() ?? size ?? 120,
-          height: profilePicture.width?.toDouble() ?? size ?? 120,
+          width: size,
+          height: size,
           decoration: BoxDecoration(
             border: Border.all(
               width: borderWidth,
@@ -38,7 +38,7 @@ class ProfileImage extends StatelessWidget {
             ],
             image: DecorationImage(
               image: imageProvider,
-              fit: BoxFit.contain,
+              fit: BoxFit.cover,
             ),
           ),
           duration: const Duration(

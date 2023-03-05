@@ -6,6 +6,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:projex_app/models/user_model/user_model.dart';
 import 'package:projex_app/screens/invite_members/invite_members_screen.dart';
 import 'package:projex_app/state/add_members.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 
 class InviteMembersEmailField extends ConsumerWidget {
@@ -15,6 +16,8 @@ class InviteMembersEmailField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final translations = ref.watch(translationProvider).translations.inviteMembersPage;
+
     return SliverPadding(
       padding: const EdgeInsets.all(8.0),
       sliver: SliverToBoxAdapter(
@@ -51,15 +54,15 @@ class InviteMembersEmailField extends ConsumerWidget {
                       .get();
 
                   if (query.size == 0) {
-                    state.invalidateFirstField(errorText: 'This email does not exist');
+                    state.invalidateFirstField(errorText: translations.userDoesNotExistError);
                   } else {
                     final user = query.docs.first.data();
                     if (project.memberIds.contains(user.id)) {
-                      state.invalidateFirstField(errorText: 'User is already a member of this project');
+                      state.invalidateFirstField(errorText: translations.userIsAlreadyAMemberErrorText);
                     } else if (project.joinRequests.contains(user.id)) {
-                      state.invalidateFirstField(errorText: 'There is a pending join request for this user');
+                      state.invalidateFirstField(errorText: translations.userHasAPendingRequestErrorText);
                     } else if (project.invitations.contains(user.id)) {
-                      state.invalidateFirstField(errorText: 'There is a pending invitation for this user');
+                      state.invalidateFirstField(errorText: translations.userHasAPendingInviteErrorText);
                     } else {
                       ref.read(memberEmailsProvider.notifier).add(user);
                     }

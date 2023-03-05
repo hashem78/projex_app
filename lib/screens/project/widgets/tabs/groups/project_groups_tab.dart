@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/state/available_groups.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 
 class GroupsTab extends ConsumerStatefulWidget {
@@ -16,15 +17,16 @@ class _GroupsTabState extends ConsumerState<GroupsTab> with AutomaticKeepAliveCl
   Widget build(BuildContext context) {
     super.build(context);
     final groupsFuture = ref.watch(availableGroupsProvider);
+    final translations = ref.watch(translationProvider).translations.projectPage;
     ref.listen(
       projectProvider.select((p) => p.userRoleMap),
       (before, after) {
-        ref.refresh(availableGroupsProvider);
+        ref.invalidate(availableGroupsProvider);
       },
     );
     return RefreshIndicator(
       onRefresh: () async {
-        ref.refresh(availableGroupsProvider);
+        ref.invalidate(availableGroupsProvider);
       },
       child: groupsFuture.when(
         data: (groups) {
@@ -43,8 +45,8 @@ class _GroupsTabState extends ConsumerState<GroupsTab> with AutomaticKeepAliveCl
               },
             );
           } else {
-            return const Center(
-              child: Text('You are not part of any groups'),
+            return Center(
+              child: Text(translations.projectNotPartOfAnyGroup),
             );
           }
         },

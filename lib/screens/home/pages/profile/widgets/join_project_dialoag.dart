@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:projex_app/models/project_model/project_model.dart';
 import 'package:projex_app/state/auth.dart';
+import 'package:projex_app/state/locale.dart';
 
 class JoinProjectDialog extends ConsumerStatefulWidget {
   const JoinProjectDialog({
@@ -20,8 +21,9 @@ class _JoinProjectDialogState extends ConsumerState<JoinProjectDialog> {
   final k = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
+    final translations = ref.watch(translationProvider).translations.home;
     return AlertDialog(
-      title: const Text('Join a Project'),
+      title: Text(translations.joinProjectDialogTitle),
       content: SizedBox(
         width: 0.8.sw,
         child: FormBuilder(
@@ -31,7 +33,7 @@ class _JoinProjectDialogState extends ConsumerState<JoinProjectDialog> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('Enter a Project Invite Code'),
+              Text(translations.joinProjectDialogSubTitle),
               FormBuilderTextField(
                 name: 'piid',
                 maxLines: 1,
@@ -55,7 +57,7 @@ class _JoinProjectDialogState extends ConsumerState<JoinProjectDialog> {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text('Cancel'),
+          child: Text(translations.joinProjectDialogCancelButtonText),
         ),
         TextButton(
           onPressed: () async {
@@ -101,7 +103,7 @@ class _JoinProjectDialogState extends ConsumerState<JoinProjectDialog> {
               }
             }
           },
-          child: const Text('OK'),
+          child: Text(translations.joinProjectDialogJoinButtonText),
         ),
       ],
     );

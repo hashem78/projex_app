@@ -3,6 +3,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,6 +23,7 @@ import 'package:projex_app/state/router_provider.dart';
 import 'package:projex_app/state/shared_perferences_provider.dart';
 import 'package:projex_app/state/theme_mode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stack_trace/stack_trace.dart' as stack_trace;
 
 final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 const androidChannel = AndroidNotificationChannel(
@@ -32,19 +34,27 @@ const androidChannel = AndroidNotificationChannel(
 );
 const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
 const notificationSettings = InitializationSettings(android: androidSettings);
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FlutterError.demangleStackTrace = (StackTrace stack) {
+    if (stack is stack_trace.Trace) return stack.vmTrace;
+    if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
+    return stack;
+  };
 
   // For debugging purposes.
   // Make sure to run firebase eumlators:start
   if (kDebugMode) {
+    print('============= using emulators ============');
     await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
     FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5001);
+    await FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
   }
   await FirebaseMessaging.instance.requestPermission();
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -55,11 +65,6 @@ Future<void> main() async {
 
   await flutterLocalNotificationsPlugin.initialize(
     notificationSettings,
-    onSelectNotification: (String? payload) async {
-      if (payload != null) {
-        debugPrint('notification payload: $payload');
-      }
-    },
   );
 
   await flutterLocalNotificationsPlugin

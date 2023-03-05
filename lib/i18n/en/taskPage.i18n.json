@@ -1,0 +1,12 @@
+{
+    "taskDetailsTabBarTabTitle": "Details",
+    "taskAssigneesTabBarTabTitle": "Asignees",
+    "taskSubTasksTabBarTabTitle": "Subtasks",
+    "taskCreatedByTitle": "Created By",
+    "taskTitleTextFieldLabelText": "Name",
+    "taskDescriptionTextFieldLabelText": "Description",
+    "taskStartDateFieldLabelText": "Start Date & Time",
+    "taskEndDateFieldLabelText": "End Date & Time",
+    "taskDueDateFieldLabelText": "Due Date & Time",
+    "taskStatusLabelText": "Status"
+}

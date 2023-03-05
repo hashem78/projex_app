@@ -5,6 +5,7 @@ import 'package:projex_app/screens/project/widgets/tabs/members/project_member_t
 import 'package:projex_app/screens/project_settings/tabs/members/widets/invite_members_tile.dart';
 import 'package:projex_app/screens/project_settings/tabs/members/widets/pending_invitations_tille.dart';
 import 'package:projex_app/screens/project_settings/tabs/members/widets/review_join_requests_tile.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/user_provider.dart';
 
@@ -16,6 +17,7 @@ class ManageMembersTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final project = ref.watch(projectProvider);
+    final translations = ref.watch(translationProvider).translations.projectSettings;
     return CustomScrollView(
       slivers: [
         SliverList(
@@ -27,10 +29,10 @@ class ManageMembersTab extends ConsumerWidget {
             ],
           ),
         ),
-        const SliverPadding(
-          padding: EdgeInsets.all(8.0),
+        SliverPadding(
+          padding: const EdgeInsets.all(8.0),
           sliver: SliverToBoxAdapter(
-            child: Text('Project Members'),
+            child: Text(translations.membersTabProjectMembersTitleText),
           ),
         ),
         SliverList(
@@ -45,10 +47,7 @@ class ManageMembersTab extends ConsumerWidget {
                 child: ProjectMemberTile(
                   allowAddingRoles: true,
                   showRoles: true,
-                  onTap: () {
-                    final user = ref.read(userProvider);
-                    context.push('/profile/${user.id}');
-                  },
+                  onTap: () => context.push('/profile/$uid'),
                 ),
               );
             },

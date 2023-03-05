@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:projex_app/state/group_chat.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 
 class GroupNameField extends HookConsumerWidget {
@@ -15,6 +16,7 @@ class GroupNameField extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final groupName = ref.watch(groupChatProvider.select((value) => value.name));
     final gid = ref.watch(projectProvider.select((value) => value.id));
+    final translations = ref.watch(translationProvider).translations.editGroupChatPage;
 
     final errorText = useValueNotifier<String?>(null);
     return TextFormField(
@@ -25,7 +27,7 @@ class GroupNameField extends HookConsumerWidget {
       ],
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        labelText: 'Group name',
+        labelText: translations.groupNameFieldTitleText,
         hintText: groupName,
         errorText: useValueListenable(errorText),
       ),

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:projex_app/screens/project/widgets/tabs/tasks/widgets/face_pile.dart';
 import 'package:projex_app/screens/project/widgets/tabs/tasks/widgets/project_task_tile_actions.dart';
 import 'package:projex_app/screens/project/widgets/tabs/tasks/widgets/project_task_tile_progress_indicator.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/task_provider.dart';
 
@@ -16,6 +17,7 @@ class ProjectTaskTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final task = ref.watch(taskProvider);
+    final translations = ref.watch(translationProvider).translations;
 
     return InkWell(
       onTap: () {
@@ -37,7 +39,7 @@ class ProjectTaskTile extends ConsumerWidget {
                   children: [
                     Text(task.title),
                     Text(
-                      task.status.name,
+                      translations[task.status.name] ?? '',
                       style: TextStyle(color: task.status.color),
                     ),
                   ],

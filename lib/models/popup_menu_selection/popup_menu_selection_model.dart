@@ -4,7 +4,7 @@ part 'popup_menu_selection_model.freezed.dart';
 @freezed
 class PopupMenuSelection with _$PopupMenuSelection {
   const factory PopupMenuSelection.settings({
-    @Default("Settings") String name,
+    @Default("projectPage.projectMenuSettingsItemText") String name,
   }) = _PopupMenuSelectionSettings;
 
   static const values = <PopupMenuSelection>[

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 
 class ReviewJoinRequestsScreenAppBar extends ConsumerWidget {
@@ -11,6 +12,7 @@ class ReviewJoinRequestsScreenAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final project = ref.watch(projectProvider);
+    final translations = ref.watch(translationProvider).translations.reviewJoinRequestsPage;
     return SliverAppBar(
       title: Text(project.name),
       expandedHeight: 0.25.sh,
@@ -19,15 +21,15 @@ class ReviewJoinRequestsScreenAppBar extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Review Join Requests'),
+            Text(translations.title),
             if (project.joinRequests.isNotEmpty)
               Text(
-                '${project.joinRequests.length} join requests(s)',
+                translations.subTitleJoinRequestsText(number: project.joinRequests.length),
                 style: Theme.of(context).textTheme.labelSmall,
               ),
             if (project.joinRequests.isEmpty)
               Text(
-                'There are no join requests',
+                translations.subTitleNoJoinRequestsText,
                 style: Theme.of(context).textTheme.labelSmall,
               ),
           ],

@@ -80,13 +80,13 @@ class TranslationsNotifier extends StateNotifier<TranslationsContainer> {
 ///    ...
 /// }
 /// ```
-final translationProvider =
-    StateNotifierProvider<TranslationsNotifier, TranslationsContainer>(
+final translationProvider = StateNotifierProvider<TranslationsNotifier, TranslationsContainer>(
   (ref) {
     final prefs = ref.read(sharedPerferencesProvider);
     late AppLocale locale;
     if (prefs.containsKey("locale")) {
-      locale = prefs.getString("locale")!.toAppLocale()!;
+      
+      locale = AppLocaleUtils.parse(prefs.getString("locale")!);
     } else {
       // Default to the devices locale if this is the first
       // time the application is lanched

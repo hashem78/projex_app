@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:projex_app/models/role_model/role.dart';
 
@@ -16,11 +16,13 @@ class RoleBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Badge(
-        padding: padding,
-        shape: BadgeShape.square,
-        badgeColor: Color(int.parse(role.color, radix: 16)),
-        borderRadius: BorderRadius.circular(8),
+      child: badge.Badge(
+        badgeStyle: badge.BadgeStyle(
+          shape: badge.BadgeShape.square,
+          borderRadius: BorderRadius.circular(8.0),
+          badgeColor: Color(int.parse(role.color, radix: 16)),
+          padding: padding,
+        ),
         badgeContent: Text(
           role.name,
           style: const TextStyle(color: Colors.white),

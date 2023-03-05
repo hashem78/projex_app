@@ -1,0 +1,14 @@
+{
+    "projectTabBarGroupsTitle": "المجموعات",
+    "projectTabBarMembersTitle": "الأعضاء",
+    "projectTabBarTasksTitle": "المهام",
+    "projectCreateTaskButtonText": "انشاء مهمة",
+    "projectMenuSettingsItemText": "الاعدادات",
+    "projectNotPartOfAnyGroup": "انت لست عضو في اي مجموعة بعد",
+    "projectNoTasksInProject": "لا يوجد مهام جديدة في هذا المشروع",
+    "projectTaskMenuViewItemText": "عرض",
+    "projectTaskMenuFeedBackItemText": "تغذية راجعة",
+    "projectTaskMenuDeleteItemText": "حذف",
+    "newTaskDefaultTitle": "مهمة جديدة",
+    "newTaskDefaultDescription": "هذه مهمة جديدة"
+}

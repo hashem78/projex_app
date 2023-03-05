@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/models/role_model/role.dart';
@@ -35,11 +35,12 @@ class CheckableColorBadge extends StatelessWidget {
       child: SizedBox(
         width: 35,
         height: 35,
-        child: Badge(
-          toAnimate: false,
-          badgeColor: color,
-          shape: BadgeShape.square,
-          borderRadius: BorderRadius.circular(4.0),
+        child: badge.Badge(
+          badgeStyle: badge.BadgeStyle(
+            shape: badge.BadgeShape.square,
+            borderRadius: BorderRadius.circular(4.0),
+            badgeColor: color,
+          ),
           badgeContent: color.value == roleColor.value
               ? const Icon(
                   Icons.check,

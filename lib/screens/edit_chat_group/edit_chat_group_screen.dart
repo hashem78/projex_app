@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:projex_app/screens/edit_chat_group/widgets/edit_chat_role_list.dart';
 import 'package:projex_app/screens/edit_chat_group/widgets/group_name_field.dart';
 import 'package:projex_app/state/group_chat.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 
 class EditChatGroupScreen extends ConsumerWidget {
@@ -13,6 +14,7 @@ class EditChatGroupScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final project = ref.watch(projectProvider);
     final group = ref.watch(groupChatProvider);
+    final translations = ref.watch(translationProvider).translations.editGroupChatPage;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -33,7 +35,7 @@ class EditChatGroupScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(8.0),
             sliver: SliverToBoxAdapter(
               child: Text(
-                'Roles that can access this group',
+                translations.allowedRolesTitleText,
                 style: TextStyle(fontSize: 50.sp),
               ),
             ),

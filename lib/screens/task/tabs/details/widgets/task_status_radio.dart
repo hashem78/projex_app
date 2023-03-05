@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/models/task_status/task_status.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/task_provider.dart';
 
@@ -15,6 +16,8 @@ class TaskStatusRadio extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final task = ref.watch(taskProvider);
+    final translations = ref.watch(translationProvider).translations;
+
     bool canChange = true;
     defaultStatus.whenOrNull(
       complete: (_, __) {
@@ -29,7 +32,7 @@ class TaskStatusRadio extends ConsumerWidget {
       value: defaultStatus,
       groupValue: task.status,
       title: Text(
-        defaultStatus.name,
+        translations[defaultStatus.name] ?? '',
         style: const TextStyle(
           color: Colors.white,
         ),

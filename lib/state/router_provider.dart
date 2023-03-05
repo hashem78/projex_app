@@ -19,6 +19,7 @@ import 'package:projex_app/screens/project_settings/project_settings_screen.dart
 import 'package:projex_app/screens/review_join_requests/review_join_requests_screen.dart';
 import 'package:projex_app/screens/task/task_screen.dart';
 import 'package:projex_app/state/auth.dart';
+import 'package:projex_app/state/go_router_refresh_stream.dart';
 import 'package:projex_app/state/group_chat.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:projex_app/state/sub_task_provider.dart';
@@ -49,7 +50,6 @@ final routerProvider = Provider<GoRouter>(
 
     return GoRouter(
       debugLogDiagnostics: true,
-      urlPathStrategy: UrlPathStrategy.path,
       refreshListenable: GoRouterRefreshStream(auth.stream),
       routes: [
         GoRoute(
@@ -234,7 +234,7 @@ final routerProvider = Provider<GoRouter>(
           builder: (context, state) => const LoginScreen(),
         ),
       ],
-      redirect: (state) {
+      redirect: (context, state) {
         // if the user is not logged in, they need to login
         final isLoggingIn = state.subloc == '/login';
         final isNotLoggedIn = FirebaseAuth.instance.currentUser == null;
@@ -245,9 +245,9 @@ final routerProvider = Provider<GoRouter>(
         // if the user is logged in but still on the login page, send them to
         // the home page
         if (isLoggingIn) {
-          return '/';
+          return '/login';
         }
-
+        
         // no need to redirect at all
         return null;
       },

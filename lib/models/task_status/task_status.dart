@@ -7,15 +7,15 @@ part 'task_status.g.dart';
 class PTaskStatus with _$PTaskStatus {
   const PTaskStatus._();
   const factory PTaskStatus.complete({
-    @Default('Complete') String name,
+    @Default('taskStatus.complete') String name,
     @JsonKey(ignore: true) @Default(Colors.lightGreen) Color color,
   }) = _Complete;
   const factory PTaskStatus.incomplete({
-    @Default('Incomplete') String name,
+    @Default('taskStatus.incomplete') String name,
     @JsonKey(ignore: true) @Default(Colors.red) Color color,
   }) = _UnComplete;
   const factory PTaskStatus.beingWorkedOn({
-    @Default('Being worked on') String name,
+    @Default('taskStatus.beingWorkedOn') String name,
     @JsonKey(ignore: true) @Default(Colors.lightBlue) Color color,
   }) = _BeingWorkedOn;
   static const List<PTaskStatus> values = [

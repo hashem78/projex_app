@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projex_app/models/chat_group/chat_group_model.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -18,13 +19,18 @@ class CreateGroupTile extends ConsumerStatefulWidget {
 class _CreateGroupTileState extends ConsumerState<CreateGroupTile> {
   @override
   Widget build(BuildContext context) {
+    final translations = ref.watch(translationProvider).translations.projectSettings;
     return ListTile(
       leading: const Icon(Icons.add),
-      title: const Text('Create Group'),
+      title: Text(translations.groupsTabCreateGroupButtonText),
       onTap: () async {
         final projectId = ref.read(selectedProjectProvider);
         final uuid = const Uuid().v4();
-        final group = ChatGroup(id: uuid, name: 'New Group Chat');
+        final group = ChatGroup(
+          id: uuid,
+          name: translations.groupsTabDefaultGroupName,
+          allowedRoleIds: ['owner'],
+        );
         await FirebaseFirestore.instance
             .doc(
           'projects/$projectId/groupChats/$uuid',

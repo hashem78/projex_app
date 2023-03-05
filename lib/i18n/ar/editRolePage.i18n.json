@@ -1,0 +1,10 @@
+{
+    "editRoleAppBarTitle": "تعديل الدور",
+    "displayTabBarTitle": "العرض",
+    "permissionsTabBarTitle": "الأُذونات",
+    "manageTabBarTitle": "تحكم",
+    "displayTabRoleNameFieldTitleText": "الاسم",
+    "displayTabColorFieldTitleText": "اللون",
+    "manageTabDeleteRoleButtonText": "حذف الدور",
+    "manageTabMembersHaveThisRoleText": "$number أعضاء الذين لديهم هذا الدور"
+}
