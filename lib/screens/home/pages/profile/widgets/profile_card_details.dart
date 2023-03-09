@@ -18,8 +18,9 @@ class ProfileScreenCardDetails extends ConsumerWidget {
           maxLines: 1,
           style: Theme.of(context).textTheme.headlineSmall,
         ),
+        if(user.email != null)
         Text(
-          user.email,
+          user.email!,
           style: Theme.of(context).textTheme.bodySmall,
         ),
       ],

@@ -37,10 +37,11 @@ class ProjectMemberTile extends ConsumerWidget {
                     user.name,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  Text(
-                    user.email,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
+                  if (user.email != null)
+                    Text(
+                      user.email!,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                   if (showRoles) MemberRoleList(allowAddingRoles: allowAddingRoles),
                 ],
               ),

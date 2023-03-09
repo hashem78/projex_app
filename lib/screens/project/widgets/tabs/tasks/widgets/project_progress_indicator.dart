@@ -15,11 +15,11 @@ class ProjectProgressIndicator extends ConsumerWidget {
 
     return SizedBox(
       width: 0.5.sw,
-      height: 0.3.sh,
+      height: 0.5.sh,
       child: CircularPercentIndicator(
         animation: true,
         animationDuration: 1000,
-        radius: 320.r,
+        radius: 300.r,
         reverse: true,
         lineWidth: 15,
         circularStrokeCap: CircularStrokeCap.round,
@@ -42,7 +42,7 @@ class ProjectProgressIndicator extends ConsumerWidget {
           "${(progress * 100).round()}%",
           maxLines: 1,
           style: TextStyle(
-            fontSize: 150.sp,
+            fontSize: 50.sp,
             color: Colors.purple,
             fontWeight: FontWeight.bold,
           ),

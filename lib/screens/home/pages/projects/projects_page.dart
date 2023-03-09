@@ -43,9 +43,9 @@ class HomeProjectsPage extends ConsumerWidget {
           builder: (context, snapshot, child) {
             final docs = snapshot.docs;
             if (docs.isEmpty) {
-              return const SliverToBoxAdapter(
+              return SliverToBoxAdapter(
                 child: Center(
-                  child: Text('There are no projects'),
+                  child: Text(translations.noProjectsText),
                 ),
               );
             }

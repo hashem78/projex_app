@@ -34,8 +34,8 @@ class AuthNotifier extends StateNotifier<PUser> {
           } else {
             final puser = PUser(
               id: event.uid,
-              email: event.email!,
-              name: event.displayName ?? event.email!.split('@').first,
+              email: event.email,
+              name: event.displayName ?? event.email?.split('@').first ?? 'Anonymous',
               profilePicture: PProfilePicture(
                 link: event.photoURL ?? "https://i.imgur.com/qW7gjGk.jpg",
               ),

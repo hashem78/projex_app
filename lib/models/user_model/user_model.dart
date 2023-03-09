@@ -81,7 +81,7 @@ class PUser with _$PUser {
   const factory PUser({
     @Default("") String id,
     @Default("") String name,
-    @Default("") String email,
+    @Default("") String? email,
     @Default("") String phoneNumber,
     @Default(PProfilePicture(link: 'https://i.imgur.com/kEqAm6K.png', width: 120, height: 120))
         PProfilePicture profilePicture,

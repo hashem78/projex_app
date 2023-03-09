@@ -41,9 +41,12 @@ class TaskAssigneesTab extends ConsumerWidget {
                       overrides: [
                         selectedUserProvider.overrideWithValue(uid),
                       ],
-                      child: const ProjectMemberTile(
-                        allowAddingRoles: false,
-                        showRoles: true,
+                      child: const Expanded(
+                        child: ProjectMemberTile(
+                          allowAddingRoles: false,
+                          showRoles: true,
+                          showRemoveFromProjectButton: false,
+                        ),
                       ),
                     ),
                     const Spacer(),

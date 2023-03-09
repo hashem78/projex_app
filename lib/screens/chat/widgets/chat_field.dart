@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/models/message_model/message_model.dart';
@@ -53,6 +52,7 @@ class _ChatFieldState extends ConsumerState<ChatField> {
           ),
           ElevatedButton(
             onPressed: () async {
+              
               if (controller.text.isNotEmpty) {
                 final projectId = ref.read(selectedProjectProvider);
                 final senderId = ref.read(authProvider).id;
@@ -61,7 +61,7 @@ class _ChatFieldState extends ConsumerState<ChatField> {
                   text: controller.text,
                   createdOn: DateTime.now(),
                   senderId: senderId,
-                  senderToken: (await FirebaseMessaging.instance.getToken())!,
+                  senderToken: '',
                 );
                 final db = FirebaseFirestore.instance;
                 late final String path;

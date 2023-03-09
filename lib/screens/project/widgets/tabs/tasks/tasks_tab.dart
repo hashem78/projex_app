@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projex_app/screens/project/widgets/tabs/tasks/widgets/project_task_list.dart';
 import 'package:projex_app/screens/project/widgets/tabs/tasks/widgets/project_progress_indicator.dart';
+import 'package:projex_app/state/locale.dart';
 import 'package:projex_app/state/project_provider.dart';
 
 class TasksTab extends ConsumerWidget {
@@ -14,9 +15,10 @@ class TasksTab extends ConsumerWidget {
     final numberOfTasks = ref.watch(
       projectProvider.select((value) => value.numberOfTasks),
     );
+    final translations = ref.watch(translationProvider).translations.projectPage;
     if (numberOfTasks == 0) {
-      return const Center(
-        child: Text('There are no tasks in this project'),
+      return Center(
+        child: Text(translations.projectNoTasksInProject),
       );
     }
     return const CustomScrollView(

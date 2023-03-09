@@ -60,10 +60,11 @@ class ProfileScreen extends ConsumerWidget {
                                   maxLines: 1,
                                   style: Theme.of(context).textTheme.headlineSmall,
                                 ),
-                                Text(
-                                  user.email,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
+                                if (user.email != null)
+                                  Text(
+                                    user.email!,
+                                    style: Theme.of(context).textTheme.bodySmall,
+                                  ),
                               ],
                             ),
                           ),
