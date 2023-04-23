@@ -47,6 +47,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           icons: icons,
           gapWidth: 0,
           activeColor: colorMappings[_selectedIndex],
+          inactiveColor: Colors.grey,
           activeIndex: _selectedIndex,
           onTap: (index) => setState(
             () {
