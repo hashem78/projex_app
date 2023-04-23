@@ -28,7 +28,8 @@ final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 const androidChannel = AndroidNotificationChannel(
   'high_importance_channel', // id
   'High Importance Notifications', // title
-  description: 'This channel is used for important notifications.', // description
+  description:
+      'This channel is used for important notifications.', // description
   importance: Importance.max,
 );
 const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -65,7 +66,8 @@ Future<void> main() async {
   );
 
   await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(androidChannel);
   FirebaseMessaging.onMessage.listen(
     (message) {
@@ -125,6 +127,7 @@ class App extends ConsumerWidget {
     final router = ref.watch(routerProvider);
     // The current theme mode for this App
     final themeState = ref.watch(themeModeProvider);
+    print(themeState.flutterThemeMode);
     // The current translations + locale for this App
     final translations = ref.watch(translationProvider);
     return ScreenUtilInit(
@@ -146,8 +149,13 @@ class App extends ConsumerWidget {
             FormBuilderLocalizations.delegate,
           ],
           themeMode: themeState.flutterThemeMode,
-          theme: ThemeData(
-            brightness: themeState.flutterBrightness,
+          theme: ThemeData.light().copyWith(
+            inputDecorationTheme: const InputDecorationTheme(
+              border: InputBorder.none,
+              filled: true,
+            ),
+          ),
+          darkTheme: ThemeData.dark().copyWith(
             inputDecorationTheme: const InputDecorationTheme(
               border: InputBorder.none,
               filled: true,
