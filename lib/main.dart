@@ -14,7 +14,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:flutterfire_ui/i10n.dart';
 import 'package:form_builder_validators/localization/l10n.dart';
-import 'package:projex_app/firebase_options.dart';
 import 'package:projex_app/i18n/translations.g.dart';
 import 'package:projex_app/screens/login/login_localizations.dart';
 import 'package:projex_app/state/locale.dart';
@@ -38,9 +37,7 @@ const notificationSettings = InitializationSettings(android: androidSettings);
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp();
   FlutterError.demangleStackTrace = (StackTrace stack) {
     if (stack is stack_trace.Trace) return stack.vmTrace;
     if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
