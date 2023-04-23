@@ -17,9 +17,9 @@ class EditRoleScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final project = ref.watch(projectProvider);
+    final pid = ref.watch(selectedProjectProvider);
     return PRoleBuilder(
-      pid: project.id,
+      pid: pid,
       rid: roleId,
       builder: (context, role) {
         return Scaffold(
